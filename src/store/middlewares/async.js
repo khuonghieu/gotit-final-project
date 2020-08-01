@@ -3,21 +3,38 @@ export default (store) => (next) => (action) => {
     return action.promise.then(
       async (result) => {
         if (result.ok) {
+          const successResult = await result.json();
+          console.log('success result:', action.type, successResult);
           store.dispatch({
             type: `${action.type}_SUCCESS`,
-            payload: await result.json(),
+            payload: successResult,
           });
-        } else {
-          store.dispatch({
-            type: `${action.type}_FAILURE`,
-            payload: await result.json(),
-          });
+          next(action);
+          return {
+            success: true,
+            payload: successResult,
+          };
         }
+        const failResult = await result.json();
+        console.log('fail1 result:', action.type, failResult);
+        store.dispatch({
+          type: `${action.type}_FAILURE`,
+          payload: failResult,
+        });
         next(action);
+        return {
+          success: false,
+          payload: failResult,
+        };
       },
-      (err) => {
+      async (err) => {
+        console.log('fail2 result:', action.type, err);
         store.dispatch({ type: `${action.type}_FAILURE`, payload: err });
         next(action);
+        return {
+          success: false,
+          payload: await err,
+        };
       },
     );
   }

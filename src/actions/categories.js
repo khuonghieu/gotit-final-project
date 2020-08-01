@@ -1,6 +1,6 @@
 import * as constants from '../constants/actions';
-import { post } from '../utilities/request';
-import { CREATE_CATEGORY_URL, FETCH_CATEGORY_URL } from '../config/urlconfig';
+import { post, get } from '../utilities/request';
+import { CREATE_CATEGORY_URL, FETCH_CATEGORIES_URL, VIEW_CATEGORY_URL } from '../config/urlconfig';
 
 export const chooseCategory = (categoryId) => ({
   type: constants.CHOOSE_CATEGORY,
@@ -12,7 +12,12 @@ export const createCategory = (name, description) => ({
   promise: post(CREATE_CATEGORY_URL, { name, description }),
 });
 
-export const viewCategories = (offset, limit) => ({
+export const fetchCategories = (offset, limit) => ({
   type: constants.FETCH_CATEGORIES,
-  promise: get(FETCH_CATEGORY_URL(offset, limit)),
+  promise: get(FETCH_CATEGORIES_URL(offset, limit)),
+});
+
+export const viewCategory = (categoryId) => ({
+  type: constants.VIEW_CATEGORY,
+  promise: get(VIEW_CATEGORY_URL(categoryId)),
 });

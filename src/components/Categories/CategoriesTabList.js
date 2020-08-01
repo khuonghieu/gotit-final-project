@@ -1,7 +1,7 @@
 import { Tab } from '@gotitinc/design-system';
-import React, { useState, useEffect } from 'react';
-import { useDispatch, connect } from 'react-redux';
-import { chooseCategory, viewCategories } from '../../actions/categories';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { chooseCategory, fetchCategories } from '../../actions/categories';
 import CurrentCategoryInfo from './CurrentCategoryInfo';
 import CreateCategoryForm from './CreateCategoryForm';
 
@@ -13,25 +13,25 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  onChooseCategory: (category) => dispatch(chooseCategory(category)),
-  onViewCategories: (offset, limit) => dispatch(viewCategories(offset, limit)),
+  chooseCategory: (category) => dispatch(chooseCategory(category)),
+  fetchCategories: (offset, limit) => dispatch(fetchCategories(offset, limit)),
 });
 
 function categoriesTabList({
-  categories, loggedIn, onChooseCategory, onViewCategories,
+  categories, loggedIn, chooseCategory, fetchCategories,
 }) {
   useEffect(() => {
     if (loggedIn) {
-      onViewCategories();
+      fetchCategories(0, 10);
     }
-  }, [loggedIn, onViewCategories, categories.categoriesList]);
+  }, [loggedIn, categories.categoriesList, fetchCategories]);
   return (
     <div>
       <Tab
         current={categories.currentCategory}
-        onSelect={onChooseCategory}
+        onSelect={chooseCategory}
       >
-        {categories.categoriesList ? categories.categoriesList.map((categoryElement) => (<Tab.Item eventKey={categoryElement.id}>{categoryElement.name}</Tab.Item>)) : 'null'}
+        {(categories.categoriesList) ? categories.categoriesList.map((categoryElement) => (<Tab.Item eventKey={categoryElement.id}>{categoryElement.name}</Tab.Item>)) : 'null'}
       </Tab>
       <CurrentCategoryInfo categoryId={categories.currentCategory} />
       <CreateCategoryForm />

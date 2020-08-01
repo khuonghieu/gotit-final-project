@@ -13,10 +13,14 @@ function categories(state = initialState, action) {
         currentCategory: action.categoryId,
       };
     case constants.FETCH_CATEGORIES_SUCCESS:
-      return {
-        currentCategory: null,
-        categoriesList: action.payload.categories,
-      };
+      if (action.payload.categories) {
+        return {
+          currentCategory: null,
+          categoriesList: action.payload.categories,
+        };
+      }
+      return state;
+
     default:
       return state;
   }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { get } from '../../utilities/request';
+import { viewCategory } from '../../actions/categories';
 
 function mapStateToProps(state) {
   return {
@@ -8,27 +8,27 @@ function mapStateToProps(state) {
   };
 }
 
-const mapDispatchToProps = (dispatch) => ({
-
-});
-
 function CurrentCategoryInfo({ categoryId }) {
+  const [categoryInfo, setCategoryInfo] = useState({});
   useEffect(() => {
-
-  }, []);
+    async () => {
+      const result = await viewCategory(categoryId);
+      setCategoryInfo(result.payload);
+    };
+  }, [categoryId]);
 
   return (
     <div>
-      <p>
-        category name:
-        {' '}
-        {categoryInfo.name}
-      </p>
-      <p>
-        category desc:
-        {' '}
-        {categoryInfo.description}
-      </p>
+      {categoryInfo.categories ? (
+        <p>
+          category name:
+          {' '}
+          {categoryInfo.name}
+          category desc:
+          {' '}
+          {categoryInfo.description}
+        </p>
+      ) : 'No category to show'}
     </div>
   );
 }

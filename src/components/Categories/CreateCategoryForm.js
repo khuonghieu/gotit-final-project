@@ -1,32 +1,33 @@
-import { useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { Form, Button } from '@gotitinc/design-system';
-import React from 'react';
+import React, { useState } from 'react';
 import { createCategory } from '../../actions/categories';
 
-function CreateCategoryForm() {
-  const dispatch = useDispatch();
+const mapDispatchToProps = (dispatch) => ({
+  createCategory: (name, description) => dispatch(createCategory(name, description)),
+});
+
+export function CreateCategoryForm({ createCategory }) {
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
 
   function handleCreateCategory(e) {
     e.preventDefault();
-    const name = e.target.elements.name.value;
-    const description = e.target.elements.description.value;
     if (name && description) {
-      dispatch(createCategory(name, description));
+      createCategory(name, description);
     } else {
       alert('Fill all the blanks');
     }
   }
   return (
     <div>
-      <Form onSubmit={handleCreateCategory}>
-        <Form.Label>Category name</Form.Label>
-        <Form.Input type="text" placeholder="Enter category name" name="name" />
-        <Form.Label>Category description</Form.Label>
-        <Form.Input type="text" placeholder="Enter category description" name="description" />
-        <Button>Submit</Button>
-      </Form>
+      <Form.Label>Category name</Form.Label>
+      <Form.Input value={name} onChange={(e) => setName(e.target.value)} type="text" placeholder="Enter category name" name="name" />
+      <Form.Label>Category description</Form.Label>
+      <Form.Input value={description} onChange={(e) => setDescription(e.target.value)} type="text" placeholder="Enter category description" name="description" />
+      <Button onClick={handleCreateCategory}>Submit</Button>
     </div>
   );
 }
 
-export default CreateCategoryForm;
+export default connect(null, mapDispatchToProps)(CreateCategoryForm);
