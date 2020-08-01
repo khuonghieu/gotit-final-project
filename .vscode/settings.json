@@ -1,0 +1,13 @@
+{
+    "editor.tabSize": 2,
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "editor.wordWrap": "on",
+    "emmet.includeLanguages": {
+      "javascript": "javascriptreact"
+    },
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    }
+  }
