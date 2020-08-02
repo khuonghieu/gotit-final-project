@@ -8,22 +8,28 @@ function mapStateToProps(state) {
   };
 }
 
-function CurrentCategoryInfo({ categoryId }) {
+const mapDispatchToProps = (dispatch) => ({
+  viewCategory: (categoryId) => dispatch(viewCategory(categoryId)),
+});
+
+export function CurrentCategoryInfo({ categoryId, viewCategory }) {
   const [categoryInfo, setCategoryInfo] = useState({});
+
   useEffect(() => {
-    async () => {
-      const result = await viewCategory(categoryId);
-      setCategoryInfo(result.payload);
-    };
-  }, [categoryId]);
+    (async () => {
+      const { success, payload } = await viewCategory(categoryId);
+      setCategoryInfo(payload);
+    })();
+  }, [categoryId, viewCategory]);
 
   return (
     <div>
-      {categoryInfo.categories ? (
+      {categoryInfo ? (
         <p>
           category name:
           {' '}
           {categoryInfo.name}
+          <br />
           category desc:
           {' '}
           {categoryInfo.description}
@@ -33,4 +39,4 @@ function CurrentCategoryInfo({ categoryId }) {
   );
 }
 
-export default connect(mapStateToProps, null)(CurrentCategoryInfo);
+export default connect(mapStateToProps, mapDispatchToProps)(CurrentCategoryInfo);

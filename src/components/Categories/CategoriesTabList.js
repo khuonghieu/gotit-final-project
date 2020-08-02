@@ -17,14 +17,14 @@ const mapDispatchToProps = (dispatch) => ({
   fetchCategories: (offset, limit) => dispatch(fetchCategories(offset, limit)),
 });
 
-function categoriesTabList({
+function CategoriesTabList({
   categories, loggedIn, chooseCategory, fetchCategories,
 }) {
   useEffect(() => {
     if (loggedIn) {
       fetchCategories(0, 10);
     }
-  }, [loggedIn, categories.categoriesList, fetchCategories]);
+  }, [fetchCategories, loggedIn]);
   return (
     <div>
       <Tab
@@ -33,10 +33,10 @@ function categoriesTabList({
       >
         {(categories.categoriesList) ? categories.categoriesList.map((categoryElement) => (<Tab.Item eventKey={categoryElement.id}>{categoryElement.name}</Tab.Item>)) : 'null'}
       </Tab>
-      <CurrentCategoryInfo categoryId={categories.currentCategory} />
+      <CurrentCategoryInfo />
       <CreateCategoryForm />
     </div>
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(categoriesTabList);
+export default connect(mapStateToProps, mapDispatchToProps)(CategoriesTabList);
