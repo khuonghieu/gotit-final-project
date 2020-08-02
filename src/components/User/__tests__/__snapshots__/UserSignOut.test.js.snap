@@ -1,3 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`components/User/UserProfile.js should render correctly 1`] = `ReactWrapper {}`;
+exports[`components/User/UserSignOut.js should render correctly 1`] = `ReactWrapper {}`;

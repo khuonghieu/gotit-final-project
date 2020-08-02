@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Header, Button } from '@gotitinc/design-system';
+import { Route } from 'react-router-dom';
 import ModalContainer from './Modals';
 import UserProfile from './User/UserProfile';
 import UserSignOut from './User/UserSignOut';
@@ -38,20 +39,44 @@ export function App({
 
   return (
     <div>
-      <Header fullWidth>
-        <Header.Main>
-          <Header.Left>
-            <UserProfile currentUser={user.currentUser} />
-          </Header.Left>
-          <Header.Right>
-            {!user.loggedIn && <Button onClick={signUpModal}>Sign up modal</Button>}
-            {!user.loggedIn && <Button onClick={signInModal}>Sign in modal</Button>}
-            <div>{user.loggedIn && (<UserSignOut />)}</div>
-          </Header.Right>
-        </Header.Main>
-      </Header>
-      <div>{!user.loggedIn && <ModalContainer modal={modal} />}</div>
-      <div>{user.loggedIn && <CategoriesTabList />}</div>
+      <Route
+        exact
+        path="/"
+        render={() => (
+          <div>
+            <Header fullWidth>
+              <Header.Main>
+                <Header.Left>
+                  <UserProfile user={user} />
+                </Header.Left>
+                <Header.Right>
+                  <Button onClick={signUpModal}>Sign up modal</Button>
+                  <Button onClick={signInModal}>Sign in modal</Button>
+                </Header.Right>
+              </Header.Main>
+            </Header>
+            <div>{!user.loggedIn && <ModalContainer modal={modal} />}</div>
+          </div>
+        )}
+      />
+      <Route
+        path="/catalog"
+        render={() => (
+          <div>
+            <Header fullWidth>
+              <Header.Main>
+                <Header.Left>
+                  <UserProfile user={user} />
+                </Header.Left>
+                <Header.Right>
+                  <div><UserSignOut /></div>
+                </Header.Right>
+              </Header.Main>
+            </Header>
+            <div><CategoriesTabList /></div>
+          </div>
+        )}
+      />
     </div>
 
   );
@@ -60,7 +85,9 @@ export function App({
 App.propTypes = {
   user: PropTypes.object,
   modal: PropTypes.string,
-  currentUser: PropTypes.string,
+  fetchUserInfo: PropTypes.func,
+  signUpModal: PropTypes.func,
+  signInModal: PropTypes.func,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -2,20 +2,26 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Button, Form, Modal } from '@gotitinc/design-system';
+import { withRouter } from 'react-router';
 import { signIn } from '../../actions/userAuth';
 
 const mapDispatchToProps = (dispatch) => ({
   signIn: (username, password) => dispatch(signIn(username, password)),
 });
 
-export function SignInModal({ onClose, signIn }) {
+export function SignInModal({ onClose, signIn, history }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  function handleSignin(e) {
+  async function handleSignin(e) {
     e.preventDefault();
     if (username && password) {
-      signIn(username, password);
+      const { success, payload } = await signIn(username, password);
+      if (!success) {
+        console.log(payload);
+      } else {
+        history.push('/catalog');
+      }
     } else {
       alert('Fill all the blanks');
     }
@@ -42,6 +48,7 @@ export function SignInModal({ onClose, signIn }) {
 SignInModal.propTypes = {
   onClose: PropTypes.func,
   signIn: PropTypes.func,
+  history: PropTypes.object,
 };
 
-export default connect(null, mapDispatchToProps)(SignInModal);
+export default withRouter(connect(null, mapDispatchToProps)(SignInModal));

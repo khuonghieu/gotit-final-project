@@ -1,11 +1,12 @@
 import React from 'react';
 import { shallow, configure, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import { createBrowserHistory } from 'history';
 import { UserSignOut } from '../UserSignOut';
 
 configure({ adapter: new Adapter() });
 
-describe('components/User/UserProfile.js', () => {
+describe('components/User/UserSignOut.js', () => {
   let wrapper;
   let props;
 
@@ -13,6 +14,7 @@ describe('components/User/UserProfile.js', () => {
     props = {
       signOut: jest.fn(),
       signOutModal: jest.fn(),
+      history: createBrowserHistory(),
     };
   });
   const setup = () => {

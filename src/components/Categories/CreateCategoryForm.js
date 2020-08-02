@@ -11,10 +11,13 @@ export function CreateCategoryForm({ createCategory }) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
 
-  function handleCreateCategory(e) {
+  async function handleCreateCategory(e) {
     e.preventDefault();
     if (name && description) {
-      createCategory(name, description);
+      const { success, payload } = await createCategory(name, description);
+      if (!success) {
+        console.log(payload);
+      }
     } else {
       alert('Fill all the blanks');
     }

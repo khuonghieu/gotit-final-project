@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { viewCategory } from '../../actions/categories';
 
@@ -15,9 +15,10 @@ const mapDispatchToProps = (dispatch) => ({
 export function CurrentCategoryInfo({ categoryId, viewCategory }) {
   const [categoryInfo, setCategoryInfo] = useState({});
 
-  useEffect(() => {
+  // Must use React.useEffect, else the unit test wont work
+  React.useEffect(() => {
     (async () => {
-      const { success, payload } = await viewCategory(categoryId);
+      const { payload } = await viewCategory(categoryId);
       setCategoryInfo(payload);
     })();
   }, [categoryId, viewCategory]);

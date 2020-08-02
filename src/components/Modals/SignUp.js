@@ -14,10 +14,13 @@ export function SignUpModal({ onClose, signUp }) {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
 
-  function handleSignup(e) {
+  async function handleSignup(e) {
     e.preventDefault();
     if (email && username && password && name) {
-      signUp(email, username, password, name);
+      const { success, payload } = await signUp(email, username, password, name);
+      if (!success) {
+        console.log(payload);
+      }
     } else {
       alert('fill all the blanks');
     }

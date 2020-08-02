@@ -1,9 +1,9 @@
 import { Tab } from '@gotitinc/design-system';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import { chooseCategory, fetchCategories } from '../../actions/categories';
 import CurrentCategoryInfo from './CurrentCategoryInfo';
-import CreateCategoryForm from './CreateCategoryForm';
 
 function mapStateToProps(state) {
   return {
@@ -17,10 +17,15 @@ const mapDispatchToProps = (dispatch) => ({
   fetchCategories: (offset, limit) => dispatch(fetchCategories(offset, limit)),
 });
 
-function CategoriesTabList({
-  categories, loggedIn, chooseCategory, fetchCategories,
+export function CategoriesTabList({
+  categories, loggedIn, chooseCategory, fetchCategories, history,
 }) {
-  useEffect(() => {
+  function onChooseCategory(category) {
+    chooseCategory(category);
+    history.push(`/catalog/category/${category}`);
+  }
+
+  React.useEffect(() => {
     if (loggedIn) {
       fetchCategories(0, 10);
     }
@@ -29,14 +34,14 @@ function CategoriesTabList({
     <div>
       <Tab
         current={categories.currentCategory}
-        onSelect={chooseCategory}
+        onSelect={onChooseCategory}
       >
-        {(categories.categoriesList) ? categories.categoriesList.map((categoryElement) => (<Tab.Item eventKey={categoryElement.id}>{categoryElement.name}</Tab.Item>)) : 'null'}
+        {(categories.categoriesList) ? categories.categoriesList.map((categoryElement) => (<Tab.Item eventKey={categoryElement.id} key={categoryElement.id}>{categoryElement.name}</Tab.Item>)) : 'null'}
       </Tab>
       <CurrentCategoryInfo />
-      <CreateCategoryForm />
+      {/* <CreateCategoryForm /> */}
     </div>
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CategoriesTabList);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CategoriesTabList));

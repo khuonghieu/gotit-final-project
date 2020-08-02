@@ -1,7 +1,8 @@
 import React from 'react';
 import { shallow, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import UserProfile from '../UserProfile';
+import { createBrowserHistory } from 'history';
+import { UserProfile } from '../UserProfile';
 
 configure({ adapter: new Adapter() });
 
@@ -11,7 +12,8 @@ describe('components/User/UserProfile.js', () => {
 
   beforeEach(() => {
     props = {
-      currentUser: null,
+      user: {},
+      history: createBrowserHistory(),
     };
   });
   const setup = () => {
@@ -32,14 +34,19 @@ describe('components/User/UserProfile.js', () => {
 
   it('should display current user name', () => {
     props = {
-      currentUser: {
-        id: 1,
-        username: 'user',
-        email: 'user@gotitapp.co',
-        name: 'testuser',
-        created: '2015-08-05T08:40:51.620Z',
-        updated: '2018-04-03T08:40:51.620Z',
+      ...props,
+      user: {
+        loggedIn: true,
+        currentUser: {
+          id: 1,
+          username: 'user',
+          email: 'user@gotitapp.co',
+          name: 'testuser',
+          created: '2015-08-05T08:40:51.620Z',
+          updated: '2018-04-03T08:40:51.620Z',
+        },
       },
+
     };
     setup();
     expect(wrapper.text()).toBe('testuser');
