@@ -31,6 +31,11 @@ export function CreateItemForm({ currentCategory, createItem }) {
   }
   return (
     <div>
+      <p>
+        Create item for category id:
+        {' '}
+        {currentCategory}
+      </p>
       <Form.Label>Item name</Form.Label>
       <Form.Input value={name} onChange={(e) => setName(e.target.value)} type="text" placeholder="Enter item name" name="name" />
       <Form.Label>Item description</Form.Label>

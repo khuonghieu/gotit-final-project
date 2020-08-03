@@ -21,11 +21,16 @@ describe('components/Categories/CategoriesTabList.js', () => {
       history: createBrowserHistory(),
     };
   });
+
+  const update = () => {
+    tabItems = wrapper.find('Tab-item');
+  };
+
   const setup = () => {
     wrapper = shallow(
       <CategoriesTabList {...props} />,
     );
-    tabItems = wrapper.find('.Tab-item');
+    update();
   };
   it('should render correctly', () => {
     setup();
