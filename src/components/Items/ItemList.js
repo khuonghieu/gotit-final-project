@@ -59,8 +59,8 @@ export function ItemList({
             <Button
               variant="primary"
               size="small"
-              onClick={() => {
-                // chooseItem(currentCategory, itemElement.id);
+              onClick={async () => {
+                await chooseItem(currentCategory, itemElement.id);
                 editItemModal();
               }}
             >
