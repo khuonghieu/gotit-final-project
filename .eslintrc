@@ -28,5 +28,6 @@
   "globals": {
     "localStorage": true,
     "fetch": true,
+    "jest": true,
   }
 }

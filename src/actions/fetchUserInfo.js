@@ -1,6 +1,6 @@
 import * as constants from '../constants/actions';
 import { get } from '../utilities/request';
-import { CONFIG } from '../config/urlconfig';
+import CONFIG from '../config/local';
 
 const fetchUserInfo = () => ({
   type: constants.FETCH_USER_INFO,
