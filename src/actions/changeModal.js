@@ -15,3 +15,11 @@ export const signOutModal = {
 export const closeModal = {
   type: constants.CLOSE_MODAL,
 };
+
+export const chooseItemModal = {
+  type: constants.CHOOSE_ITEM_MODAL,
+};
+
+export const editItemModal = {
+  type: constants.EDIT_ITEM_MODAL,
+};

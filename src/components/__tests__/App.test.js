@@ -8,17 +8,21 @@ configure({ adapter: new Adapter() });
 describe('components/App.js', () => {
   let wrapper;
   let props;
-
+  let useEffect;
   beforeEach(() => {
+    useEffect = jest.spyOn(React, 'useEffect');
     props = {
       user: {
         loggedIn: false,
         currentUser: null,
       },
       modal: null,
-      onFetchUserInfo: jest.fn(),
+      fetchUserInfo: jest.fn(),
+      signInModal: jest.fn(),
+      signUpModal: jest.fn(),
     };
   });
+
   const setup = () => {
     wrapper = shallow(
       <App {...props} />,
@@ -29,9 +33,16 @@ describe('components/App.js', () => {
     setup();
     expect(wrapper).toMatchSnapshot();
   });
-  it('should not fetch user info when not logged in ', () => {
+  it('should fetch user info when logged in ', () => {
+    useEffect.mockImplementation((f) => f());
+    props = {
+      ...props,
+      user: {
+        loggedIn: true,
+        currentUser: null,
+      },
+    };
     setup();
-    jest.spyOn(React, 'useEffect').mockImplementation((f) => f());
-    expect(props.onFetchUserInfo).not.toHaveBeenCalled();
+    expect(props.fetchUserInfo).toHaveBeenCalled();
   });
 });

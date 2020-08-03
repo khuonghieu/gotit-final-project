@@ -1,7 +1,8 @@
-import React from 'react';
+import React, * as fromReact from 'react';
 import { shallow, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { createBrowserHistory } from 'history';
+import { Tab } from '@gotitinc/design-system';
 import { CategoriesTabList } from '../CategoriesTabList';
 
 configure({ adapter: new Adapter() });
@@ -10,9 +11,9 @@ describe('components/Categories/CategoriesTabList.js', () => {
   let wrapper;
   let props;
   let tabItems;
-
+  let useEffect;
   beforeEach(() => {
-    jest.spyOn(React, 'useEffect').mockImplementation((f) => f());
+    useEffect = jest.spyOn(fromReact, 'useEffect');
     props = {
       categories: { currentCategory: null, categoriesList: [] },
       loggedIn: false,
@@ -23,7 +24,7 @@ describe('components/Categories/CategoriesTabList.js', () => {
   });
 
   const update = () => {
-    tabItems = wrapper.find('Tab-item');
+    tabItems = wrapper.find(Tab.Item);
   };
 
   const setup = () => {
@@ -37,6 +38,7 @@ describe('components/Categories/CategoriesTabList.js', () => {
     expect(wrapper).toMatchSnapshot();
   });
   it('should call fetchCategories when loggedIn is true', () => {
+    useEffect.mockImplementation((f) => f());
     props = {
       ...props,
       loggedIn: true,

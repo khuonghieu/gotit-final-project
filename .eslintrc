@@ -27,5 +27,6 @@
   "plugins": ["react-hooks"],
   "globals": {
     "localStorage": true,
+    "fetch": true,
   }
 }

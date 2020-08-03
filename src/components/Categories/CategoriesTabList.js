@@ -1,5 +1,5 @@
 import { Tab } from '@gotitinc/design-system';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { chooseCategory, fetchCategories } from '../../actions/categories';
@@ -27,7 +27,7 @@ export function CategoriesTabList({
     history.push(`/catalog/category/${category}`);
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (loggedIn) {
       fetchCategories(0, 10);
     }
@@ -38,10 +38,13 @@ export function CategoriesTabList({
         current={categories.currentCategory}
         onSelect={onChooseCategory}
       >
-        {(categories.categoriesList) ? categories.categoriesList.map((categoryElement) => (<Tab.Item eventKey={categoryElement.id} key={categoryElement.id}>{categoryElement.name}</Tab.Item>)) : 'null'}
+        {(categories.categoriesList) ? categories.categoriesList.map((categoryElement) => (<Tab.Item eventKey={categoryElement.id} key={categoryElement.id}>{categoryElement.name}</Tab.Item>)) : null}
       </Tab>
+      <hr />
       <CurrentCategoryInfo />
+      <hr />
       <CreateItemForm />
+      <hr />
       <ItemList />
       {/* <CreateCategoryForm /> */}
     </div>

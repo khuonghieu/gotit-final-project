@@ -1,7 +1,8 @@
 import { Card, Button } from '@gotitinc/design-system';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { viewItems } from '../../actions/items';
+import { viewItems, chooseItem } from '../../actions/items';
+import { chooseItemModal, editItemModal } from '../../actions/changeModal';
 
 function mapStateToProps(state) {
   return {
@@ -11,9 +12,14 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => ({
   viewItems: (categoryId, offset, limit) => dispatch(viewItems(categoryId, offset, limit)),
+  chooseItem: (categoryId, itemId) => dispatch(chooseItem(categoryId, itemId)),
+  chooseItemModal: () => dispatch(chooseItemModal),
+  editItemModal: () => dispatch(editItemModal),
 });
 
-export function ItemList({ currentCategory, viewItems }) {
+export function ItemList({
+  currentCategory, viewItems, chooseItem, chooseItemModal, editItemModal,
+}) {
   const [itemList, setItemList] = useState([]);
 
   useEffect(() => {
@@ -39,20 +45,29 @@ export function ItemList({ currentCategory, viewItems }) {
               {' '}
               {itemElement.name}
             </Card.Title>
-            <Button variant="secondary" size="small">Action</Button>
+            <Button
+              variant="secondary"
+              size="small"
+              onClick={() => {
+                chooseItem(currentCategory, itemElement.id);
+                chooseItemModal();
+              }}
+            >
+              View item
+
+            </Button>
+            <Button
+              variant="primary"
+              size="small"
+              onClick={() => {
+                // chooseItem(currentCategory, itemElement.id);
+                editItemModal();
+              }}
+            >
+              Edit item
+
+            </Button>
           </Card.Header>
-          <Card.Body>
-            <p>
-              Description:
-              {' '}
-              {itemElement.description}
-            </p>
-            <p>
-              Item price
-              {' '}
-              {itemElement.price}
-            </p>
-          </Card.Body>
         </Card>
       ))
         : 'No item to show'}

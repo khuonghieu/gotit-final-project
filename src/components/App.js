@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Header, Button } from '@gotitinc/design-system';
+import { Header } from '@gotitinc/design-system';
 import { Route } from 'react-router-dom';
 import ModalContainer from './Modals';
 import UserProfile from './User/UserProfile';
@@ -10,6 +10,8 @@ import { getToken } from '../utilities/localStorage';
 import fetchUserInfo from '../actions/fetchUserInfo';
 import { signInModal, signUpModal } from '../actions/changeModal';
 import CategoriesTabList from './Categories/CategoriesTabList';
+import LandingPage from './LandingPage';
+import Catalog from './Catalog';
 
 function mapStateToProps(state) {
   return {
@@ -27,55 +29,23 @@ const mapDispatchToProps = (dispatch) => ({
 export function App({
   user, modal, fetchUserInfo, signUpModal, signInModal,
 }) {
-  const token = getToken();
-
-  // const [result, setResult] = useState({});
-
-  useEffect(() => {
+  React.useEffect(() => {
     if (user.loggedIn) {
       fetchUserInfo();
     }
-  }, [fetchUserInfo, token, user.loggedIn]);
+  }, [fetchUserInfo, getToken(), user.loggedIn]);
 
   return (
     <div>
+      <div><ModalContainer modal={modal} /></div>
       <Route
         exact
         path="/"
-        render={() => (
-          <div>
-            <Header fullWidth>
-              <Header.Main>
-                <Header.Left>
-                  <UserProfile user={user} />
-                </Header.Left>
-                <Header.Right>
-                  <Button onClick={signUpModal}>Sign up modal</Button>
-                  <Button onClick={signInModal}>Sign in modal</Button>
-                </Header.Right>
-              </Header.Main>
-            </Header>
-            <div>{!user.loggedIn && <ModalContainer modal={modal} />}</div>
-          </div>
-        )}
+        component={LandingPage}
       />
       <Route
         path="/catalog"
-        render={() => (
-          <div>
-            <Header fullWidth>
-              <Header.Main>
-                <Header.Left>
-                  <UserProfile user={user} />
-                </Header.Left>
-                <Header.Right>
-                  <div><UserSignOut /></div>
-                </Header.Right>
-              </Header.Main>
-            </Header>
-            <div><CategoriesTabList /></div>
-          </div>
-        )}
+        component={Catalog}
       />
     </div>
 

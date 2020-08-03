@@ -5,6 +5,8 @@ import SignInModal from './SignIn';
 import SignUpModal from './SignUp';
 import { closeModal } from '../../actions/changeModal';
 import * as constants from '../../constants/actions';
+import ViewItem from './ViewItem';
+import EditItem from './EditItem';
 
 function mapStateToProps(state) {
   return {
@@ -19,6 +21,8 @@ const mapDispatchToProps = (dispatch) => ({
 const ModalMap = new Map();
 ModalMap.set(constants.SIGN_IN_MODAL, SignInModal);
 ModalMap.set(constants.SIGN_UP_MODAL, SignUpModal);
+ModalMap.set(constants.CHOOSE_ITEM_MODAL, ViewItem);
+ModalMap.set(constants.EDIT_ITEM_MODAL, EditItem);
 
 export function ModalContainer({ modal, closeModal }) {
   const ModalToRender = ModalMap.get(modal);

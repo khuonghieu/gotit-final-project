@@ -10,6 +10,10 @@ function modal(state = null, action) {
       return null;
     case constants.CLOSE_MODAL:
       return null;
+    case constants.CHOOSE_ITEM_MODAL:
+      return constants.CHOOSE_ITEM_MODAL;
+    case constants.EDIT_ITEM_MODAL:
+      return constants.EDIT_ITEM_MODAL;
     default:
       return state;
   }

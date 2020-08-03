@@ -44,7 +44,7 @@ export function SignUpModal({ onClose, signUp }) {
           <Form.Input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Enter password" name="password" />
           <Form.Label>Name</Form.Label>
           <Form.Input value={name} onChange={(e) => setName(e.target.value)} type="text" placeholder="Enter your name" name="name" />
-          <Button onClick={handleSignup}>Submit</Button>
+          <Button onClick={handleSignup}>Sign Up</Button>
         </Modal.Body>
       </Modal>
     </div>

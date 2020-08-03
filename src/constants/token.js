@@ -1,2 +1,2 @@
-export const USER_TOKEN = 'USER_TOKEN';
-export const TOKEN_PREFIX = 'GOTIT_';
+export const USER_TOKEN = 'user_token';
+export const TOKEN_PREFIX = 'gotit_';

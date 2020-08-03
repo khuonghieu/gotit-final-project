@@ -42,7 +42,7 @@ export function CreateItemForm({ currentCategory, createItem }) {
       <Form.Input value={description} onChange={(e) => setDescription(e.target.value)} type="text" placeholder="Enter item description" name="description" />
       <Form.Label>Item price</Form.Label>
       <Form.Input value={price} onChange={(e) => setPrice(e.target.value)} type="number" placeholder="Enter item price" name="price" />
-      <Button onClick={handleCreateItem}>Submit</Button>
+      <Button onClick={handleCreateItem}>Create Item</Button>
     </div>
   );
 }

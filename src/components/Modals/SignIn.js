@@ -20,6 +20,7 @@ export function SignInModal({ onClose, signIn, history }) {
       if (!success) {
         console.log(payload);
       } else {
+        onClose();
         history.push('/catalog');
       }
     } else {
@@ -39,7 +40,7 @@ export function SignInModal({ onClose, signIn, history }) {
         <Form.Input value={username} onChange={(e) => setUsername(e.target.value)} type="text" placeholder="Enter username" name="username" />
         <Form.Label>Password</Form.Label>
         <Form.Input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Enter password" name="password" />
-        <Button onClick={handleSignin} id="sign-in-form-button">Submit</Button>
+        <Button onClick={handleSignin} id="sign-in-form-button">Sign In</Button>
       </Modal.Body>
     </Modal>
   );
