@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { chooseCategory, fetchCategories } from '../../actions/categories';
 import CurrentCategoryInfo from './CurrentCategoryInfo';
+import CreateItemForm from '../Items/CreateItemForm';
+import ItemList from '../Items/ItemList';
 
 function mapStateToProps(state) {
   return {
@@ -39,6 +41,8 @@ export function CategoriesTabList({
         {(categories.categoriesList) ? categories.categoriesList.map((categoryElement) => (<Tab.Item eventKey={categoryElement.id} key={categoryElement.id}>{categoryElement.name}</Tab.Item>)) : 'null'}
       </Tab>
       <CurrentCategoryInfo />
+      <CreateItemForm />
+      <ItemList />
       {/* <CreateCategoryForm /> */}
     </div>
   );
