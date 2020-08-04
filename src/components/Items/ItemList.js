@@ -1,7 +1,7 @@
 import { Card, Button } from '@gotitinc/design-system';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { viewItems, chooseItem } from '../../actions/items';
+import { viewItems, chooseItem, deteleItem } from '../../actions/items';
 import { chooseItemModal, editItemModal } from '../../actions/changeModal';
 
 function mapStateToProps(state) {
@@ -15,10 +15,11 @@ const mapDispatchToProps = (dispatch) => ({
   chooseItem: (categoryId, itemId) => dispatch(chooseItem(categoryId, itemId)),
   chooseItemModal: () => dispatch(chooseItemModal),
   editItemModal: () => dispatch(editItemModal),
+  deleteItem: (categoryId, itemId) => dispatch(deteleItem(categoryId, itemId)),
 });
 
 export function ItemList({
-  currentCategory, viewItems, chooseItem, chooseItemModal, editItemModal,
+  currentCategory, viewItems, chooseItem, chooseItemModal, editItemModal, deleteItem,
 }) {
   const [itemList, setItemList] = useState([]);
 
@@ -33,7 +34,7 @@ export function ItemList({
         }
       }
     })();
-  }, [currentCategory, viewItems]);
+  }, [currentCategory, editItemModal, viewItems]);
 
   return (
     <div>
@@ -65,6 +66,16 @@ export function ItemList({
               }}
             >
               Edit item
+
+            </Button>
+            <Button
+              variant="negative"
+              size="small"
+              onClick={async () => {
+                await deleteItem(currentCategory, itemElement.id);
+              }}
+            >
+              Delete item
 
             </Button>
           </Card.Header>

@@ -1,5 +1,7 @@
 import * as constants from '../constants/actions';
-import { post, get, put } from '../utilities/request';
+import {
+  post, get, put, deleteRequest,
+} from '../utilities/request';
 import CONFIG from '../config/local';
 
 export const createItem = (categoryId, name, description, price) => ({
@@ -20,4 +22,9 @@ export const chooseItem = (categoryId, itemId) => ({
 export const editItem = (categoryId, itemId, name, description, price) => ({
   type: constants.EDIT_ITEM_MODAL,
   promise: put(`${CONFIG.URL}/categories/${categoryId}/items/${itemId}`, { name, description, price }),
+});
+
+export const deteleItem = (categoryId, itemId) => ({
+  type: constants.DELETE_ITEM,
+  promise: deleteRequest(`${CONFIG.URL}/categories/${categoryId}/items/${itemId}`),
 });
