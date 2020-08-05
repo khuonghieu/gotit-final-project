@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { Form, Button } from '@gotitinc/design-system';
+import { Form, Button, Message } from '@gotitinc/design-system';
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { createItem } from '../../actions/items';
@@ -19,6 +19,8 @@ export function CreateItemForm({ currentCategory, createItem, refreshItemList })
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState(0.0);
 
+  const [errorMessage, setErrorMessage] = useState('');
+
   useEffect(() => {
     setName('');
     setDescription('');
@@ -29,16 +31,28 @@ export function CreateItemForm({ currentCategory, createItem, refreshItemList })
     e.preventDefault();
     if (currentCategory && name && description && price) {
       const { success, payload } = await createItem(currentCategory, name, description, price);
-      if (!success) {
-        console.log(payload);
-      }
       refreshItemList();
+      if (!success) {
+        setErrorMessage(JSON.stringify(payload));
+      }
     } else {
       alert('Fill all the blanks');
     }
   }
   return (
     <div>
+      {errorMessage ? (
+        <Message type="system" variant="negative">
+          <Message.Container>
+            <Message.Title>
+              Sign in failed
+            </Message.Title>
+            <Message.Content>
+              {errorMessage}
+            </Message.Content>
+          </Message.Container>
+        </Message>
+      ) : null}
       <p>
         <b>Create item for this category:</b>
       </p>
@@ -54,7 +68,7 @@ export function CreateItemForm({ currentCategory, createItem, refreshItemList })
 }
 
 CreateItemForm.propTypes = {
-  currentCategory: PropTypes.string,
+  currentCategory: PropTypes.number,
   createItem: PropTypes.func,
   refreshItemList: PropTypes.func,
 };

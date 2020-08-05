@@ -1,4 +1,4 @@
-import { Card, Button } from '@gotitinc/design-system';
+import { Card, Button, EmptyState } from '@gotitinc/design-system';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -49,7 +49,7 @@ export function ItemList({
     <div>
       <CreateItemForm refreshItemList={refreshItemList} />
       <hr />
-      {itemList ? itemList.map((itemElement) => (
+      {itemList.length > 0 ? itemList.map((itemElement) => (
         <Card key={itemElement.id}>
           <Card.Header>
             <Card.Title>
@@ -90,14 +90,25 @@ export function ItemList({
           </Card.Header>
         </Card>
       ))
-        : 'No item to show'}
+        : (
+          <div style={{ maxWidth: 300 }}>
+            <EmptyState name="searchResult">
+              <EmptyState.Heading>
+                Empty search results
+              </EmptyState.Heading>
+              <EmptyState.Description>
+                No item found.
+              </EmptyState.Description>
+            </EmptyState>
+          </div>
+        )}
     </div>
   );
 }
 
 ItemList.propTypes = {
   editComplete: PropTypes.bool,
-  currentCategory: PropTypes.string,
+  currentCategory: PropTypes.number,
   viewItems: PropTypes.func,
   chooseItem: PropTypes.func,
   chooseItemModal: PropTypes.func,

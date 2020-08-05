@@ -44,7 +44,7 @@ export function CurrentCategoryInfo({ categoryId, viewCategory }) {
 }
 
 CurrentCategoryInfo.propTypes = {
-  categoryId: PropTypes.string,
+  categoryId: PropTypes.number,
   viewCategory: PropTypes.func,
 };
 

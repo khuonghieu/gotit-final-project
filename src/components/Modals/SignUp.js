@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Button, Form, Modal } from '@gotitinc/design-system';
+import {
+  Button, Form, Modal, Message,
+} from '@gotitinc/design-system';
 import { signUp } from '../../actions/userAuth';
 
 const mapDispatchToProps = (dispatch) => ({
@@ -14,12 +16,14 @@ export function SignUpModal({ onClose, signUp }) {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
 
+  const [errorMessage, setErrorMessage] = useState();
+
   async function handleSignup(e) {
     e.preventDefault();
     if (email && username && password && name) {
       const { success, payload } = await signUp(email, username, password, name);
       if (!success) {
-        console.log(payload);
+        setErrorMessage(JSON.stringify(payload.message));
       }
     } else {
       alert('fill all the blanks');
@@ -28,6 +32,18 @@ export function SignUpModal({ onClose, signUp }) {
 
   return (
     <div>
+      {errorMessage ? (
+        <Message type="system" variant="negative">
+          <Message.Container>
+            <Message.Title>
+              Sign up failed
+            </Message.Title>
+            <Message.Content>
+              {errorMessage}
+            </Message.Content>
+          </Message.Container>
+        </Message>
+      ) : null}
       <Modal relative centered size="small">
         <Modal.Header closeButton onClick={onClose}>
           <Modal.Title>Sign Up</Modal.Title>

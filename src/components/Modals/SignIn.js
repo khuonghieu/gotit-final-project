@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Button, Form, Modal } from '@gotitinc/design-system';
+import {
+  Button, Form, Modal, Message,
+} from '@gotitinc/design-system';
 import { withRouter } from 'react-router';
 import { signIn } from '../../actions/userAuth';
 
@@ -13,12 +15,14 @@ export function SignInModal({ onClose, signIn, history }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  const [errorMessage, setErrorMessage] = useState('');
+
   async function handleSignin(e) {
     e.preventDefault();
     if (username && password) {
       const { success, payload } = await signIn(username, password);
       if (!success) {
-        console.log(payload);
+        setErrorMessage(payload.message);
       } else {
         onClose();
         history.push('/catalog');
@@ -28,21 +32,35 @@ export function SignInModal({ onClose, signIn, history }) {
     }
   }
   return (
-    <Modal size="small" relative centered onHide={onClose}>
-      <Modal.Header closeButton onClick={onClose}>
-        <Modal.Title>Sign In</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <div className="u-textCenter">
-          <img src="holder.js/100px90?text=Image" className="u-maxWidthFull u-marginBottomExtraSmall" alt="" />
-        </div>
-        <Form.Label>Username</Form.Label>
-        <Form.Input value={username} onChange={(e) => setUsername(e.target.value)} type="text" placeholder="Enter username" name="username" />
-        <Form.Label>Password</Form.Label>
-        <Form.Input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Enter password" name="password" />
-        <Button onClick={handleSignin} id="sign-in-form-button">Sign In</Button>
-      </Modal.Body>
-    </Modal>
+    <div>
+      {errorMessage ? (
+        <Message type="system" variant="negative">
+          <Message.Container>
+            <Message.Title>
+              Sign in failed
+            </Message.Title>
+            <Message.Content>
+              {errorMessage}
+            </Message.Content>
+          </Message.Container>
+        </Message>
+      ) : null}
+      <Modal size="small" relative centered onHide={onClose}>
+        <Modal.Header closeButton onClick={onClose}>
+          <Modal.Title>Sign In</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="u-textCenter">
+            <img src="holder.js/100px90?text=Image" className="u-maxWidthFull u-marginBottomExtraSmall" alt="" />
+          </div>
+          <Form.Label>Username</Form.Label>
+          <Form.Input value={username} onChange={(e) => setUsername(e.target.value)} type="text" placeholder="Enter username" name="username" />
+          <Form.Label>Password</Form.Label>
+          <Form.Input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Enter password" name="password" />
+          <Button onClick={handleSignin} id="sign-in-form-button">Sign In</Button>
+        </Modal.Body>
+      </Modal>
+    </div>
   );
 }
 
