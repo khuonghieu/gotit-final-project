@@ -2,7 +2,14 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Badge } from '@gotitinc/design-system';
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { getToken } from '../../utilities/localStorage';
+
+function mapStateToProps(state) {
+  return {
+    user: state.user,
+  };
+}
 
 export function UserProfile({ user, history }) {
   useEffect(() => {
@@ -24,4 +31,4 @@ UserProfile.propTypes = {
   currentUser: PropTypes.object,
 };
 
-export default withRouter(UserProfile);
+export default withRouter(connect(mapStateToProps, null)(UserProfile));

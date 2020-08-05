@@ -5,19 +5,13 @@ import UserProfile from './User/UserProfile';
 import UserSignOut from './User/UserSignOut';
 import CategoriesTabList from './Categories/CategoriesTabList';
 
-function mapStateToProps(state) {
-  return {
-    user: state.user,
-  };
-}
-
-export function Catalog({ user }) {
+export function Catalog() {
   return (
     <div>
       <Header fullWidth>
         <Header.Main>
           <Header.Left>
-            <UserProfile user={user} />
+            <UserProfile />
           </Header.Left>
           <Header.Right>
             <div><UserSignOut /></div>
@@ -30,4 +24,4 @@ export function Catalog({ user }) {
   );
 }
 
-export default connect(mapStateToProps, null)(Catalog);
+export default Catalog;
