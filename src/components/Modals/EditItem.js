@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Button, Form, Modal } from '@gotitinc/design-system';
+import PropTypes from 'prop-types';
 import { editItem } from '../../actions/items';
 
 function mapStateToProps(state) {
@@ -27,6 +28,8 @@ export function EditItem({
       const { success, payload } = await editItem(categoryId, item.id, name, description, price);
       if (!success) {
         console.log(payload);
+      } else {
+        onClose();
       }
     } else {
       alert('fill all the blanks');
@@ -53,5 +56,12 @@ export function EditItem({
     </Modal>
   );
 }
+
+EditItem.propTypes = {
+  onClose: PropTypes.func,
+  item: PropTypes.object,
+  editItem: PropTypes.func,
+  categoryId: PropTypes.number,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditItem);

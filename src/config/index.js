@@ -1,5 +1,13 @@
-import { localConfigs } from './local';
+import localConfigs from './local';
+import devConfigs from './dev';
+import prodConfigs from './prod';
 
-const configs = localConfigs;
+let configs = localConfigs;
 
-export default configs;
+if (process.env.REACT_APP_ENV === 'prod') {
+  configs = prodConfigs;
+} else if (process.env.REACT_APP_ENV === 'dev') {
+  configs = devConfigs;
+}
+
+export default ({ ...configs });

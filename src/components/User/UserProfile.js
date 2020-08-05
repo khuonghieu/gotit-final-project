@@ -28,7 +28,8 @@ export function UserProfile({ user, history }) {
 }
 
 UserProfile.propTypes = {
-  currentUser: PropTypes.object,
+  user: PropTypes.object,
+  history: PropTypes.object,
 };
 
 export default withRouter(connect(mapStateToProps, null)(UserProfile));

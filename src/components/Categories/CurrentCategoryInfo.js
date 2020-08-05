@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { viewCategory } from '../../actions/categories';
 
 function mapStateToProps(state) {
@@ -27,11 +28,13 @@ export function CurrentCategoryInfo({ categoryId, viewCategory }) {
     <div>
       {categoryInfo ? (
         <p>
-          category name:
+          <b>Category info</b>
+          <br />
+          Category name:
           {' '}
           {categoryInfo.name}
           <br />
-          category desc:
+          Category description:
           {' '}
           {categoryInfo.description}
         </p>
@@ -39,5 +42,10 @@ export function CurrentCategoryInfo({ categoryId, viewCategory }) {
     </div>
   );
 }
+
+CurrentCategoryInfo.propTypes = {
+  categoryId: PropTypes.string,
+  viewCategory: PropTypes.func,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(CurrentCategoryInfo);

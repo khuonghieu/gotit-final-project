@@ -2,9 +2,9 @@ import { Tab } from '@gotitinc/design-system';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import PropTypes from 'prop-types';
 import { chooseCategory, fetchCategories } from '../../actions/categories';
 import CurrentCategoryInfo from './CurrentCategoryInfo';
-import CreateItemForm from '../Items/CreateItemForm';
 import ItemList from '../Items/ItemList';
 
 function mapStateToProps(state) {
@@ -43,12 +43,18 @@ export function CategoriesTabList({
       <hr />
       <CurrentCategoryInfo />
       <hr />
-      <CreateItemForm />
-      <hr />
       <ItemList />
       {/* <CreateCategoryForm /> */}
     </div>
   );
 }
+
+CategoriesTabList.propTypes = {
+  categories: PropTypes.object,
+  loggedIn: PropTypes.bool,
+  chooseCategory: PropTypes.func,
+  fetchCategories: PropTypes.func,
+  history: PropTypes.object,
+};
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CategoriesTabList));

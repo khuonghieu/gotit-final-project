@@ -1,5 +1,5 @@
-export const CONFIG = {
+const localConfigs = {
   URL: 'http://localhost:5000',
 };
 
-export default CONFIG;
+export default localConfigs;

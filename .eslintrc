@@ -29,5 +29,6 @@
     "localStorage": true,
     "fetch": true,
     "jest": true,
+    "alert": true,
   }
 }

@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { Form, Button } from '@gotitinc/design-system';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { createItem } from '../../actions/items';
 
 function mapStateToProps(state) {
@@ -13,10 +14,16 @@ const mapDispatchToProps = (dispatch) => ({
   createItem: (categoryId, name, description, price) => dispatch(createItem(categoryId, name, description, price)),
 });
 
-export function CreateItemForm({ currentCategory, createItem }) {
+export function CreateItemForm({ currentCategory, createItem, refreshItemList }) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState(0.0);
+
+  useEffect(() => {
+    setName('');
+    setDescription('');
+    setPrice(0);
+  }, [currentCategory]);
 
   async function handleCreateItem(e) {
     e.preventDefault();
@@ -25,6 +32,7 @@ export function CreateItemForm({ currentCategory, createItem }) {
       if (!success) {
         console.log(payload);
       }
+      refreshItemList();
     } else {
       alert('Fill all the blanks');
     }
@@ -32,9 +40,7 @@ export function CreateItemForm({ currentCategory, createItem }) {
   return (
     <div>
       <p>
-        Create item for category id:
-        {' '}
-        {currentCategory}
+        <b>Create item for this category:</b>
       </p>
       <Form.Label>Item name</Form.Label>
       <Form.Input value={name} onChange={(e) => setName(e.target.value)} type="text" placeholder="Enter item name" name="name" />
@@ -46,5 +52,11 @@ export function CreateItemForm({ currentCategory, createItem }) {
     </div>
   );
 }
+
+CreateItemForm.propTypes = {
+  currentCategory: PropTypes.string,
+  createItem: PropTypes.func,
+  refreshItemList: PropTypes.func,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateItemForm);

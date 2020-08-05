@@ -1,6 +1,6 @@
 import * as constants from '../constants/actions';
 import { post } from '../utilities/request';
-import CONFIG from '../config/local';
+import CONFIG from '../config';
 
 export const signIn = (username, password) => ({
   type: constants.SIGN_IN,

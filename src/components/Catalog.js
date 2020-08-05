@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Header } from '@gotitinc/design-system';
 import UserProfile from './User/UserProfile';
 import UserSignOut from './User/UserSignOut';
@@ -11,7 +10,9 @@ export function Catalog() {
       <Header fullWidth>
         <Header.Main>
           <Header.Left>
+            {/* <Link to="/profile"> */}
             <UserProfile />
+            {/* </Link> */}
           </Header.Left>
           <Header.Right>
             <div><UserSignOut /></div>

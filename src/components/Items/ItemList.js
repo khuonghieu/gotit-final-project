@@ -1,12 +1,16 @@
 import { Card, Button } from '@gotitinc/design-system';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { viewItems, chooseItem, deteleItem } from '../../actions/items';
 import { chooseItemModal, editItemModal } from '../../actions/changeModal';
+import CreateItemForm from './CreateItemForm';
+import * as constants from '../../constants/actions';
 
 function mapStateToProps(state) {
   return {
     currentCategory: state.categories.currentCategory,
+    editComplete: state.modal === constants.EDIT_ITEM_MODAL,
   };
 }
 
@@ -19,9 +23,14 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export function ItemList({
-  currentCategory, viewItems, chooseItem, chooseItemModal, editItemModal, deleteItem,
+  editComplete, currentCategory, viewItems, chooseItem, chooseItemModal, editItemModal, deleteItem,
 }) {
   const [itemList, setItemList] = useState([]);
+  const [refresh, setRefresh] = useState(false);
+
+  function refreshItemList() {
+    setRefresh(!refresh);
+  }
 
   useEffect(() => {
     (async () => {
@@ -34,12 +43,14 @@ export function ItemList({
         }
       }
     })();
-  }, [currentCategory, editItemModal, viewItems]);
+  }, [currentCategory, viewItems, refresh, editComplete]);
 
   return (
     <div>
+      <CreateItemForm refreshItemList={refreshItemList} />
+      <hr />
       {itemList ? itemList.map((itemElement) => (
-        <Card>
+        <Card key={itemElement.id}>
           <Card.Header>
             <Card.Title>
               Item name:
@@ -55,7 +66,6 @@ export function ItemList({
               }}
             >
               View item
-
             </Button>
             <Button
               variant="primary"
@@ -66,17 +76,16 @@ export function ItemList({
               }}
             >
               Edit item
-
             </Button>
             <Button
               variant="negative"
               size="small"
               onClick={async () => {
                 await deleteItem(currentCategory, itemElement.id);
+                refreshItemList();
               }}
             >
               Delete item
-
             </Button>
           </Card.Header>
         </Card>
@@ -85,5 +94,15 @@ export function ItemList({
     </div>
   );
 }
+
+ItemList.propTypes = {
+  editComplete: PropTypes.bool,
+  currentCategory: PropTypes.string,
+  viewItems: PropTypes.func,
+  chooseItem: PropTypes.func,
+  chooseItemModal: PropTypes.func,
+  editItemModal: PropTypes.func,
+  deleteItem: PropTypes.func,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ItemList);

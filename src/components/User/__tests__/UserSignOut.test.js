@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow, configure, mount } from 'enzyme';
+import { shallow, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { createBrowserHistory } from 'history';
 import { UserSignOut } from '../UserSignOut';
@@ -18,7 +18,7 @@ describe('components/User/UserSignOut.js', () => {
     };
   });
   const setup = () => {
-    wrapper = mount(
+    wrapper = shallow(
       <UserSignOut {...props} />,
     );
   };

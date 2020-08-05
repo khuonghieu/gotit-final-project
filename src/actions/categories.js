@@ -1,6 +1,6 @@
 import * as constants from '../constants/actions';
 import { post, get } from '../utilities/request';
-import CONFIG from '../config/local';
+import CONFIG from '../config';
 
 export const chooseCategory = (categoryId) => ({
   type: constants.CHOOSE_CATEGORY,

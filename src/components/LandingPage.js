@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Header, Button } from '@gotitinc/design-system';
+import PropTypes from 'prop-types';
 import UserProfile from './User/UserProfile';
 import { signInModal, signUpModal } from '../actions/changeModal';
 
@@ -32,5 +33,11 @@ export function LandingPage({ user, signUpModal, signInModal }) {
     </div>
   );
 }
+
+LandingPage.propTypes = {
+  user: PropTypes.object,
+  signUpModal: PropTypes.func,
+  signInModal: PropTypes.func,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(LandingPage);

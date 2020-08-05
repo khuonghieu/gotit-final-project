@@ -2,7 +2,7 @@ import * as constants from '../constants/actions';
 import {
   post, get, put, deleteRequest,
 } from '../utilities/request';
-import CONFIG from '../config/local';
+import CONFIG from '../config';
 
 export const createItem = (categoryId, name, description, price) => ({
   type: constants.CREATE_ITEM,

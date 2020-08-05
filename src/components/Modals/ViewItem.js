@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Modal } from '@gotitinc/design-system';
+import PropTypes from 'prop-types';
 
 function mapStateToProps(state) {
   return {
@@ -37,5 +38,10 @@ export function ViewItem({ onClose, item }) {
     </Modal>
   );
 }
+
+ViewItem.propTypes = {
+  onClose: PropTypes.func,
+  item: PropTypes.object,
+};
 
 export default connect(mapStateToProps, null)(ViewItem);
