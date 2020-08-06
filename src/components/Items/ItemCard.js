@@ -1,27 +1,29 @@
 import { Card, Button } from '@gotitinc/design-system';
-import React, { } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-import { viewItems, chooseItem, deteleItem } from '../../actions/items';
-import { chooseItemModal, editItemModal } from '../../actions/changeModal';
+import { useHistory } from 'react-router';
+import { viewItems, chooseItem, deleteItem } from '../../actions/items';
+import { chooseModal } from '../../actions/modals';
+import * as constants from '../../constants/actions';
 
 function mapStateToProps(state) {
   return {
     currentCategory: state.categories.currentCategory,
+    user: state.user,
   };
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  viewItems: (categoryId, offset, limit) => dispatch(viewItems(categoryId, offset, limit)),
-  chooseItem: (categoryId, itemId) => dispatch(chooseItem(categoryId, itemId)),
-  chooseItemModal: () => dispatch(chooseItemModal),
-  editItemModal: () => dispatch(editItemModal),
-  deleteItem: (categoryId, itemId) => dispatch(deteleItem(categoryId, itemId)),
-});
+const mapDispatchToProps = {
+  viewItems,
+  chooseItem,
+  deleteItem,
+  chooseModal,
+};
 
 export function ItemCard({
-  itemElement, currentCategory, chooseItem, chooseItemModal, editItemModal, deleteItem, refreshItemList, history,
+  user, itemElement, currentCategory, chooseItem, deleteItem, refreshItemList, chooseModal,
 }) {
+  const history = useHistory();
   return (
     <Card>
       <Card.Header>
@@ -30,24 +32,24 @@ export function ItemCard({
           {' '}
           {itemElement.name}
         </Card.Title>
-        {history.location.pathname === '/profile' ? (
+        <Button
+          variant="secondary"
+          size="small"
+          onClick={() => {
+            chooseItem(currentCategory, itemElement.id);
+            history.push(`/catalog/${currentCategory}/${itemElement.id}`);
+          }}
+        >
+          View item
+        </Button>
+        {user.loggedIn && user.currentUser.id === itemElement.user_id ? (
           <div>
-            <Button
-              variant="secondary"
-              size="small"
-              onClick={() => {
-                chooseItem(currentCategory, itemElement.id);
-                chooseItemModal();
-              }}
-            >
-              View item
-            </Button>
             <Button
               variant="primary"
               size="small"
               onClick={async () => {
                 await chooseItem(currentCategory, itemElement.id);
-                editItemModal();
+                chooseModal(constants.EDIT_ITEM_MODAL);
               }}
             >
               Edit item
@@ -64,9 +66,10 @@ export function ItemCard({
             </Button>
           </div>
         ) : null}
+
       </Card.Header>
     </Card>
   );
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ItemCard));
+export default connect(mapStateToProps, mapDispatchToProps)(ItemCard);

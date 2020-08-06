@@ -1,9 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Badge } from '@gotitinc/design-system';
-import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getToken } from '../../utilities/localStorage';
 
 function mapStateToProps(state) {
   return {
@@ -11,12 +9,7 @@ function mapStateToProps(state) {
   };
 }
 
-export function UserProfile({ user, history }) {
-  useEffect(() => {
-    if (!getToken() || !user.loggedIn) {
-      history.push('/');
-    }
-  }, [history, user.loggedIn]);
+export function UserProfile({ user }) {
   return (
     <div style={{ width: 350 }}>
       <span className="u-marginRightSmall">
@@ -29,7 +22,6 @@ export function UserProfile({ user, history }) {
 
 UserProfile.propTypes = {
   user: PropTypes.object,
-  history: PropTypes.object,
 };
 
-export default withRouter(connect(mapStateToProps, null)(UserProfile));
+export default connect(mapStateToProps, null)(UserProfile);

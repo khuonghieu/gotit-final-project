@@ -1,5 +1,5 @@
 import * as constants from '../constants/actions';
-import { post } from '../utilities/request';
+import { post, get } from '../utilities/request';
 import CONFIG from '../config';
 
 export const signIn = (username, password) => ({
@@ -7,13 +7,18 @@ export const signIn = (username, password) => ({
   promise: post(`${CONFIG.URL}/login`, { username, password }),
 });
 
-export const signOut = {
+export const signOut = () => ({
   type: constants.SIGN_OUT,
-};
+});
 
 export const signUp = (email, username, password, name) => ({
   type: constants.SIGN_UP,
   promise: post(`${CONFIG.URL}/registrations`, {
     email, username, password, name,
   }),
+});
+
+export const fetchUserInfo = () => ({
+  type: constants.FETCH_USER_INFO,
+  promise: get(`${CONFIG.URL}/me`),
 });

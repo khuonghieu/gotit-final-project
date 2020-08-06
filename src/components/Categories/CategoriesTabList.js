@@ -1,7 +1,7 @@
 import { Tab } from '@gotitinc/design-system';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import PropTypes from 'prop-types';
 import { chooseCategory, fetchCategories } from '../../actions/categories';
 import CurrentCategoryInfo from './CurrentCategoryInfo';
@@ -14,23 +14,30 @@ function mapStateToProps(state) {
   };
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  chooseCategory: (category) => dispatch(chooseCategory(category)),
-  fetchCategories: (offset, limit) => dispatch(fetchCategories(offset, limit)),
-});
+const mapDispatchToProps = {
+  chooseCategory,
+  fetchCategories,
+};
 
 export function CategoriesTabList({
-  categories, loggedIn, chooseCategory, fetchCategories, history,
+  categories, chooseCategory, fetchCategories, loggedIn,
 }) {
+  const history = useHistory();
+  const params = useParams(history);
+
   function onChooseCategory(category) {
     chooseCategory(category);
+    history.push(`/catalog/${category}`);
   }
 
   useEffect(() => {
-    if (loggedIn) {
-      fetchCategories(0, 10);
-    }
-  }, [fetchCategories, loggedIn]);
+    (async () => {
+      await fetchCategories(0, 10);
+      if (params.categoryId) {
+        chooseCategory(params.categoryId);
+      }
+    })();
+  }, [chooseCategory, fetchCategories, params.categoryId, loggedIn]);
   return (
     <div>
       <Tab
@@ -40,7 +47,7 @@ export function CategoriesTabList({
         {(categories.categoriesList) ? categories.categoriesList.map((categoryElement) => (<Tab.Item eventKey={categoryElement.id} key={categoryElement.id}>{categoryElement.name}</Tab.Item>)) : null}
       </Tab>
       <hr />
-      {history.location.pathname === '/catalog' ? <CurrentCategoryInfo /> : null}
+      <CurrentCategoryInfo />
       <hr />
       <ItemList />
       {/* <CreateCategoryForm /> */}
@@ -50,10 +57,8 @@ export function CategoriesTabList({
 
 CategoriesTabList.propTypes = {
   categories: PropTypes.object,
-  loggedIn: PropTypes.bool,
   chooseCategory: PropTypes.func,
   fetchCategories: PropTypes.func,
-  history: PropTypes.object,
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CategoriesTabList));
+export default connect(mapStateToProps, mapDispatchToProps)(CategoriesTabList);

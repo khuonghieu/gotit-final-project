@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import user from './user';
-import modal from './modal';
+import user from './users';
+import modal from './modals';
 import categories from './categories';
-import item from './item';
+import item from './items';
 
 export default combineReducers({
   user, modal, categories, item,

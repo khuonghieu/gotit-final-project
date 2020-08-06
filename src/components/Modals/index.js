@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import SignInModal from './SignIn';
 import SignUpModal from './SignUp';
-import { closeModal } from '../../actions/changeModal';
+import { closeModal } from '../../actions/modals';
 import * as constants from '../../constants/actions';
 import ViewItem from './ViewItem';
 import EditItem from './EditItem';
@@ -14,9 +14,9 @@ function mapStateToProps(state) {
   };
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  closeModal: () => dispatch(closeModal),
-});
+const mapDispatchToProps = {
+  closeModal,
+};
 
 const ModalMap = new Map();
 ModalMap.set(constants.SIGN_IN_MODAL, SignInModal);

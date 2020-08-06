@@ -24,7 +24,7 @@ export const editItem = (categoryId, itemId, name, description, price) => ({
   promise: put(`${CONFIG.URL}/categories/${categoryId}/items/${itemId}`, { name, description, price }),
 });
 
-export const deteleItem = (categoryId, itemId) => ({
+export const deleteItem = (categoryId, itemId) => ({
   type: constants.DELETE_ITEM,
   promise: deleteRequest(`${CONFIG.URL}/categories/${categoryId}/items/${itemId}`),
 });

@@ -10,4 +10,4 @@ if (process.env.REACT_APP_ENV === 'prod') {
   configs = devConfigs;
 }
 
-export default ({ ...configs });
+export default configs;

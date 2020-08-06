@@ -10,9 +10,9 @@ function mapStateToProps(state) {
   };
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  createItem: (categoryId, name, description, price) => dispatch(createItem(categoryId, name, description, price)),
-});
+const mapDispatchToProps = {
+  createItem,
+};
 
 export function CreateItemForm({ currentCategory, createItem, refreshItemList }) {
   const [name, setName] = useState('');

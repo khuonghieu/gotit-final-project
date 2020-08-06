@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Header, Button } from '@gotitinc/design-system';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router';
 import UserProfile from './User/UserProfile';
-import { signInModal, signUpModal } from '../actions/changeModal';
+import { chooseModal } from '../actions/modals';
+import * as constants from '../constants/actions';
 
 function mapStateToProps(state) {
   return {
@@ -11,12 +13,17 @@ function mapStateToProps(state) {
   };
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  signUpModal: () => dispatch(signUpModal),
-  signInModal: () => dispatch(signInModal),
-});
+const mapDispatchToProps = {
+  chooseModal,
+};
 
-export function LandingPage({ user, signUpModal, signInModal }) {
+export function LandingPage({ user, chooseModal }) {
+  const history = useHistory();
+  useEffect(() => {
+    if (user.loggedIn) {
+      history.push('/catalog');
+    }
+  }, [history, user.loggedIn]);
   return (
     <div>
       <Header fullWidth>
@@ -25,8 +32,8 @@ export function LandingPage({ user, signUpModal, signInModal }) {
             <UserProfile user={user} />
           </Header.Left>
           <Header.Right>
-            <Button onClick={signUpModal}>Sign up modal</Button>
-            <Button onClick={signInModal}>Sign in modal</Button>
+            <Button onClick={() => chooseModal(constants.SIGN_UP_MODAL)}>Sign up modal</Button>
+            <Button onClick={() => chooseModal(constants.SIGN_IN_MODAL)}>Sign in modal</Button>
           </Header.Right>
         </Header.Main>
       </Header>
@@ -36,8 +43,7 @@ export function LandingPage({ user, signUpModal, signInModal }) {
 
 LandingPage.propTypes = {
   user: PropTypes.object,
-  signUpModal: PropTypes.func,
-  signInModal: PropTypes.func,
+  chooseModal: PropTypes.func,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LandingPage);

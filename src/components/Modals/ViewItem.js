@@ -11,7 +11,7 @@ function mapStateToProps(state) {
 
 export function ViewItem({ onClose, item }) {
   return (
-    <Modal size="small" relative centered onHide={onClose}>
+    <Modal size="small" show centered onHide={onClose}>
       <Modal.Header closeButton onClick={onClose}>
         <Modal.Title>Item Details</Modal.Title>
       </Modal.Header>

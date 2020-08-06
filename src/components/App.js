@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ModalContainer from './Modals';
-import { getToken } from '../utilities/localStorage';
-import fetchUserInfo from '../actions/fetchUserInfo';
+import { fetchUserInfo } from '../actions/users';
 import LandingPage from './LandingPage';
 import Catalog from './Catalog';
-import Profile from './Profile';
+import ItemDetails from './Items/ItemDetails';
 
 function mapStateToProps(state) {
   return {
@@ -16,18 +15,16 @@ function mapStateToProps(state) {
   };
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  fetchUserInfo: () => dispatch(fetchUserInfo()),
-});
+const mapDispatchToProps = {
+  fetchUserInfo,
+};
 
 export function App({
   user, modal, fetchUserInfo,
 }) {
   React.useEffect(() => {
-    if (user.loggedIn) {
-      fetchUserInfo();
-    }
-  }, [fetchUserInfo, getToken(), user.loggedIn]);
+    fetchUserInfo();
+  }, [fetchUserInfo, user.loggedIn]);
 
   return (
     <div>
@@ -38,10 +35,11 @@ export function App({
         component={LandingPage}
       />
       <Route
-        path="/catalog"
+        exact
+        path="/catalog/:categoryId?"
         component={Catalog}
       />
-      <Route path="/profile" component={Profile} />
+      <Route exact path="/catalog/:categoryId/:itemId" component={ItemDetails} />
     </div>
 
   );

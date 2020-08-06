@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {
   Button, Form, Modal, Message,
 } from '@gotitinc/design-system';
-import { signUp } from '../../actions/userAuth';
+import { signUp } from '../../actions/users';
 
 const mapDispatchToProps = (dispatch) => ({
   signUp: (email, username, password, name) => dispatch(signUp(email, username, password, name)),
@@ -44,7 +44,7 @@ export function SignUpModal({ onClose, signUp }) {
           </Message.Container>
         </Message>
       ) : null}
-      <Modal relative centered size="small">
+      <Modal show centered size="small" onHide={onClose}>
         <Modal.Header closeButton onClick={onClose}>
           <Modal.Title>Sign Up</Modal.Title>
         </Modal.Header>

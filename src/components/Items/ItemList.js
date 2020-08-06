@@ -12,15 +12,16 @@ function mapStateToProps(state) {
   return {
     currentCategory: state.categories.currentCategory,
     editComplete: state.modal === constants.EDIT_ITEM_MODAL,
+    user: state.user,
   };
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  viewItems: (categoryId, offset, limit) => dispatch(viewItems(categoryId, offset, limit)),
-});
+const mapDispatchToProps = {
+  viewItems,
+};
 
 export function ItemList({
-  editComplete, currentCategory, viewItems, history,
+  editComplete, currentCategory, viewItems, user,
 }) {
   const [itemList, setItemList] = useState([]);
   const [refresh, setRefresh] = useState(false);
@@ -44,10 +45,10 @@ export function ItemList({
 
   return (
     <div>
-      {history.location.pathname === '/profile' ? <CreateItemForm refreshItemList={refreshItemList} /> : null }
+      <CreateItemForm refreshItemList={refreshItemList} />
       <hr />
       {itemList.length > 0 ? itemList.map((itemElement) => (
-        <ItemCard key={itemElement.id} itemElement={itemElement} refreshItemList={refreshItemList} />
+        <ItemCard itemElement={itemElement} refreshItemList={refreshItemList} />
       ))
         : (
           <div style={{ maxWidth: 300 }}>
@@ -71,4 +72,4 @@ ItemList.propTypes = {
   viewItems: PropTypes.func,
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ItemList));
+export default connect(mapStateToProps, mapDispatchToProps)(ItemList);

@@ -9,5 +9,5 @@ export const setToken = (newToken) => {
 };
 
 export const deleteToken = () => {
-  localStorage.setItem(tokenConst.TOKEN_PREFIX + tokenConst.USER_TOKEN, null);
+  localStorage.removeItem(tokenConst.TOKEN_PREFIX + tokenConst.USER_TOKEN);
 };

@@ -3,9 +3,9 @@ import { Form, Button } from '@gotitinc/design-system';
 import React, { useState } from 'react';
 import { createCategory } from '../../actions/categories';
 
-const mapDispatchToProps = (dispatch) => ({
-  createCategory: (name, description) => dispatch(createCategory(name, description)),
-});
+const mapDispatchToProps = {
+  createCategory,
+};
 
 export function CreateCategoryForm({ createCategory }) {
   const [name, setName] = useState('');

@@ -9,9 +9,9 @@ function mapStateToProps(state) {
   };
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  viewCategory: (categoryId) => dispatch(viewCategory(categoryId)),
-});
+const mapDispatchToProps = {
+  viewCategory,
+};
 
 export function CurrentCategoryInfo({ categoryId, viewCategory }) {
   const [categoryInfo, setCategoryInfo] = useState({});

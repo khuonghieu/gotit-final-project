@@ -13,9 +13,9 @@ function mapStateToProps(state) {
   };
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  editItem: (categoryId, itemId, name, description, price) => dispatch(editItem(categoryId, itemId, name, description, price)),
-});
+const mapDispatchToProps = {
+  editItem,
+};
 
 export function EditItem({
   onClose, item, editItem, categoryId,
@@ -47,7 +47,7 @@ export function EditItem({
         <Message type="system" variant="negative">
           <Message.Container>
             <Message.Title>
-              Sign in failed
+              Edit item failed
             </Message.Title>
             <Message.Content>
               {errorMessage}
@@ -55,7 +55,7 @@ export function EditItem({
           </Message.Container>
         </Message>
       ) : null}
-      <Modal size="small" relative centered onHide={onClose}>
+      <Modal size="small" show centered onHide={onClose}>
         <Modal.Header closeButton onClick={onClose}>
           <Modal.Title>Edit Item</Modal.Title>
         </Modal.Header>

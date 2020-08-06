@@ -4,18 +4,20 @@ import PropTypes from 'prop-types';
 import {
   Button, Form, Modal, Message,
 } from '@gotitinc/design-system';
-import { withRouter } from 'react-router';
-import { signIn } from '../../actions/userAuth';
+import { useHistory } from 'react-router';
+import { signIn } from '../../actions/users';
 
 const mapDispatchToProps = (dispatch) => ({
   signIn: (username, password) => dispatch(signIn(username, password)),
 });
 
-export function SignInModal({ onClose, signIn, history }) {
+export function SignInModal({ onClose, signIn }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const [errorMessage, setErrorMessage] = useState('');
+
+  const history = useHistory();
 
   async function handleSignin(e) {
     e.preventDefault();
@@ -25,7 +27,6 @@ export function SignInModal({ onClose, signIn, history }) {
         setErrorMessage(payload.message);
       } else {
         onClose();
-        history.push('/catalog');
       }
     } else {
       alert('Fill all the blanks');
@@ -45,7 +46,7 @@ export function SignInModal({ onClose, signIn, history }) {
           </Message.Container>
         </Message>
       ) : null}
-      <Modal size="small" relative centered onHide={onClose}>
+      <Modal size="small" show centered onHide={onClose}>
         <Modal.Header closeButton onClick={onClose}>
           <Modal.Title>Sign In</Modal.Title>
         </Modal.Header>
@@ -67,7 +68,6 @@ export function SignInModal({ onClose, signIn, history }) {
 SignInModal.propTypes = {
   onClose: PropTypes.func,
   signIn: PropTypes.func,
-  history: PropTypes.object,
 };
 
-export default withRouter(connect(null, mapDispatchToProps)(SignInModal));
+export default connect(null, mapDispatchToProps)(SignInModal);

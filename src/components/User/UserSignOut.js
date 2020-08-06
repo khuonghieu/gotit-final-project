@@ -1,21 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Button } from '@gotitinc/design-system';
-import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
-import { signOut } from '../../actions/userAuth';
-import { signOutModal } from '../../actions/changeModal';
+import { signOut } from '../../actions/users';
+import { chooseModal } from '../../actions/modals';
+import * as constants from '../../constants/actions';
 
-const mapDispatchToProps = (dispatch) => ({
-  signOut: () => dispatch(signOut),
-  signOutModal: () => dispatch(signOutModal),
-});
+const mapDispatchToProps = {
+  signOut,
+  chooseModal,
+};
 
-export function UserSignOut({ signOut, signOutModal, history }) {
+export function UserSignOut({ signOut, chooseModal }) {
   function onSignOut() {
     signOut();
-    signOutModal();
-    history.push('/');
+    chooseModal(constants.SIGN_OUT_MODAL);
   }
   return (
     <div>
@@ -28,8 +27,7 @@ export function UserSignOut({ signOut, signOutModal, history }) {
 
 UserSignOut.propTypes = {
   signOut: PropTypes.func,
-  signOutModal: PropTypes.func,
-  history: PropTypes.object,
+  chooseModal: PropTypes.func,
 };
 
-export default withRouter(connect(null, mapDispatchToProps)(UserSignOut));
+export default connect(null, mapDispatchToProps)(UserSignOut);
