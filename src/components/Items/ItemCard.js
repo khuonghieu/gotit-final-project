@@ -1,6 +1,7 @@
 import { Card, Button } from '@gotitinc/design-system';
 import React, { } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import { viewItems, chooseItem, deteleItem } from '../../actions/items';
 import { chooseItemModal, editItemModal } from '../../actions/changeModal';
 
@@ -19,7 +20,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export function ItemCard({
-  itemElement, currentCategory, chooseItem, chooseItemModal, editItemModal, deleteItem, refreshItemList,
+  itemElement, currentCategory, chooseItem, chooseItemModal, editItemModal, deleteItem, refreshItemList, history,
 }) {
   return (
     <Card>
@@ -29,39 +30,43 @@ export function ItemCard({
           {' '}
           {itemElement.name}
         </Card.Title>
-        <Button
-          variant="secondary"
-          size="small"
-          onClick={() => {
-            chooseItem(currentCategory, itemElement.id);
-            chooseItemModal();
-          }}
-        >
-          View item
-        </Button>
-        <Button
-          variant="primary"
-          size="small"
-          onClick={async () => {
-            await chooseItem(currentCategory, itemElement.id);
-            editItemModal();
-          }}
-        >
-          Edit item
-        </Button>
-        <Button
-          variant="negative"
-          size="small"
-          onClick={async () => {
-            await deleteItem(currentCategory, itemElement.id);
-            refreshItemList();
-          }}
-        >
-          Delete item
-        </Button>
+        {history.location.pathname === '/profile' ? (
+          <div>
+            <Button
+              variant="secondary"
+              size="small"
+              onClick={() => {
+                chooseItem(currentCategory, itemElement.id);
+                chooseItemModal();
+              }}
+            >
+              View item
+            </Button>
+            <Button
+              variant="primary"
+              size="small"
+              onClick={async () => {
+                await chooseItem(currentCategory, itemElement.id);
+                editItemModal();
+              }}
+            >
+              Edit item
+            </Button>
+            <Button
+              variant="negative"
+              size="small"
+              onClick={async () => {
+                await deleteItem(currentCategory, itemElement.id);
+                refreshItemList();
+              }}
+            >
+              Delete item
+            </Button>
+          </div>
+        ) : null}
       </Card.Header>
     </Card>
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ItemCard);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ItemCard));

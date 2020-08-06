@@ -1,12 +1,13 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
+import { connect } from 'react-redux';
 import ModalContainer from './Modals';
 import { getToken } from '../utilities/localStorage';
 import fetchUserInfo from '../actions/fetchUserInfo';
 import LandingPage from './LandingPage';
 import Catalog from './Catalog';
+import Profile from './Profile';
 
 function mapStateToProps(state) {
   return {
@@ -40,6 +41,7 @@ export function App({
         path="/catalog"
         component={Catalog}
       />
+      <Route path="/profile" component={Profile} />
     </div>
 
   );

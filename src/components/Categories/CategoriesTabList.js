@@ -24,7 +24,6 @@ export function CategoriesTabList({
 }) {
   function onChooseCategory(category) {
     chooseCategory(category);
-    history.push(`/catalog/category/${category}`);
   }
 
   useEffect(() => {
@@ -41,7 +40,7 @@ export function CategoriesTabList({
         {(categories.categoriesList) ? categories.categoriesList.map((categoryElement) => (<Tab.Item eventKey={categoryElement.id} key={categoryElement.id}>{categoryElement.name}</Tab.Item>)) : null}
       </Tab>
       <hr />
-      <CurrentCategoryInfo />
+      {history.location.pathname === '/catalog' ? <CurrentCategoryInfo /> : null}
       <hr />
       <ItemList />
       {/* <CreateCategoryForm /> */}

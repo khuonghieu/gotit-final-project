@@ -1,5 +1,6 @@
 import React from 'react';
 import { Header } from '@gotitinc/design-system';
+import { Link } from 'react-router-dom';
 import UserProfile from './User/UserProfile';
 import UserSignOut from './User/UserSignOut';
 import CategoriesTabList from './Categories/CategoriesTabList';
@@ -10,9 +11,9 @@ export function Catalog() {
       <Header fullWidth>
         <Header.Main>
           <Header.Left>
-            {/* <Link to="/profile"> */}
-            <UserProfile />
-            {/* </Link> */}
+            <Link to="/profile">
+              <UserProfile />
+            </Link>
           </Header.Left>
           <Header.Right>
             <div><UserSignOut /></div>

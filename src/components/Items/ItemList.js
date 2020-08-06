@@ -2,6 +2,7 @@ import { EmptyState } from '@gotitinc/design-system';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router';
 import { viewItems } from '../../actions/items';
 import CreateItemForm from './CreateItemForm';
 import * as constants from '../../constants/actions';
@@ -19,7 +20,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export function ItemList({
-  editComplete, currentCategory, viewItems,
+  editComplete, currentCategory, viewItems, history,
 }) {
   const [itemList, setItemList] = useState([]);
   const [refresh, setRefresh] = useState(false);
@@ -43,7 +44,7 @@ export function ItemList({
 
   return (
     <div>
-      <CreateItemForm refreshItemList={refreshItemList} />
+      {history.location.pathname === '/profile' ? <CreateItemForm refreshItemList={refreshItemList} /> : null }
       <hr />
       {itemList.length > 0 ? itemList.map((itemElement) => (
         <ItemCard key={itemElement.id} itemElement={itemElement} refreshItemList={refreshItemList} />
@@ -70,4 +71,4 @@ ItemList.propTypes = {
   viewItems: PropTypes.func,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ItemList);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ItemList));
