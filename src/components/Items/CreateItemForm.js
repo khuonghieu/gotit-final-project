@@ -34,9 +34,11 @@ export function CreateItemForm({ currentCategory, createItem, refreshItemList })
       refreshItemList();
       if (!success) {
         setErrorMessage(JSON.stringify(payload));
+      } else {
+        setErrorMessage('');
       }
     } else {
-      alert('Fill all the blanks');
+      setErrorMessage('Fill all the blanks before submit');
     }
   }
   return (

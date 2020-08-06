@@ -13,12 +13,9 @@ describe('components/Items/ItemList.js', () => {
   beforeEach(() => {
     useEffect = jest.spyOn(fromReact, 'useEffect');
     props = {
+      editComplete: false,
       currentCategory: 1,
       viewItems: jest.fn(),
-      chooseItem: jest.fn(),
-      chooseItemModal: jest.fn(),
-      editItemModal: jest.fn(),
-      deleteItem: jest.fn(),
     };
   });
 
