@@ -14,6 +14,8 @@
     "react/jsx-no-bind": 0,
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
+    "no-shadow": 0,
+    "import/no-named-as-default": 0,
     "react/jsx-filename-extension": [
       1,
       {
@@ -22,13 +24,13 @@
           ".jsx"
         ]
       }
-    ],
+    ]
   },
   "plugins": ["react-hooks"],
   "globals": {
     "localStorage": true,
     "fetch": true,
     "jest": true,
-    "alert": true,
+    "alert": true
   }
 }

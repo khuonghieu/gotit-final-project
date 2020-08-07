@@ -20,10 +20,8 @@ const mapDispatchToProps = {
 export function LandingPage({ user, chooseModal }) {
   const history = useHistory();
   useEffect(() => {
-    if (user.loggedIn) {
-      history.push('/catalog');
-    }
-  }, [history, user.loggedIn]);
+    history.push('/catalog');
+  }, [history]);
   return (
     <div>
       <Header fullWidth>

@@ -48,9 +48,11 @@ export function ItemCard({
             <Button
               variant="primary"
               size="small"
-              onClick={async () => {
-                await chooseItem(currentCategory, itemElement.id);
-                chooseModal(constants.EDIT_ITEM_MODAL);
+              onClick={() => {
+                const prefill = {
+                  name: itemElement.name, description: itemElement.description, price: itemElement.price, id: itemElement.id,
+                };
+                chooseModal(constants.EDIT_ITEM_MODAL, prefill);
               }}
             >
               Edit item

@@ -10,7 +10,7 @@ import ItemCard from './ItemCard';
 function mapStateToProps(state) {
   return {
     currentCategory: state.categories.currentCategory,
-    editComplete: state.modal === constants.EDIT_ITEM_MODAL,
+    editComplete: state.modal.modalChosen === constants.EDIT_ITEM_MODAL,
   };
 }
 

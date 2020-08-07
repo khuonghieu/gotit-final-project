@@ -10,7 +10,7 @@ const mapDispatchToProps = {
 
 export function ItemDetails({ chooseItem }) {
   const { categoryId, itemId } = useParams(useHistory());
-  console.log(categoryId, itemId);
+
   const [chosenItem, setChosenItem] = useState({});
   useEffect(() => {
     (async () => {

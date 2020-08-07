@@ -5,6 +5,7 @@ export const SIGN_IN_FAILURE = 'SIGN_IN_FAILURE';
 export const SIGN_UP_MODAL = 'SIGN_UP_MODAL';
 export const SIGN_IN_MODAL = 'SIGN_IN_MODAL';
 export const SIGN_OUT_MODAL = 'SIGN_OUT_MODAL';
+export const CHOOSE_MODAL = 'CHOOSE_MODAL';
 export const CLOSE_MODAL = 'CLOSE_MODAL';
 export const CHOOSE_ITEM_MODAL = 'CHOOSE_ITEM_MODAL';
 export const EDIT_ITEM_MODAL = 'EDIT_ITEM_MODAL';

@@ -1,7 +1,9 @@
 import * as constants from '../constants/actions';
 
-export const chooseModal = (modalName) => ({
-  type: modalName,
+export const chooseModal = (modalName, props) => ({
+  type: constants.CHOOSE_MODAL,
+  modalChosen: modalName,
+  prefill: { ...props },
 });
 
 export const closeModal = () => ({

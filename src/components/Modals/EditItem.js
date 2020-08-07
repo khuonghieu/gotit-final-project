@@ -8,7 +8,6 @@ import { editItem } from '../../actions/items';
 
 function mapStateToProps(state) {
   return {
-    item: state.item,
     categoryId: state.categories.currentCategory,
   };
 }
@@ -18,18 +17,24 @@ const mapDispatchToProps = {
 };
 
 export function EditItem({
-  onClose, item, editItem, categoryId,
+  onClose, editItem, categoryId, prefill,
 }) {
-  const [name, setName] = useState(item.name);
-  const [description, setDescription] = useState(item.description);
-  const [price, setPrice] = useState(item.price);
+  const [name, setName] = useState(prefill.name);
+  const [description, setDescription] = useState(prefill.description);
+  const [price, setPrice] = useState(prefill.price);
+
+  // if (prefill) {
+  //   setName(prefill.name);
+  //   setDescription(prefill.description);
+  //   setPrice(prefill.price);
+  // }
 
   const [errorMessage, setErrorMessage] = useState('');
 
   async function handleEditItem(e) {
     e.preventDefault();
     if (name && description && price) {
-      const { success, payload } = await editItem(categoryId, item.id, name, description, price);
+      const { success, payload } = await editItem(categoryId, prefill.id, name, description, price);
       if (!success) {
         setErrorMessage(JSON.stringify(payload));
       } else {

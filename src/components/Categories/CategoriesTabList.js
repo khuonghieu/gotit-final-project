@@ -41,6 +41,7 @@ export function CategoriesTabList({
         chooseCategory(null);
       }
     })();
+    // TODO: add comment for loggedIn usage
   }, [chooseCategory, fetchCategories, params.categoryId, loggedIn, fetchUserInfo]);
 
   return (
@@ -49,7 +50,16 @@ export function CategoriesTabList({
         current={categories.currentCategory}
         onSelect={onChooseCategory}
       >
-        {(categories.categoriesList) ? categories.categoriesList.map((categoryElement) => (<Tab.Item eventKey={categoryElement.id} key={categoryElement.id}>{categoryElement.name}</Tab.Item>)) : null}
+        {(categories.categoriesList) ? categories.categoriesList.map(
+          (categoryElement) => (
+            <Tab.Item
+              eventKey={categoryElement.id}
+              key={categoryElement.id}
+            >
+              {categoryElement.name}
+            </Tab.Item>
+          ),
+        ) : null}
       </Tab>
       <hr />
       <CurrentCategoryInfo />

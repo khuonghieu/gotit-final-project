@@ -7,6 +7,7 @@ import { createItem } from '../../actions/items';
 function mapStateToProps(state) {
   return {
     currentCategory: state.categories.currentCategory,
+    user: state.user,
   };
 }
 
@@ -14,7 +15,9 @@ const mapDispatchToProps = {
   createItem,
 };
 
-export function CreateItemForm({ currentCategory, createItem, refreshItemList }) {
+export function CreateItemForm({
+  currentCategory, createItem, refreshItemList, user,
+}) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState(0.0);
@@ -43,28 +46,33 @@ export function CreateItemForm({ currentCategory, createItem, refreshItemList })
   }
   return (
     <div>
-      {errorMessage ? (
-        <Message type="system" variant="negative">
-          <Message.Container>
-            <Message.Title>
-              Create item fail failed
-            </Message.Title>
-            <Message.Content>
-              {errorMessage}
-            </Message.Content>
-          </Message.Container>
-        </Message>
+      {user.loggedIn ? (
+        <div>
+          {errorMessage ? (
+            <Message type="system" variant="negative">
+              <Message.Container>
+                <Message.Title>
+                  Create item fail failed
+                </Message.Title>
+                <Message.Content>
+                  {errorMessage}
+                </Message.Content>
+              </Message.Container>
+            </Message>
+          ) : null}
+          <p>
+            <b>Create item for this category:</b>
+          </p>
+          <Form.Label>Item name</Form.Label>
+          <Form.Input value={name} onChange={(e) => setName(e.target.value)} type="text" placeholder="Enter item name" name="name" />
+          <Form.Label>Item description</Form.Label>
+          <Form.Input value={description} onChange={(e) => setDescription(e.target.value)} type="text" placeholder="Enter item description" name="description" />
+          <Form.Label>Item price</Form.Label>
+          <Form.Input value={price} onChange={(e) => setPrice(e.target.value)} type="number" placeholder="Enter item price" name="price" />
+          <Button onClick={handleCreateItem}>Create Item</Button>
+        </div>
       ) : null}
-      <p>
-        <b>Create item for this category:</b>
-      </p>
-      <Form.Label>Item name</Form.Label>
-      <Form.Input value={name} onChange={(e) => setName(e.target.value)} type="text" placeholder="Enter item name" name="name" />
-      <Form.Label>Item description</Form.Label>
-      <Form.Input value={description} onChange={(e) => setDescription(e.target.value)} type="text" placeholder="Enter item description" name="description" />
-      <Form.Label>Item price</Form.Label>
-      <Form.Input value={price} onChange={(e) => setPrice(e.target.value)} type="number" placeholder="Enter item price" name="price" />
-      <Button onClick={handleCreateItem}>Create Item</Button>
+
     </div>
   );
 }

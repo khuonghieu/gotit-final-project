@@ -32,23 +32,23 @@ export function SignUpModal({ onClose, signUp }) {
 
   return (
     <div>
-      {errorMessage ? (
-        <Message type="system" variant="negative">
-          <Message.Container>
-            <Message.Title>
-              Sign up failed
-            </Message.Title>
-            <Message.Content>
-              {errorMessage}
-            </Message.Content>
-          </Message.Container>
-        </Message>
-      ) : null}
       <Modal show centered size="small" onHide={onClose}>
         <Modal.Header closeButton onClick={onClose}>
           <Modal.Title>Sign Up</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          {errorMessage ? (
+            <Message type="system" variant="negative">
+              <Message.Container>
+                <Message.Title>
+                  Sign up failed
+                </Message.Title>
+                <Message.Content>
+                  {errorMessage}
+                </Message.Content>
+              </Message.Container>
+            </Message>
+          ) : null}
           <div className="u-textCenter">
             <img src="holder.js/100px90?text=Image" className="u-maxWidthFull u-marginBottomExtraSmall" alt="" />
           </div>

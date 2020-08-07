@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import {
   Button, Form, Modal, Message,
 } from '@gotitinc/design-system';
-import { useHistory } from 'react-router';
 import { signIn } from '../../actions/users';
 
 const mapDispatchToProps = {
@@ -17,9 +16,6 @@ export function SignInModal({ onClose, signIn }) {
 
   const [errorMessage, setErrorMessage] = useState('');
 
-  // const history = useHistory();
-  // history.push('/catalog');
-
   async function handleSignin(e) {
     e.preventDefault();
     if (username && password) {
@@ -30,28 +26,29 @@ export function SignInModal({ onClose, signIn }) {
         onClose();
       }
     } else {
+      // TODO: remove alerts
       alert('Fill all the blanks');
     }
   }
   return (
     <div>
-      {errorMessage ? (
-        <Message type="system" variant="negative">
-          <Message.Container>
-            <Message.Title>
-              Sign in failed
-            </Message.Title>
-            <Message.Content>
-              {errorMessage}
-            </Message.Content>
-          </Message.Container>
-        </Message>
-      ) : null}
       <Modal size="small" show centered onHide={onClose}>
         <Modal.Header closeButton onClick={onClose}>
           <Modal.Title>Sign In</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          {errorMessage ? (
+            <Message type="system" variant="negative">
+              <Message.Container>
+                <Message.Title>
+                  Sign in failed
+                </Message.Title>
+                <Message.Content>
+                  {errorMessage}
+                </Message.Content>
+              </Message.Container>
+            </Message>
+          ) : null}
           <div className="u-textCenter">
             <img src="holder.js/100px90?text=Image" className="u-maxWidthFull u-marginBottomExtraSmall" alt="" />
           </div>

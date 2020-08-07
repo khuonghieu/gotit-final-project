@@ -19,14 +19,14 @@ const mapDispatchToProps = {
   fetchUserInfo,
 };
 
-export function App({ user, modal, fetchUserInfo }) {
+export function App({ user, fetchUserInfo }) {
   React.useEffect(() => {
     fetchUserInfo();
   }, [fetchUserInfo, user.loggedIn]);
 
   return (
     <div>
-      <div><ModalContainer modal={modal} /></div>
+      <div><ModalContainer /></div>
       <Route
         exact
         path="/"
@@ -45,7 +45,7 @@ export function App({ user, modal, fetchUserInfo }) {
 
 App.propTypes = {
   user: PropTypes.object,
-  modal: PropTypes.string,
+  modal: PropTypes.object,
   fetchUserInfo: PropTypes.func,
 };
 
