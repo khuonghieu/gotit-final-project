@@ -2,7 +2,6 @@ import { EmptyState } from '@gotitinc/design-system';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router';
 import { viewItems } from '../../actions/items';
 import CreateItemForm from './CreateItemForm';
 import * as constants from '../../constants/actions';
@@ -12,7 +11,6 @@ function mapStateToProps(state) {
   return {
     currentCategory: state.categories.currentCategory,
     editComplete: state.modal === constants.EDIT_ITEM_MODAL,
-    user: state.user,
   };
 }
 
@@ -21,7 +19,7 @@ const mapDispatchToProps = {
 };
 
 export function ItemList({
-  editComplete, currentCategory, viewItems, user,
+  editComplete, currentCategory, viewItems,
 }) {
   const [itemList, setItemList] = useState([]);
   const [refresh, setRefresh] = useState(false);
@@ -36,8 +34,6 @@ export function ItemList({
         const { success, payload } = await viewItems(currentCategory, 0, 10);
         if (success) {
           setItemList(payload.items);
-        } else {
-          console.log(payload);
         }
       }
     })();
@@ -68,7 +64,7 @@ export function ItemList({
 
 ItemList.propTypes = {
   editComplete: PropTypes.bool,
-  currentCategory: PropTypes.number,
+  currentCategory: PropTypes.string,
   viewItems: PropTypes.func,
 };
 

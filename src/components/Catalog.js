@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Header, Button } from '@gotitinc/design-system';
-import { Link, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import UserProfile from './User/UserProfile';
 import UserSignOut from './User/UserSignOut';
 import CategoriesTabList from './Categories/CategoriesTabList';
@@ -48,4 +48,8 @@ export function Catalog({ user, chooseModal }) {
   );
 }
 
+Catalog.propTypes = {
+  user: PropTypes.object,
+  chooseModal: PropTypes.func,
+};
 export default connect(mapStateToProps, mapDispatchToProps)(Catalog);

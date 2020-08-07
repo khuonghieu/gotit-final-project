@@ -15,7 +15,7 @@ function categories(state = initialState, action) {
     case constants.FETCH_CATEGORIES_SUCCESS:
       if (action.payload.categories) {
         return {
-          currentCategory: null,
+          ...state,
           categoriesList: action.payload.categories,
         };
       }

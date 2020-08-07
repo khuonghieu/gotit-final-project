@@ -40,4 +40,8 @@ export function ItemDetails({ chooseItem }) {
   );
 }
 
+ItemDetails.propTypes = {
+  chooseItem: PropTypes.func,
+};
+
 export default connect(null, mapDispatchToProps)(ItemDetails);

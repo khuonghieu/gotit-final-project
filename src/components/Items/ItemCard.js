@@ -2,6 +2,7 @@ import { Card, Button } from '@gotitinc/design-system';
 import React from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
+import PropTypes from 'prop-types';
 import { viewItems, chooseItem, deleteItem } from '../../actions/items';
 import { chooseModal } from '../../actions/modals';
 import * as constants from '../../constants/actions';
@@ -35,14 +36,14 @@ export function ItemCard({
         <Button
           variant="secondary"
           size="small"
-          onClick={() => {
-            chooseItem(currentCategory, itemElement.id);
+          onClick={async () => {
+            await chooseItem(currentCategory, itemElement.id);
             history.push(`/catalog/${currentCategory}/${itemElement.id}`);
           }}
         >
           View item
         </Button>
-        {user.loggedIn && user.currentUser.id === itemElement.user_id ? (
+        {(user.currentUser && user.currentUser.id === itemElement.user_id) ? (
           <div>
             <Button
               variant="primary"
@@ -71,5 +72,15 @@ export function ItemCard({
     </Card>
   );
 }
+
+ItemCard.propTypes = {
+  user: PropTypes.object,
+  itemElement: PropTypes.object,
+  currentCategory: PropTypes.string,
+  chooseItem: PropTypes.func,
+  deleteItem: PropTypes.func,
+  refreshItemList: PropTypes.func,
+  chooseModal: PropTypes.func,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ItemCard);

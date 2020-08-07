@@ -7,9 +7,9 @@ import {
 import { useHistory } from 'react-router';
 import { signIn } from '../../actions/users';
 
-const mapDispatchToProps = (dispatch) => ({
-  signIn: (username, password) => dispatch(signIn(username, password)),
-});
+const mapDispatchToProps = {
+  signIn,
+};
 
 export function SignInModal({ onClose, signIn }) {
   const [username, setUsername] = useState('');
@@ -17,7 +17,8 @@ export function SignInModal({ onClose, signIn }) {
 
   const [errorMessage, setErrorMessage] = useState('');
 
-  const history = useHistory();
+  // const history = useHistory();
+  // history.push('/catalog');
 
   async function handleSignin(e) {
     e.preventDefault();

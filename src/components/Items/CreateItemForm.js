@@ -47,7 +47,7 @@ export function CreateItemForm({ currentCategory, createItem, refreshItemList })
         <Message type="system" variant="negative">
           <Message.Container>
             <Message.Title>
-              Sign in failed
+              Create item fail failed
             </Message.Title>
             <Message.Content>
               {errorMessage}

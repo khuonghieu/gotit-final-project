@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { chooseCategory, fetchCategories } from '../../actions/categories';
 import CurrentCategoryInfo from './CurrentCategoryInfo';
 import ItemList from '../Items/ItemList';
+import { fetchUserInfo } from '../../actions/users';
 
 function mapStateToProps(state) {
   return {
@@ -17,10 +18,11 @@ function mapStateToProps(state) {
 const mapDispatchToProps = {
   chooseCategory,
   fetchCategories,
+  fetchUserInfo,
 };
 
 export function CategoriesTabList({
-  categories, chooseCategory, fetchCategories, loggedIn,
+  categories, chooseCategory, fetchCategories, fetchUserInfo, loggedIn,
 }) {
   const history = useHistory();
   const params = useParams(history);
@@ -35,9 +37,12 @@ export function CategoriesTabList({
       await fetchCategories(0, 10);
       if (params.categoryId) {
         chooseCategory(params.categoryId);
+      } else {
+        chooseCategory(null);
       }
     })();
-  }, [chooseCategory, fetchCategories, params.categoryId, loggedIn]);
+  }, [chooseCategory, fetchCategories, params.categoryId, loggedIn, fetchUserInfo]);
+
   return (
     <div>
       <Tab
@@ -59,6 +64,8 @@ CategoriesTabList.propTypes = {
   categories: PropTypes.object,
   chooseCategory: PropTypes.func,
   fetchCategories: PropTypes.func,
+  fetchUserInfo: PropTypes.func,
+  loggedIn: PropTypes.bool,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CategoriesTabList);

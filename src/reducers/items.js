@@ -7,7 +7,7 @@ function item(state = initialState, action) {
     case constants.CHOOSE_ITEM_SUCCESS:
       return action.payload;
     case constants.CHOOSE_ITEM_FAILURE:
-      return initialState;
+      return state;
     default:
       return state;
   }

@@ -19,9 +19,7 @@ const mapDispatchToProps = {
   fetchUserInfo,
 };
 
-export function App({
-  user, modal, fetchUserInfo,
-}) {
+export function App({ user, modal, fetchUserInfo }) {
   React.useEffect(() => {
     fetchUserInfo();
   }, [fetchUserInfo, user.loggedIn]);

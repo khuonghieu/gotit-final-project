@@ -20,6 +20,7 @@ describe('components/Categories/CategoriesTabList.js', () => {
       chooseCategory: jest.fn(),
       fetchCategories: jest.fn(),
       history: createBrowserHistory(),
+      fetchUserInfo: jest.fn(),
     };
   });
 

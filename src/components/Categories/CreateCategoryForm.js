@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { Form, Button } from '@gotitinc/design-system';
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { createCategory } from '../../actions/categories';
 
 const mapDispatchToProps = {
@@ -32,5 +33,8 @@ export function CreateCategoryForm({ createCategory }) {
     </div>
   );
 }
+CreateCategoryForm.propTypes = {
+  createCategory: PropTypes.func,
+};
 
 export default connect(null, mapDispatchToProps)(CreateCategoryForm);
