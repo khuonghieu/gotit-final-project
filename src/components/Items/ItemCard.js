@@ -76,13 +76,13 @@ export function ItemCard({
 }
 
 ItemCard.propTypes = {
-  user: PropTypes.object,
-  itemElement: PropTypes.object,
-  currentCategory: PropTypes.string,
-  chooseItem: PropTypes.func,
-  deleteItem: PropTypes.func,
-  refreshItemList: PropTypes.func,
-  chooseModal: PropTypes.func,
+  user: PropTypes.object.isRequired,
+  itemElement: PropTypes.object.isRequired,
+  currentCategory: PropTypes.string.isRequired,
+  chooseItem: PropTypes.func.isRequired,
+  deleteItem: PropTypes.func.isRequired,
+  refreshItemList: PropTypes.func.isRequired,
+  chooseModal: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ItemCard);

@@ -1,7 +1,7 @@
 import * as constants from '../constants/actions';
 import {
   post, get, put, deleteRequest,
-} from '../utilities/request';
+} from '../util/request';
 import CONFIG from '../config';
 
 export const createItem = (categoryId, name, description, price) => ({

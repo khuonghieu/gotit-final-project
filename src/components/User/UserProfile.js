@@ -21,7 +21,7 @@ export function UserProfile({ user }) {
 }
 
 UserProfile.propTypes = {
-  user: PropTypes.object,
+  user: PropTypes.object.isRequired,
 };
 
 export default connect(mapStateToProps, null)(UserProfile);

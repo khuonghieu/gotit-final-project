@@ -49,7 +49,7 @@ export function Catalog({ user, chooseModal }) {
 }
 
 Catalog.propTypes = {
-  user: PropTypes.object,
-  chooseModal: PropTypes.func,
+  user: PropTypes.object.isRequired,
+  chooseModal: PropTypes.func.isRequired,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Catalog);

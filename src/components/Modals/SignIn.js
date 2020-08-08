@@ -13,13 +13,16 @@ const mapDispatchToProps = {
 export function SignInModal({ onClose, signIn }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [disable, setDisable] = useState(false);
 
   const [errorMessage, setErrorMessage] = useState('');
 
   async function handleSignin(e) {
     e.preventDefault();
     if (username && password) {
+      setDisable(true);
       const { success, payload } = await signIn(username, password);
+      setDisable(false);
       if (!success) {
         setErrorMessage(payload.message);
       } else {
@@ -56,7 +59,7 @@ export function SignInModal({ onClose, signIn }) {
           <Form.Input value={username} onChange={(e) => setUsername(e.target.value)} type="text" placeholder="Enter username" name="username" />
           <Form.Label>Password</Form.Label>
           <Form.Input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Enter password" name="password" />
-          <Button onClick={handleSignin} id="sign-in-form-button">Sign In</Button>
+          <Button disabled={disable} onClick={handleSignin} id="sign-in-form-button">Sign In</Button>
         </Modal.Body>
       </Modal>
     </div>
@@ -64,8 +67,8 @@ export function SignInModal({ onClose, signIn }) {
 }
 
 SignInModal.propTypes = {
-  onClose: PropTypes.func,
-  signIn: PropTypes.func,
+  onClose: PropTypes.func.isRequired,
+  signIn: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(SignInModal);

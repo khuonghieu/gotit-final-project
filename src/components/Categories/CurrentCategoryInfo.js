@@ -45,7 +45,7 @@ export function CurrentCategoryInfo({ categoryId, viewCategory }) {
 
 CurrentCategoryInfo.propTypes = {
   categoryId: PropTypes.string,
-  viewCategory: PropTypes.func,
+  viewCategory: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CurrentCategoryInfo);

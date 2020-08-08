@@ -32,8 +32,8 @@ export function ModalContainer({ modal, closeModal }) {
 }
 
 ModalContainer.propTypes = {
-  modal: PropTypes.string,
-  closeModal: PropTypes.func,
+  modal: PropTypes.object.isRequired,
+  closeModal: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModalContainer);

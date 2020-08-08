@@ -11,7 +11,6 @@ import ItemDetails from './Items/ItemDetails';
 function mapStateToProps(state) {
   return {
     user: state.user,
-    modal: state.modal,
   };
 }
 
@@ -44,9 +43,8 @@ export function App({ user, fetchUserInfo }) {
 }
 
 App.propTypes = {
-  user: PropTypes.object,
-  modal: PropTypes.object,
-  fetchUserInfo: PropTypes.func,
+  user: PropTypes.object.isRequired,
+  fetchUserInfo: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

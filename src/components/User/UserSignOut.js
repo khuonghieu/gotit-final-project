@@ -26,8 +26,8 @@ export function UserSignOut({ signOut, chooseModal }) {
 }
 
 UserSignOut.propTypes = {
-  signOut: PropTypes.func,
-  chooseModal: PropTypes.func,
+  signOut: PropTypes.func.isRequired,
+  chooseModal: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(UserSignOut);

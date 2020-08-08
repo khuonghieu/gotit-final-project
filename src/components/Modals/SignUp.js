@@ -16,12 +16,16 @@ export function SignUpModal({ onClose, signUp }) {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
 
-  const [errorMessage, setErrorMessage] = useState();
+  const [errorMessage, setErrorMessage] = useState('');
+  const [disable, setDisable] = useState(false);
 
   async function handleSignup(e) {
     e.preventDefault();
+
     if (email && username && password && name) {
+      setDisable(true);
       const { success, payload } = await signUp(email, username, password, name);
+      setDisable(false);
       if (!success) {
         setErrorMessage(JSON.stringify(payload.message));
       }
@@ -60,7 +64,7 @@ export function SignUpModal({ onClose, signUp }) {
           <Form.Input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Enter password" name="password" />
           <Form.Label>Name</Form.Label>
           <Form.Input value={name} onChange={(e) => setName(e.target.value)} type="text" placeholder="Enter your name" name="name" />
-          <Button onClick={handleSignup}>Sign Up</Button>
+          <Button disabled={disable} onClick={handleSignup}>Sign Up</Button>
         </Modal.Body>
       </Modal>
     </div>
@@ -68,8 +72,8 @@ export function SignUpModal({ onClose, signUp }) {
 }
 
 SignUpModal.propTypes = {
-  onClose: PropTypes.func,
-  signUp: PropTypes.func,
+  onClose: PropTypes.func.isRequired,
+  signUp: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(SignUpModal);

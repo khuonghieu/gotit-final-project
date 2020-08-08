@@ -1,5 +1,5 @@
 import * as constants from '../constants/actions';
-import { getToken } from '../utilities/localStorage';
+import { getToken } from '../util/localStorage';
 
 const initialState = { loggedIn: getToken() !== null, currentUser: null };
 // if (getToken() !== null) {

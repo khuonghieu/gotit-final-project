@@ -23,18 +23,16 @@ export function EditItem({
   const [description, setDescription] = useState(prefill.description);
   const [price, setPrice] = useState(prefill.price);
 
-  // if (prefill) {
-  //   setName(prefill.name);
-  //   setDescription(prefill.description);
-  //   setPrice(prefill.price);
-  // }
-
   const [errorMessage, setErrorMessage] = useState('');
+
+  const [disable, setDisable] = useState(false);
 
   async function handleEditItem(e) {
     e.preventDefault();
     if (name && description && price) {
+      setDisable(true);
       const { success, payload } = await editItem(categoryId, prefill.id, name, description, price);
+      setDisable(false);
       if (!success) {
         setErrorMessage(JSON.stringify(payload));
       } else {
@@ -74,7 +72,7 @@ export function EditItem({
           <Form.Input value={description} onChange={(e) => setDescription(e.target.value)} type="text" placeholder="Enter description" name="description" />
           <Form.Label>Item price</Form.Label>
           <Form.Input value={price} onChange={(e) => setPrice(e.target.value)} type="number" placeholder="Enter item price" name="price" />
-          <Button onClick={handleEditItem} id="edit-item-form-button">Confirm</Button>
+          <Button disabled={disable} onClick={handleEditItem} id="edit-item-form-button">Confirm</Button>
         </Modal.Body>
       </Modal>
     </div>
@@ -82,10 +80,10 @@ export function EditItem({
 }
 
 EditItem.propTypes = {
-  onClose: PropTypes.func,
-  item: PropTypes.object,
-  editItem: PropTypes.func,
-  categoryId: PropTypes.number,
+  onClose: PropTypes.func.isRequired,
+  editItem: PropTypes.func.isRequired,
+  categoryId: PropTypes.number.isRequired,
+  prefill: PropTypes.object.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditItem);

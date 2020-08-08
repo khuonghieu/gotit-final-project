@@ -34,7 +34,7 @@ export function CreateCategoryForm({ createCategory }) {
   );
 }
 CreateCategoryForm.propTypes = {
-  createCategory: PropTypes.func,
+  createCategory: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(CreateCategoryForm);

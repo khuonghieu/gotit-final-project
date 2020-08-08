@@ -6,23 +6,20 @@ import PropTypes from 'prop-types';
 import { chooseCategory, fetchCategories } from '../../actions/categories';
 import CurrentCategoryInfo from './CurrentCategoryInfo';
 import ItemList from '../Items/ItemList';
-import { fetchUserInfo } from '../../actions/users';
 
 function mapStateToProps(state) {
   return {
     categories: state.categories,
-    loggedIn: state.user.loggedIn,
   };
 }
 
 const mapDispatchToProps = {
   chooseCategory,
   fetchCategories,
-  fetchUserInfo,
 };
 
 export function CategoriesTabList({
-  categories, chooseCategory, fetchCategories, fetchUserInfo, loggedIn,
+  categories, chooseCategory, fetchCategories,
 }) {
   const history = useHistory();
   const params = useParams(history);
@@ -34,15 +31,17 @@ export function CategoriesTabList({
 
   useEffect(() => {
     (async () => {
-      await fetchCategories(0, 10);
+      const res = await fetchCategories(0, 10);
       if (params.categoryId) {
         chooseCategory(params.categoryId);
+      } else if (res.payload.categories.length > 0) {
+        onChooseCategory(res.payload.categories[0].id);
       } else {
         chooseCategory(null);
       }
     })();
-    // TODO: add comment for loggedIn usage
-  }, [chooseCategory, fetchCategories, params.categoryId, loggedIn, fetchUserInfo]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chooseCategory, fetchCategories, history, params.categoryId]);
 
   return (
     <div>
@@ -65,17 +64,14 @@ export function CategoriesTabList({
       <CurrentCategoryInfo />
       <hr />
       <ItemList />
-      {/* <CreateCategoryForm /> */}
     </div>
   );
 }
 
 CategoriesTabList.propTypes = {
-  categories: PropTypes.object,
-  chooseCategory: PropTypes.func,
-  fetchCategories: PropTypes.func,
-  fetchUserInfo: PropTypes.func,
-  loggedIn: PropTypes.bool,
+  categories: PropTypes.object.isRequired,
+  chooseCategory: PropTypes.func.isRequired,
+  fetchCategories: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CategoriesTabList);

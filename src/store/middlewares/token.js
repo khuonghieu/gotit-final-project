@@ -1,5 +1,5 @@
 import * as constants from '../../constants/actions';
-import { setToken, deleteToken } from '../../utilities/localStorage';
+import { setToken, deleteToken } from '../../util/localStorage';
 
 export default (store) => (next) => (action) => {
   if (action.type === constants.SIGN_IN_SUCCESS || action.type === constants.SIGN_UP_SUCCESS) {

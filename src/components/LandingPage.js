@@ -40,8 +40,8 @@ export function LandingPage({ user, chooseModal }) {
 }
 
 LandingPage.propTypes = {
-  user: PropTypes.object,
-  chooseModal: PropTypes.func,
+  user: PropTypes.object.isRequired,
+  chooseModal: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LandingPage);

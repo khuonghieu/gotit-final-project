@@ -63,9 +63,9 @@ export function ItemList({
 }
 
 ItemList.propTypes = {
-  editComplete: PropTypes.bool,
+  editComplete: PropTypes.bool.isRequired,
   currentCategory: PropTypes.string,
-  viewItems: PropTypes.func,
+  viewItems: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ItemList);

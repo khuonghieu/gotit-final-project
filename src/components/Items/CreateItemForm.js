@@ -24,6 +24,8 @@ export function CreateItemForm({
 
   const [errorMessage, setErrorMessage] = useState('');
 
+  const [disable, setDisable] = useState(false);
+
   useEffect(() => {
     setName('');
     setDescription('');
@@ -33,7 +35,9 @@ export function CreateItemForm({
   async function handleCreateItem(e) {
     e.preventDefault();
     if (currentCategory && name && description && price) {
+      setDisable(true);
       const { success, payload } = await createItem(currentCategory, name, description, price);
+      setDisable(false);
       refreshItemList();
       if (!success) {
         setErrorMessage(JSON.stringify(payload));
@@ -69,7 +73,7 @@ export function CreateItemForm({
           <Form.Input value={description} onChange={(e) => setDescription(e.target.value)} type="text" placeholder="Enter item description" name="description" />
           <Form.Label>Item price</Form.Label>
           <Form.Input value={price} onChange={(e) => setPrice(e.target.value)} type="number" placeholder="Enter item price" name="price" />
-          <Button onClick={handleCreateItem}>Create Item</Button>
+          <Button disabled={disable} onClick={handleCreateItem}>Create Item</Button>
         </div>
       ) : null}
 
@@ -78,9 +82,10 @@ export function CreateItemForm({
 }
 
 CreateItemForm.propTypes = {
-  currentCategory: PropTypes.number,
-  createItem: PropTypes.func,
-  refreshItemList: PropTypes.func,
+  user: PropTypes.object.isRequired,
+  currentCategory: PropTypes.string,
+  createItem: PropTypes.func.isRequired,
+  refreshItemList: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateItemForm);
