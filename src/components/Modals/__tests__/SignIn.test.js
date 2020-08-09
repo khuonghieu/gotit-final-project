@@ -36,17 +36,11 @@ describe('components/Modals/SignIn.js', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  // it('should close when click close button', () => {
-  //   setup();
-  //   button.at(0).simulate('click');
-  //   expect(props.onClose).toHaveBeenCalled();
-  // });
-
-  // it('should call SignIn API when form is fully filled and clicked submit button', () => {
-  //   setup();
-  //   input.at(0).simulate('change', { target: { value: 'testuser' } });
-  //   input.at(1).simulate('change', { target: { value: 'testpassword' } });
-  //   button.at(1).simulate('click');
-  //   expect(props.signIn).toHaveBeenCalled();
-  // });
+  it('should call SignIn API when form is fully filled and clicked submit button', () => {
+    setup();
+    input.at(0).simulate('change', { target: { value: 'testuser' } });
+    input.at(1).simulate('change', { target: { value: 'testpassword' } });
+    button.props().onClick();
+    expect(props.signIn).toHaveBeenCalled();
+  });
 });

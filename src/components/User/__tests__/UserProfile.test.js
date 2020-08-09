@@ -13,7 +13,6 @@ describe('components/User/UserProfile.js', () => {
   beforeEach(() => {
     props = {
       user: {},
-      history: createBrowserHistory(),
     };
   });
   const setup = () => {

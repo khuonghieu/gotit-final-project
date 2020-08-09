@@ -35,20 +35,13 @@ describe('components/Modals/SignUp.js', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  // it('should close when click close button', () => {
-  //   setup();
-  //   const closeButton = wrapper.find(Button);
-  //   button.simulate('click');
-  //   expect(props.onClose).toHaveBeenCalled();
-  // });
-
-  // it('should call SignIn API when form is fully filled and clicked submit button', () => {
-  //   setup();
-  //   input.at(0).simulate('change', { target: { value: 'testemail@gmail.com' } });
-  //   input.at(1).simulate('change', { target: { value: 'testusername' } });
-  //   input.at(2).simulate('change', { target: { value: 'testpassword' } });
-  //   input.at(3).simulate('change', { target: { value: 'testname' } });
-  //   button.simulate('click');
-  //   expect(props.signUp).toHaveBeenCalled();
-  // });
+  it('should call SignIn API when form is fully filled and clicked submit button', () => {
+    setup();
+    input.at(0).simulate('change', { target: { value: 'testemail@gmail.com' } });
+    input.at(1).simulate('change', { target: { value: 'testusername' } });
+    input.at(2).simulate('change', { target: { value: 'testpassword' } });
+    input.at(3).simulate('change', { target: { value: 'testname' } });
+    button.props().onClick();
+    expect(props.signUp).toHaveBeenCalled();
+  });
 });

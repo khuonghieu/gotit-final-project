@@ -31,6 +31,10 @@
     "localStorage": true,
     "fetch": true,
     "jest": true,
-    "alert": true
+    "alert": true,
+    "it": true,
+    "expect": true,
+    "describe": true,
+    "beforeEach": true
   }
 }

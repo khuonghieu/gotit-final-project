@@ -1,8 +1,8 @@
 import React, * as fromReact from 'react';
 import { shallow, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import { createBrowserHistory } from 'history';
 import { Tab } from '@gotitinc/design-system';
+import reactRouter from 'react-router';
 import { CategoriesTabList } from '../CategoriesTabList';
 
 configure({ adapter: new Adapter() });
@@ -12,15 +12,14 @@ describe('components/Categories/CategoriesTabList.js', () => {
   let props;
   let tabItems;
   let useEffect;
+
   beforeEach(() => {
     useEffect = jest.spyOn(fromReact, 'useEffect');
+
     props = {
       categories: { currentCategory: null, categoriesList: [] },
-      loggedIn: false,
       chooseCategory: jest.fn(),
       fetchCategories: jest.fn(),
-      history: createBrowserHistory(),
-      fetchUserInfo: jest.fn(),
     };
   });
 
@@ -34,19 +33,18 @@ describe('components/Categories/CategoriesTabList.js', () => {
     );
     update();
   };
+
   it('should render correctly', () => {
     setup();
     expect(wrapper).toMatchSnapshot();
   });
-  it('should call fetchCategories when loggedIn is true', () => {
+
+  it('should call fetchCategories when rendered', () => {
     useEffect.mockImplementation((f) => f());
-    props = {
-      ...props,
-      loggedIn: true,
-    };
     setup();
     expect(props.fetchCategories).toHaveBeenCalled();
   });
+
   it('should render correct number of tab items when receiving array of categories', () => {
     props = {
       ...props,

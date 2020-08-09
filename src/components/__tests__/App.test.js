@@ -1,4 +1,4 @@
-import React from 'react';
+import React, * as fromReact from 'react';
 import { shallow, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { App } from '../App';
@@ -10,16 +10,13 @@ describe('components/App.js', () => {
   let props;
   let useEffect;
   beforeEach(() => {
-    useEffect = jest.spyOn(React, 'useEffect');
+    useEffect = jest.spyOn(fromReact, 'useEffect');
     props = {
       user: {
         loggedIn: false,
         currentUser: null,
       },
-      modal: null,
       fetchUserInfo: jest.fn(),
-      signInModal: jest.fn(),
-      signUpModal: jest.fn(),
     };
   });
 
@@ -33,6 +30,7 @@ describe('components/App.js', () => {
     setup();
     expect(wrapper).toMatchSnapshot();
   });
+
   it('should fetch user info when logged in ', () => {
     useEffect.mockImplementation((f) => f());
     props = {

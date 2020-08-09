@@ -22,6 +22,7 @@ describe('components/Items/CreateItemForm.js', () => {
       currentCategory: 1,
       createItem: jest.fn(),
       refreshItemList: jest.fn(),
+      user: { loggedIn: true },
     };
   });
 
@@ -37,21 +38,21 @@ describe('components/Items/CreateItemForm.js', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  // it('should call SignIn API when form is fully filled and clicked submit button', () => {
-  //   setup();
-  //   input.at(0).simulate('change', { target: { value: 'testname' } });
-  //   input.at(1).simulate('change', { target: { value: 'testdescription' } });
-  //   input.at(2).simulate('change', { target: { value: 5 } });
-  //   button.simulate('click');
-  //   expect(props.createItem).toHaveBeenCalled();
-  // });
+  it('should call SignIn API when form is fully filled and clicked submit button', () => {
+    setup();
+    input.at(0).simulate('change', { target: { value: 'testname' } });
+    input.at(1).simulate('change', { target: { value: 'testdescription' } });
+    input.at(2).simulate('change', { target: { value: 5 } });
+    button.props().onClick();
+    expect(props.createItem).toHaveBeenCalled();
+  });
 
-  // it('should refresh item list when done creating item', () => {
-  //   setup();
-  //   input.at(0).simulate('change', { target: { value: 'testname' } });
-  //   input.at(1).simulate('change', { target: { value: 'testdescription' } });
-  //   input.at(2).simulate('change', { target: { value: 5 } });
-  //   button.simulate('click');
-  //   expect(props.refreshItemList).toHaveBeenCalled();
-  // });
+  it('should refresh item list when done creating item', () => {
+    setup();
+    input.at(0).simulate('change', { target: { value: 'testname' } });
+    input.at(1).simulate('change', { target: { value: 'testdescription' } });
+    input.at(2).simulate('change', { target: { value: 5 } });
+    button.props().onClick();
+    expect(props.refreshItemList).toHaveBeenCalled();
+  });
 });

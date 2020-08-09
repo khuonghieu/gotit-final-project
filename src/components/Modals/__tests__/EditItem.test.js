@@ -14,7 +14,7 @@ describe('components/Modals/EditItem.js', () => {
   beforeEach(() => {
     props = {
       onClose: jest.fn(),
-      item: {
+      prefill: {
         name: 'testname',
         description: 'testdescription',
         id: 0,

@@ -11,8 +11,8 @@ describe('components/Modals/index.js', () => {
 
   beforeEach(() => {
     props = {
-      modal: null,
-      onCloseModal: jest.fn(),
+      modal: { modalChosen: null },
+      closeModal: jest.fn(),
     };
   });
   const setup = () => {

@@ -22,6 +22,7 @@ export function LandingPage({ user, chooseModal }) {
   useEffect(() => {
     history.push('/catalog');
   }, [history]);
+
   return (
     <div>
       <Header fullWidth>

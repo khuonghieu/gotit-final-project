@@ -13,7 +13,7 @@ describe('components/User/UserSignOut.js', () => {
   beforeEach(() => {
     props = {
       signOut: jest.fn(),
-      signOutModal: jest.fn(),
+      chooseModal: jest.fn(),
       history: createBrowserHistory(),
     };
   });
@@ -38,6 +38,6 @@ describe('components/User/UserSignOut.js', () => {
     setup();
     const button = wrapper.find('Button');
     button.simulate('click');
-    expect(props.signOutModal).toHaveBeenCalled();
+    expect(props.chooseModal).toHaveBeenCalled();
   });
 });
