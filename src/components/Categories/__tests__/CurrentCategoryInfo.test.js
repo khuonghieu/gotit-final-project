@@ -8,9 +8,9 @@ configure({ adapter: new Adapter() });
 describe('components/Categories/CurrentCategoryInfo.js', () => {
   let wrapper;
   let props;
-
+  let useEffect;
   beforeEach(() => {
-    jest.spyOn(React, 'useEffect').mockImplementation((f) => f());
+    useEffect = jest.spyOn(React, 'useEffect');
     props = {
       categoryId: null,
       viewCategory: jest.fn(),
@@ -26,6 +26,7 @@ describe('components/Categories/CurrentCategoryInfo.js', () => {
     expect(wrapper).toMatchSnapshot();
   });
   it('should get category info when change categoryId', () => {
+    useEffect.mockImplementation((f) => f());
     setup();
     wrapper.setProps({ ...props, categoryId: 1 });
     expect(props.viewCategory).toHaveBeenCalled();

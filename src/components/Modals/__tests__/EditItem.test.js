@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow, mount, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import { Message, Form, Button } from '@gotitinc/design-system';
 import { EditItem } from '../EditItem';
 
 configure({ adapter: new Adapter() });
@@ -26,12 +27,12 @@ describe('components/Modals/EditItem.js', () => {
   });
 
   const update = () => {
-    input = wrapper.find('input');
-    button = wrapper.find('button');
+    input = wrapper.find(Form.Input);
+    button = wrapper.find(Button);
   };
 
   const setup = () => {
-    wrapper = mount(
+    wrapper = shallow(
       <EditItem {...props} />,
     );
     update();
@@ -42,18 +43,40 @@ describe('components/Modals/EditItem.js', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('should close when click close button', () => {
-    setup();
-    button.at(0).simulate('click');
-    expect(props.onClose).toHaveBeenCalled();
-  });
-
   it('should call SignIn API when form is fully filled and clicked submit button', () => {
     setup();
-    input.at(0).simulate('change', { target: { value: 'testname1' } });
-    input.at(1).simulate('change', { target: { value: 'testdescription1' } });
-    input.at(2).simulate('change', { target: { value: 5 } });
-    button.at(1).simulate('click');
+    input.at(0).props().onChange({ target: { value: 'testname1' } });
+    input.at(1).props().onChange({ target: { value: 'testdescription1' } });
+    input.at(2).props().onChange({ target: { value: 5 } });
+    update();
+    button.props().onClick({ preventDefault: jest.fn() });
     expect(props.editItem).toHaveBeenCalled();
+  });
+
+  it('should display error message when all fields are not fully filled', () => {
+    setup();
+    button.props().onClick({ preventDefault: jest.fn() });
+    expect(wrapper.find(Message).length).toBe(1);
+  });
+  it('should display error message when edit item failed', async () => {
+    props.editItem.mockReturnValue({ success: false, payload: { message: 'error' } });
+    setup();
+    input.at(0).props().onChange({ target: { value: 'testname1' } });
+    input.at(1).props().onChange({ target: { value: 'testdescription1' } });
+    input.at(2).props().onChange({ target: { value: 5 } });
+    update();
+    await button.props().onClick({ preventDefault: jest.fn() });
+    expect(wrapper.find(Message).length).toBe(1);
+  });
+
+  it('should close when edit item success', async () => {
+    props.editItem.mockReturnValue({ success: true, payload: {} });
+    setup();
+    input.at(0).props().onChange({ target: { value: 'testname1' } });
+    input.at(1).props().onChange({ target: { value: 'testdescription1' } });
+    input.at(2).props().onChange({ target: { value: 5 } });
+    update();
+    await button.props().onClick({ preventDefault: jest.fn() });
+    expect(props.onClose).toHaveBeenCalled();
   });
 });

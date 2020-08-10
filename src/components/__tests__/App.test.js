@@ -3,6 +3,7 @@ import { shallow, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { Header, Button } from '@gotitinc/design-system';
 import { App } from '../App';
+import { UserSignOut } from '../User/UserSignOut';
 
 configure({ adapter: new Adapter() });
 
@@ -59,7 +60,7 @@ describe('components/App.js', () => {
     expect(props.fetchUserInfo).toHaveBeenCalled();
   });
 
-  it('should show sign out button when logged in', () => {
+  it('should show UserSignOut when logged in', () => {
     props = {
       ...props,
       user: {
@@ -83,5 +84,32 @@ describe('components/App.js', () => {
     setup();
     const buttons = wrapper.find(Button);
     expect(buttons.length).toBe(2);
+  });
+
+  it('should call chooseModal when click signin buttons', () => {
+    props = {
+      ...props,
+      user: {
+        loggedIn: false,
+        currentUser: null,
+      },
+    };
+    setup();
+    const buttons = wrapper.find(Button);
+    buttons.at(1).props().onClick();
+    expect(props.chooseModal).toHaveBeenCalled();
+  });
+  it('should call chooseModal when click signup buttons', () => {
+    props = {
+      ...props,
+      user: {
+        loggedIn: false,
+        currentUser: null,
+      },
+    };
+    setup();
+    const buttons = wrapper.find(Button);
+    buttons.at(0).props().onClick();
+    expect(props.chooseModal).toHaveBeenCalled();
   });
 });

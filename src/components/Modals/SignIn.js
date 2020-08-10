@@ -29,7 +29,6 @@ export function SignInModal({ onClose, signIn }) {
         onClose();
       }
     } else {
-      // TODO: remove alerts
       setErrorMessage('Fill all the blanks');
     }
   }

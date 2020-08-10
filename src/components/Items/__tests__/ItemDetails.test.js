@@ -36,4 +36,16 @@ describe('components/Items/ItemDetails.js', () => {
     setup();
     expect(wrapper).toMatchSnapshot();
   });
+
+  it('should call chooseItem when rendered', () => {
+    useEffect.mockImplementation((f) => f());
+    const params = {
+      categoryId: 1,
+      itemId: 1,
+      match: jest.fn(),
+    };
+    useParams.mockImplementation(() => params);
+    setup();
+    expect(props.chooseItem).toHaveBeenCalled();
+  });
 });

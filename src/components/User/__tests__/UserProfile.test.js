@@ -45,7 +45,6 @@ describe('components/User/UserProfile.js', () => {
           updated: '2018-04-03T08:40:51.620Z',
         },
       },
-
     };
     setup();
     expect(wrapper.text()).toBe('testuser');
