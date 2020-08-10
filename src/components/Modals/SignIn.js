@@ -30,7 +30,7 @@ export function SignInModal({ onClose, signIn }) {
       }
     } else {
       // TODO: remove alerts
-      alert('Fill all the blanks');
+      setErrorMessage('Fill all the blanks');
     }
   }
   return (

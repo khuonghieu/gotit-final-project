@@ -30,7 +30,7 @@ export function SignUpModal({ onClose, signUp }) {
         setErrorMessage(JSON.stringify(payload.message));
       }
     } else {
-      alert('fill all the blanks');
+      setErrorMessage('Fill all the blanks');
     }
   }
 

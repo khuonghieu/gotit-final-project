@@ -16,6 +16,8 @@
     "react-hooks/exhaustive-deps": "warn",
     "no-shadow": 0,
     "import/no-named-as-default": 0,
+    "import/no-mutable-exports": 0,
+    "no-unused-vars": 0,
     "react/jsx-filename-extension": [
       1,
       {
@@ -35,6 +37,7 @@
     "it": true,
     "expect": true,
     "describe": true,
-    "beforeEach": true
+    "beforeEach": true,
+    "document": true
   }
 }

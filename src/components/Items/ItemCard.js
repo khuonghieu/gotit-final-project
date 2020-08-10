@@ -50,7 +50,10 @@ export function ItemCard({
               size="small"
               onClick={() => {
                 const prefill = {
-                  name: itemElement.name, description: itemElement.description, price: itemElement.price, id: itemElement.id,
+                  name: itemElement.name,
+                  description: itemElement.description,
+                  price: itemElement.price,
+                  id: itemElement.id,
                 };
                 chooseModal(constants.EDIT_ITEM_MODAL, prefill);
               }}
