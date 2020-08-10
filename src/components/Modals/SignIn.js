@@ -19,7 +19,6 @@ export function SignInModal({ onClose, signIn }) {
 
   async function handleSignin(e) {
     e.preventDefault();
-    console.log('username and pwd', username, password);
     if (username && password) {
       setDisable(true);
       const { success, payload } = await signIn(username, password);
@@ -34,7 +33,6 @@ export function SignInModal({ onClose, signIn }) {
       setErrorMessage('Fill all the blanks');
     }
   }
-  console.log('before return', username, password);
   return (
     <div>
       <Modal size="small" show centered onHide={onClose}>
