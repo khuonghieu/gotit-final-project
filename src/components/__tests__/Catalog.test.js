@@ -29,30 +29,4 @@ describe('components/Catalog.js', () => {
     setup();
     expect(wrapper).toMatchSnapshot();
   });
-
-  it('should show sign out button when logged in', () => {
-    props = {
-      ...props,
-      user: {
-        loggedIn: true,
-        currentUser: null,
-      },
-    };
-    setup();
-    const signOutButton = wrapper.find(Header.Right);
-    expect(signOutButton.length).toBe(1);
-  });
-
-  it('should show sign up and sign in button when not logged in', () => {
-    props = {
-      ...props,
-      user: {
-        loggedIn: false,
-        currentUser: null,
-      },
-    };
-    setup();
-    const buttons = wrapper.find(Button);
-    expect(buttons.length).toBe(2);
-  });
 });

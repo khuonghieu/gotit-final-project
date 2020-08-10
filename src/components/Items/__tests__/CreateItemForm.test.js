@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import { Button, Form } from '@gotitinc/design-system';
+import { Button, Form, Message } from '@gotitinc/design-system';
 import { CreateItemForm } from '../CreateItemForm';
 
 configure({ adapter: new Adapter() });
@@ -43,16 +43,29 @@ describe('components/Items/CreateItemForm.js', () => {
     input.at(0).simulate('change', { target: { value: 'testname' } });
     input.at(1).simulate('change', { target: { value: 'testdescription' } });
     input.at(2).simulate('change', { target: { value: 5 } });
-    button.props().onClick();
+    update();
+    button.props().onClick({ preventDefault: jest.fn() });
     expect(props.createItem).toHaveBeenCalled();
   });
 
-  it('should refresh item list when done creating item', () => {
+  it('should show error message when form is NOT fully filled', () => {
     setup();
-    input.at(0).simulate('change', { target: { value: 'testname' } });
-    input.at(1).simulate('change', { target: { value: 'testdescription' } });
-    input.at(2).simulate('change', { target: { value: 5 } });
-    button.props().onClick();
+    input.at(0).simulate('change', { target: { value: '' } });
+    input.at(1).simulate('change', { target: { value: '' } });
+    input.at(2).simulate('change', { target: { value: 0 } });
+    update();
+    button.props().onClick({ preventDefault: jest.fn() });
+    expect(wrapper.find(Message).length).toBe(1);
+  });
+
+  it('should refresh item list when done creating item', async () => {
+    setup();
+    input.at(0).simulate('change', { target: { value: 'testname1' } });
+    input.at(1).simulate('change', { target: { value: 'testdescription1' } });
+    input.at(2).simulate('change', { target: { value: 6 } });
+    update();
+    props.createItem.mockReturnValue({ success: true, payload: {} });
+    await button.props().onClick({ preventDefault: jest.fn() });
     expect(props.refreshItemList).toHaveBeenCalled();
   });
 });

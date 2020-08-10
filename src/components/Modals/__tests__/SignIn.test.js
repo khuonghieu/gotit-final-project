@@ -38,9 +38,10 @@ describe('components/Modals/SignIn.js', () => {
 
   it('should call SignIn API when form is fully filled and clicked submit button', () => {
     setup();
-    input.at(0).simulate('change', { target: { value: 'testuser' } });
-    input.at(1).simulate('change', { target: { value: 'testpassword' } });
-    button.props().onClick();
+    input.at(0).props().onChange({ target: { value: 'testuser' } });
+    input.at(1).props().onChange({ target: { value: 'testpassword' } });
+    update();
+    button.props().onClick({ preventDefault: jest.fn() });
     expect(props.signIn).toHaveBeenCalled();
   });
 });

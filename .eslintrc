@@ -18,6 +18,7 @@
     "import/no-named-as-default": 0,
     "import/no-mutable-exports": 0,
     "no-unused-vars": 0,
+    "react/jsx-props-no-spreading": 0,
     "react/jsx-filename-extension": [
       1,
       {

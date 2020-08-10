@@ -41,7 +41,8 @@ describe('components/Modals/SignUp.js', () => {
     input.at(1).simulate('change', { target: { value: 'testusername' } });
     input.at(2).simulate('change', { target: { value: 'testpassword' } });
     input.at(3).simulate('change', { target: { value: 'testname' } });
-    button.props().onClick();
+    update();
+    button.props().onClick({ preventDefault: jest.fn() });
     expect(props.signUp).toHaveBeenCalled();
   });
 });

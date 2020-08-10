@@ -1,5 +1,5 @@
 import { Tab } from '@gotitinc/design-system';
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
 import PropTypes from 'prop-types';
@@ -22,12 +22,12 @@ export function CategoriesTabList({
   categories, chooseCategory, fetchCategories,
 }) {
   const history = useHistory();
-  const params = useParams(history);
+  const params = useParams();
 
-  function onChooseCategory(category) {
+  const onChooseCategory = useCallback((category) => {
     chooseCategory(category);
     history.push(`/catalog/${category}`);
-  }
+  }, [chooseCategory, history]);
 
   useEffect(() => {
     (async () => {
@@ -40,8 +40,7 @@ export function CategoriesTabList({
         chooseCategory(null);
       }
     })();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chooseCategory, fetchCategories, history, params.categoryId]);
+  }, [chooseCategory, fetchCategories, onChooseCategory, params.categoryId]);
 
   return (
     <div>

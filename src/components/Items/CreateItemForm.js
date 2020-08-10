@@ -43,41 +43,41 @@ export function CreateItemForm({
         setErrorMessage(JSON.stringify(payload));
       } else {
         setErrorMessage('');
+        setName('');
+        setDescription('');
+        setPrice(0);
       }
     } else {
-      setErrorMessage('Fill all the blanks before submit');
+      setErrorMessage('Fill all the blanks before submission');
     }
   }
   return (
-    <div>
-      {user.loggedIn ? (
-        <div>
-          {errorMessage ? (
-            <Message type="system" variant="negative">
-              <Message.Container>
-                <Message.Title>
-                  Create item fail failed
-                </Message.Title>
-                <Message.Content>
-                  {errorMessage}
-                </Message.Content>
-              </Message.Container>
-            </Message>
-          ) : null}
-          <p>
-            <b>Create item for this category:</b>
-          </p>
-          <Form.Label>Item name</Form.Label>
-          <Form.Input value={name} onChange={(e) => setName(e.target.value)} type="text" placeholder="Enter item name" name="name" />
-          <Form.Label>Item description</Form.Label>
-          <Form.Input value={description} onChange={(e) => setDescription(e.target.value)} type="text" placeholder="Enter item description" name="description" />
-          <Form.Label>Item price</Form.Label>
-          <Form.Input value={price} onChange={(e) => setPrice(e.target.value)} type="number" placeholder="Enter item price" name="price" />
-          <Button disabled={disable} onClick={handleCreateItem}>Create Item</Button>
-        </div>
-      ) : null}
-
-    </div>
+    user.loggedIn ? (
+      <div>
+        {errorMessage ? (
+          <Message type="system" variant="negative">
+            <Message.Container>
+              <Message.Title>
+                Create item fail failed
+              </Message.Title>
+              <Message.Content>
+                {errorMessage}
+              </Message.Content>
+            </Message.Container>
+          </Message>
+        ) : null}
+        <p>
+          <b>Create item for this category:</b>
+        </p>
+        <Form.Label>Item name</Form.Label>
+        <Form.Input value={name} onChange={(e) => setName(e.target.value)} type="text" placeholder="Enter item name" name="name" />
+        <Form.Label>Item description</Form.Label>
+        <Form.Input value={description} onChange={(e) => setDescription(e.target.value)} type="text" placeholder="Enter item description" name="description" />
+        <Form.Label>Item price</Form.Label>
+        <Form.Input value={price} onChange={(e) => setPrice(e.target.value)} type="number" placeholder="Enter item price" name="price" />
+        <Button disabled={disable} onClick={handleCreateItem}>Create Item</Button>
+      </div>
+    ) : null
   );
 }
 
