@@ -1,7 +1,9 @@
-import { EmptyState } from '@gotitinc/design-system';
+import { EmptyState, Pagination } from '@gotitinc/design-system';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { useLocation } from 'react-router';
+import queryString from 'query-string';
 import { viewItems } from '../../actions/items';
 import CreateItemForm from './CreateItemForm';
 import * as constants from '../../constants/actions';
@@ -24,20 +26,26 @@ export function ItemList({
   const [itemList, setItemList] = useState([]);
   const [refresh, setRefresh] = useState(false);
 
+  const location = useLocation();
+  const parsed = queryString.parse(location.search);
+
   function refreshItemList() {
     setRefresh(!refresh);
   }
 
+  // Limit fetch quantity to be 3, offset is tuned accordingly
+  const offset = 3 * Number.parseInt(parsed.page, 10) - 1;
+
   useEffect(() => {
     (async () => {
       if (currentCategory) {
-        const { success, payload } = await viewItems(currentCategory, 0, 10);
+        const { success, payload } = await viewItems(currentCategory, offset, 3);
         if (success) {
           setItemList(payload.items);
         }
       }
     })();
-  }, [currentCategory, viewItems, refresh, editComplete]);
+  }, [currentCategory, viewItems, refresh, editComplete, parsed.page, offset]);
 
   return (
     <div>
@@ -58,6 +66,15 @@ export function ItemList({
             </EmptyState>
           </div>
         )}
+      <div className="u-textCenter">
+        <Pagination>
+          <Pagination.Item active={parsed.page === '1'} href="?page=1">1</Pagination.Item>
+          <Pagination.Item active={parsed.page === '2'} href="?page=2">2</Pagination.Item>
+          <Pagination.Item active={parsed.page === '3'} href="?page=3">3</Pagination.Item>
+          <Pagination.Item active={parsed.page === '4'} href="?page=4">4</Pagination.Item>
+          <Pagination.Item active={parsed.page === '5'} href="?page=5">5</Pagination.Item>
+        </Pagination>
+      </div>
     </div>
   );
 }

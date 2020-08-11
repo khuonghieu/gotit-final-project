@@ -26,12 +26,14 @@ export function CategoriesTabList({
 
   const onChooseCategory = useCallback((category) => {
     chooseCategory(category);
-    history.push(`/catalog/${category}`);
+    // Automatically go to first page of the first category available
+    history.push(`/catalog/${category}?page=1`);
   }, [chooseCategory, history]);
 
   useEffect(() => {
     (async () => {
       const res = await fetchCategories(0, 10);
+      // Go to first available category, or go to null if unavailable
       if (params.categoryId) {
         chooseCategory(params.categoryId);
       } else if (res.payload.categories.length > 0) {

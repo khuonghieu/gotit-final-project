@@ -35,13 +35,16 @@ export function CreateItemForm({
   async function handleCreateItem(e) {
     e.preventDefault();
     if (currentCategory && name && description && price) {
+      // Disable button during API call
       setDisable(true);
+
       const { success, payload } = await createItem(currentCategory, name, description, price);
       setDisable(false);
       refreshItemList();
       if (!success) {
         setErrorMessage(JSON.stringify(payload));
       } else {
+        // Clear form input when item created successfully
         setErrorMessage('');
         setName('');
         setDescription('');
@@ -52,6 +55,7 @@ export function CreateItemForm({
     }
   }
   return (
+    // Only show form if logged in
     user.loggedIn ? (
       <div>
         {errorMessage ? (

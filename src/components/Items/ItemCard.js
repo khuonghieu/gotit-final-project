@@ -43,6 +43,7 @@ export function ItemCard({
         >
           View item
         </Button>
+        {/* Only show edit and delete buttons if the item belongs to the current user */}
         {(user.currentUser && user.currentUser.id === itemElement.user_id) ? (
           <div>
             <Button
