@@ -1,5 +1,7 @@
 import { connect } from 'react-redux';
-import { Form, Button, Message } from '@gotitinc/design-system';
+import {
+  Form, Button, Message, toast, Icon, ToastContainer,
+} from '@gotitinc/design-system';
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { createItem } from '../../actions/items';
@@ -14,6 +16,18 @@ function mapStateToProps(state) {
 const mapDispatchToProps = {
   createItem,
 };
+
+const notifyPositive = () => toast.success(() => (
+  <div className="u-flex u-flexGrow-1">
+    <div className="u-marginRightExtraSmall">
+      <Icon name="checkmarkCircle" size="medium" />
+    </div>
+    <div className="u-flexGrow-1">
+      <div className="u-fontMedium u-marginBottomExtraSmall">Create item success</div>
+    </div>
+  </div>
+), {
+});
 
 export function CreateItemForm({
   currentCategory, createItem, refreshItemList, user,
@@ -45,6 +59,7 @@ export function CreateItemForm({
         setErrorMessage(JSON.stringify(payload));
       } else {
         // Clear form input when item created successfully
+        notifyPositive();
         setErrorMessage('');
         setName('');
         setDescription('');
@@ -70,6 +85,7 @@ export function CreateItemForm({
             </Message.Container>
           </Message>
         ) : null}
+        <ToastContainer />
         <p>
           <b>Create item for this category:</b>
         </p>

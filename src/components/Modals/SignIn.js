@@ -2,13 +2,25 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
-  Button, Form, Modal, Message,
+  Button, Form, Modal, Message, toast, ToastContainer, Icon,
 } from '@gotitinc/design-system';
 import { signIn } from '../../actions/users';
 
 const mapDispatchToProps = {
   signIn,
 };
+
+const notifyPositive = () => toast.success(() => (
+  <div className="u-flex u-flexGrow-1">
+    <div className="u-marginRightExtraSmall">
+      <Icon name="checkmarkCircle" size="medium" />
+    </div>
+    <div className="u-flexGrow-1">
+      <div className="u-fontMedium u-marginBottomExtraSmall">Sign in success</div>
+    </div>
+  </div>
+), {
+});
 
 export function SignInModal({ onClose, signIn }) {
   const [username, setUsername] = useState('');
@@ -26,6 +38,7 @@ export function SignInModal({ onClose, signIn }) {
       if (!success) {
         setErrorMessage(payload.message);
       } else {
+        notifyPositive();
         onClose();
       }
     } else {
@@ -34,6 +47,7 @@ export function SignInModal({ onClose, signIn }) {
   }
   return (
     <div>
+      <ToastContainer />
       <Modal size="small" show centered onHide={onClose}>
         <Modal.Header closeButton onClick={onClose}>
           <Modal.Title>Sign In</Modal.Title>

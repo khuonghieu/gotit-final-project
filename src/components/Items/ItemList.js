@@ -2,7 +2,7 @@ import { EmptyState, Pagination } from '@gotitinc/design-system';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { useLocation } from 'react-router';
+import { useLocation, useHistory } from 'react-router';
 import queryString from 'query-string';
 import { viewItems } from '../../actions/items';
 import CreateItemForm from './CreateItemForm';
@@ -25,6 +25,9 @@ export function ItemList({
 }) {
   const [itemList, setItemList] = useState([]);
   const [refresh, setRefresh] = useState(false);
+  const [itemQuantity, setItemQuantity] = useState(0);
+
+  const history = useHistory();
 
   const location = useLocation();
   const parsed = queryString.parse(location.search);
@@ -34,7 +37,7 @@ export function ItemList({
   }
 
   // Limit fetch quantity to be 3, offset is tuned accordingly
-  const offset = 3 * Number.parseInt(parsed.page, 10) - 1;
+  const offset = 3 * (Number.parseInt(parsed.page, 10) - 1);
 
   useEffect(() => {
     (async () => {
@@ -42,10 +45,11 @@ export function ItemList({
         const { success, payload } = await viewItems(currentCategory, offset, 3);
         if (success) {
           setItemList(payload.items);
+          setItemQuantity(payload.total_items);
         }
       }
     })();
-  }, [currentCategory, viewItems, refresh, editComplete, parsed.page, offset]);
+  }, [currentCategory, viewItems, refresh, editComplete, parsed.page, offset, itemQuantity]);
 
   return (
     <div>
@@ -68,11 +72,9 @@ export function ItemList({
         )}
       <div className="u-textCenter">
         <Pagination>
-          <Pagination.Item active={parsed.page === '1'} href="?page=1">1</Pagination.Item>
-          <Pagination.Item active={parsed.page === '2'} href="?page=2">2</Pagination.Item>
-          <Pagination.Item active={parsed.page === '3'} href="?page=3">3</Pagination.Item>
-          <Pagination.Item active={parsed.page === '4'} href="?page=4">4</Pagination.Item>
-          <Pagination.Item active={parsed.page === '5'} href="?page=5">5</Pagination.Item>
+          {[...Array(Math.ceil(itemQuantity / 3)).keys()].map((key) => (
+            <Pagination.Item active={parsed.page === (key + 1).toString()} onClick={() => history.push(`/catalog/${currentCategory}?page=${key + 1}`)}>{key + 1}</Pagination.Item>
+          ))}
         </Pagination>
       </div>
     </div>
