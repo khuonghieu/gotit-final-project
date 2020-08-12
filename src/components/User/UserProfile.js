@@ -3,12 +3,6 @@ import PropTypes from 'prop-types';
 import { Badge } from '@gotitinc/design-system';
 import { connect } from 'react-redux';
 
-function mapStateToProps(state) {
-  return {
-    user: state.user,
-  };
-}
-
 export function UserProfile({ user }) {
   return (
     <div style={{ width: 350 }}>
@@ -22,5 +16,11 @@ export function UserProfile({ user }) {
 UserProfile.propTypes = {
   user: PropTypes.object.isRequired,
 };
+
+function mapStateToProps(state) {
+  return {
+    user: state.user,
+  };
+}
 
 export default connect(mapStateToProps, null)(UserProfile);

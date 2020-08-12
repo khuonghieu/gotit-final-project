@@ -21,7 +21,7 @@ describe('async middleware', () => {
 
   it('should dispatch an action that has ok result', async () => {
     const createItem = post.mockResolvedValue({ ok: true });
-    await async(store)(next)({ type: constants.CREATE_ITEM, promise: jest.fn().mockResolvedValue({ ok: true }) });
+    await async(store)(next)({ type: constants.CREATE_ITEM, promise: createItem });
     expect(store.dispatch).toHaveBeenCalled();
   });
 });

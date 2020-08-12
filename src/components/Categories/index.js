@@ -5,18 +5,7 @@ import { useHistory, useParams } from 'react-router';
 import PropTypes from 'prop-types';
 import { chooseCategory, fetchCategories } from '../../actions/categories';
 import CurrentCategoryInfo from './CurrentCategoryInfo';
-import ItemList from '../Items/ItemList';
-
-function mapStateToProps(state) {
-  return {
-    categories: state.categories,
-  };
-}
-
-const mapDispatchToProps = {
-  chooseCategory,
-  fetchCategories,
-};
+import ItemList from '../Items';
 
 export function CategoriesTabList({
   categories, chooseCategory, fetchCategories,
@@ -46,11 +35,12 @@ export function CategoriesTabList({
 
   return (
     <div>
+      {categories.categoriesList && (
       <Tab
         current={categories.currentCategory}
         onSelect={onChooseCategory}
       >
-        {(categories.categoriesList) ? categories.categoriesList.map(
+        {categories.categoriesList.map(
           (categoryElement) => (
             <Tab.Item
               eventKey={categoryElement.id}
@@ -59,8 +49,9 @@ export function CategoriesTabList({
               {categoryElement.name}
             </Tab.Item>
           ),
-        ) : null}
+        )}
       </Tab>
+      )}
       <hr />
       <CurrentCategoryInfo />
       <hr />
@@ -73,6 +64,16 @@ CategoriesTabList.propTypes = {
   categories: PropTypes.object.isRequired,
   chooseCategory: PropTypes.func.isRequired,
   fetchCategories: PropTypes.func.isRequired,
+};
+function mapStateToProps(state) {
+  return {
+    categories: state.categories,
+  };
+}
+
+const mapDispatchToProps = {
+  chooseCategory,
+  fetchCategories,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CategoriesTabList);

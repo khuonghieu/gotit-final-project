@@ -50,13 +50,13 @@ describe('components/App.js', () => {
   it('should fetch user info when change loggedIn status', () => {
     useEffect.mockImplementation((f) => f());
     setup();
-    props = {
+    wrapper.setProps({
       ...props,
       user: {
         loggedIn: true,
         currentUser: null,
       },
-    };
+    });
     expect(props.fetchUserInfo).toHaveBeenCalled();
   });
 

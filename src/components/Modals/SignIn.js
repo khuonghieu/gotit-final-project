@@ -2,25 +2,10 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
-  Button, Form, Modal, Message, toast, ToastContainer, Icon,
+  Button, Form, Modal, Message,
 } from '@gotitinc/design-system';
 import { signIn } from '../../actions/users';
-
-const mapDispatchToProps = {
-  signIn,
-};
-
-const notifyPositive = () => toast.success(() => (
-  <div className="u-flex u-flexGrow-1">
-    <div className="u-marginRightExtraSmall">
-      <Icon name="checkmarkCircle" size="medium" />
-    </div>
-    <div className="u-flexGrow-1">
-      <div className="u-fontMedium u-marginBottomExtraSmall">Sign in success</div>
-    </div>
-  </div>
-), {
-});
+import showPositiveToast from '../../util/toast';
 
 export function SignInModal({ onClose, signIn }) {
   const [username, setUsername] = useState('');
@@ -29,7 +14,7 @@ export function SignInModal({ onClose, signIn }) {
 
   const [errorMessage, setErrorMessage] = useState('');
 
-  async function handleSignin(e) {
+  async function handleSignIn(e) {
     e.preventDefault();
     if (username && password) {
       setDisable(true);
@@ -38,7 +23,7 @@ export function SignInModal({ onClose, signIn }) {
       if (!success) {
         setErrorMessage(payload.message);
       } else {
-        notifyPositive();
+        showPositiveToast('Sign in success');
         onClose();
       }
     } else {
@@ -47,7 +32,6 @@ export function SignInModal({ onClose, signIn }) {
   }
   return (
     <div>
-      <ToastContainer />
       <Modal size="small" show centered onHide={onClose}>
         <Modal.Header closeButton onClick={onClose}>
           <Modal.Title>Sign In</Modal.Title>
@@ -69,10 +53,10 @@ export function SignInModal({ onClose, signIn }) {
             <img src="holder.js/100px90?text=Image" className="u-maxWidthFull u-marginBottomExtraSmall" alt="" />
           </div>
           <Form.Label>Username</Form.Label>
-          <Form.Input value={username} onChange={(e) => setUsername(e.target.value)} type="text" placeholder="Enter username" name="username" />
+          <Form.Input value={username} onChange={(e) => { setErrorMessage(''); setUsername(e.target.value); }} type="text" placeholder="Enter username" name="username" />
           <Form.Label>Password</Form.Label>
-          <Form.Input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Enter password" name="password" />
-          <Button disabled={disable} onClick={handleSignin} id="sign-in-form-button">Sign In</Button>
+          <Form.Input value={password} onChange={(e) => { setErrorMessage(''); setPassword(e.target.value); }} type="password" placeholder="Enter password" name="password" />
+          <Button disabled={disable} onClick={handleSignIn} id="sign-in-form-button">Sign In</Button>
         </Modal.Body>
       </Modal>
     </div>
@@ -82,6 +66,10 @@ export function SignInModal({ onClose, signIn }) {
 SignInModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   signIn: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = {
+  signIn,
 };
 
 export default connect(null, mapDispatchToProps)(SignInModal);

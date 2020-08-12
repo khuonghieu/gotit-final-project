@@ -3,7 +3,7 @@ import { shallow, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { Tab } from '@gotitinc/design-system';
 import reactRouter from 'react-router';
-import { CategoriesTabList } from '../CategoriesTabList';
+import { CategoriesTabList } from '../index';
 
 configure({ adapter: new Adapter() });
 

@@ -23,6 +23,7 @@ export const put = (URL, params) => fetch(URL, {
   body: JSON.stringify(params),
 }).then((res) => res);
 
+// TODO: rename deleteRequest to del
 export const deleteRequest = (URL, params) => fetch(URL, {
   method: 'DELETE',
   headers: getHeader(),

@@ -9,22 +9,14 @@ import CreateItemForm from './CreateItemForm';
 import * as constants from '../../constants/actions';
 import ItemCard from './ItemCard';
 
-function mapStateToProps(state) {
-  return {
-    currentCategory: state.categories.currentCategory,
-    editComplete: state.modal.modalChosen === constants.EDIT_ITEM_MODAL,
-  };
-}
-
-const mapDispatchToProps = {
-  viewItems,
-};
-
 export function ItemList({
-  editComplete, currentCategory, viewItems,
+  editComplete, currentCategory, viewItems, user,
 }) {
   const [itemList, setItemList] = useState([]);
   const [refresh, setRefresh] = useState(false);
+  function refreshItemList() {
+    setRefresh(!refresh);
+  }
   const [itemQuantity, setItemQuantity] = useState(0);
 
   const history = useHistory();
@@ -32,17 +24,13 @@ export function ItemList({
   const location = useLocation();
   const parsed = queryString.parse(location.search);
 
-  function refreshItemList() {
-    setRefresh(!refresh);
-  }
-
   // Limit fetch quantity to be 3, offset is tuned accordingly
   const offset = 3 * (Number.parseInt(parsed.page, 10) - 1);
 
   // If a category is chosen, fetch that category's items with the precalculated offset
   useEffect(() => {
     (async () => {
-      if (currentCategory) {
+      if (currentCategory && !Number.isNaN(offset)) {
         const { success, payload } = await viewItems(currentCategory, offset, 3);
         if (success) {
           setItemList(payload.items);
@@ -50,14 +38,18 @@ export function ItemList({
         }
       }
     })();
-  }, [currentCategory, viewItems, refresh, editComplete, parsed.page, offset, itemQuantity]);
+  }, [currentCategory, viewItems, refresh, editComplete, parsed.page, offset]);
 
   return (
     <div>
-      <CreateItemForm refreshItemList={refreshItemList} />
+      {user.loggedIn && <CreateItemForm refreshItemList={refreshItemList} />}
       <hr />
       {itemList.length > 0 ? itemList.map((itemElement) => (
-        <ItemCard key={itemElement.id} itemElement={itemElement} refreshItemList={refreshItemList} />
+        <ItemCard
+          key={itemElement.id}
+          itemElement={itemElement}
+          refreshItemList={refreshItemList}
+        />
       ))
         : (
           <div style={{ maxWidth: 300 }}>
@@ -86,6 +78,18 @@ ItemList.propTypes = {
   editComplete: PropTypes.bool.isRequired,
   currentCategory: PropTypes.string,
   viewItems: PropTypes.func.isRequired,
+};
+
+function mapStateToProps(state) {
+  return {
+    currentCategory: state.categories.currentCategory,
+    editComplete: state.modal.modalChosen === constants.EDIT_ITEM_MODAL,
+    user: state.user,
+  };
+}
+
+const mapDispatchToProps = {
+  viewItems,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ItemList);

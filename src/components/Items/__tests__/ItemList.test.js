@@ -2,7 +2,7 @@ import React, * as fromReact from 'react';
 import { shallow, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import reactRouter from 'react-router';
-import { ItemList } from '../ItemList';
+import { ItemList } from '../index';
 
 configure({ adapter: new Adapter() });
 
@@ -29,6 +29,7 @@ describe('components/Items/ItemList.js', () => {
       editComplete: false,
       currentCategory: '1',
       viewItems: jest.fn(),
+      user: { loggedIn: true },
     };
   });
 
@@ -46,10 +47,11 @@ describe('components/Items/ItemList.js', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('should call viewItem API when mounted if currentCategory exists', () => {
+  it('should call viewItem API if currentCategory exists', () => {
+    const location = { search: '?page=1' };
     useEffect.mockImplementation((f) => f());
-    useLocation.mockImplementation(() => location);
     useHistory.mockImplementation(() => history);
+    useLocation.mockImplementation(() => location);
     props.viewItems.mockReturnValue({ success: true, payload: [1, 2, 3] });
     setup();
     expect(props.viewItems).toHaveBeenCalled();
@@ -57,8 +59,10 @@ describe('components/Items/ItemList.js', () => {
 
   it('should set item list when fetching items successfully', async () => {
     const setState = jest.fn();
+    const location = { search: '?page=1' };
     useState.mockImplementation((itemList) => [itemList, setState]);
     useEffect.mockImplementation((f) => f());
+    useLocation.mockImplementation(() => location);
     props.viewItems.mockReturnValue({ success: true, payload: [1, 2, 3] });
     await setup();
     expect(setState).toHaveBeenCalled();

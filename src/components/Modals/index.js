@@ -7,16 +7,6 @@ import { closeModal } from '../../actions/modals';
 import * as constants from '../../constants/actions';
 import EditItem from './EditItem';
 
-function mapStateToProps(state) {
-  return {
-    modal: state.modal,
-  };
-}
-
-const mapDispatchToProps = {
-  closeModal,
-};
-
 const ModalMap = new Map();
 ModalMap.set(constants.SIGN_IN_MODAL, SignInModal);
 ModalMap.set(constants.SIGN_UP_MODAL, SignUpModal);
@@ -34,6 +24,16 @@ export function ModalContainer({ modal, closeModal }) {
 ModalContainer.propTypes = {
   modal: PropTypes.object.isRequired,
   closeModal: PropTypes.func.isRequired,
+};
+
+function mapStateToProps(state) {
+  return {
+    modal: state.modal,
+  };
+}
+
+const mapDispatchToProps = {
+  closeModal,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModalContainer);

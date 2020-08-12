@@ -2,27 +2,12 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
-  Button, Form, Modal, Message, toast, ToastContainer, Icon,
+  Button, Form, Modal, Message, ToastContainer,
 } from '@gotitinc/design-system';
-import { signUp } from '../../actions/users';
+import { signUp, signIn } from '../../actions/users';
+import showPositiveToast from '../../util/toast';
 
-const mapDispatchToProps = (dispatch) => ({
-  signUp: (email, username, password, name) => dispatch(signUp(email, username, password, name)),
-});
-
-const notifyPositive = () => toast.success(() => (
-  <div className="u-flex u-flexGrow-1">
-    <div className="u-marginRightExtraSmall">
-      <Icon name="checkmarkCircle" size="medium" />
-    </div>
-    <div className="u-flexGrow-1">
-      <div className="u-fontMedium u-marginBottomExtraSmall">Sign up success</div>
-    </div>
-  </div>
-), {
-});
-
-export function SignUpModal({ onClose, signUp }) {
+export function SignUpModal({ onClose, signUp, signIn }) {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -33,18 +18,19 @@ export function SignUpModal({ onClose, signUp }) {
 
   async function handleSignup(e) {
     e.preventDefault();
-
-    if (email && username && password && name) {
+    if (email && username.length >= 5 && password.length >= 8 && name) {
       setDisable(true);
       const { success, payload } = await signUp(email, username, password, name);
       setDisable(false);
       if (!success) {
-        setErrorMessage(JSON.stringify(payload.message));
+        setErrorMessage(payload.message);
       } else {
-        notifyPositive();
+        showPositiveToast('Sign up success');
+        onClose();
+        signIn(username, password);
       }
     } else {
-      setErrorMessage('Fill all the blanks');
+      setErrorMessage({ general: 'Fill all the blanks' });
     }
   }
 
@@ -63,7 +49,10 @@ export function SignUpModal({ onClose, signUp }) {
                   Sign up failed
                 </Message.Title>
                 <Message.Content>
-                  {errorMessage}
+                  {errorMessage.general}
+                  {errorMessage.email}
+                  {errorMessage.password}
+                  {errorMessage.username}
                 </Message.Content>
               </Message.Container>
             </Message>
@@ -72,13 +61,13 @@ export function SignUpModal({ onClose, signUp }) {
             <img src="holder.js/100px90?text=Image" className="u-maxWidthFull u-marginBottomExtraSmall" alt="" />
           </div>
           <Form.Label>Email</Form.Label>
-          <Form.Input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Enter email" name="email" />
+          <Form.Input value={email} onChange={(e) => { setErrorMessage(''); setEmail(e.target.value); }} type="email" placeholder="Enter email" name="email" />
           <Form.Label>Username</Form.Label>
-          <Form.Input value={username} onChange={(e) => setUsername(e.target.value)} type="text" placeholder="Enter username" name="username" />
+          <Form.Input value={username} onChange={(e) => { setErrorMessage(''); setUsername(e.target.value); }} type="text" placeholder="Enter username" name="username" />
           <Form.Label>Password</Form.Label>
-          <Form.Input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Enter password" name="password" />
+          <Form.Input value={password} onChange={(e) => { setErrorMessage(''); setPassword(e.target.value); }} type="password" placeholder="Enter password" name="password" />
           <Form.Label>Name</Form.Label>
-          <Form.Input value={name} onChange={(e) => setName(e.target.value)} type="text" placeholder="Enter your name" name="name" />
+          <Form.Input value={name} onChange={(e) => { setErrorMessage(''); setName(e.target.value); }} type="text" placeholder="Enter your name" name="name" />
           <Button disabled={disable} onClick={handleSignup}>Sign Up</Button>
         </Modal.Body>
       </Modal>
@@ -89,6 +78,11 @@ export function SignUpModal({ onClose, signUp }) {
 SignUpModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   signUp: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = {
+  signUp,
+  signIn,
 };
 
 export default connect(null, mapDispatchToProps)(SignUpModal);

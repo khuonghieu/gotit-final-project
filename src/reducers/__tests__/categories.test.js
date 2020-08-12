@@ -15,7 +15,7 @@ describe('reducers/categories.js', () => {
       categoryId: 1,
     };
     expect(categories(undefined, dispatchedAction)).toEqual({
-      currentCategory: 1,
+      currentCategory: '1',
       categoriesList: [],
     });
   });

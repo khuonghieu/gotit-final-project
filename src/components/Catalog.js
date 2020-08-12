@@ -1,5 +1,5 @@
 import React from 'react';
-import CategoriesTabList from './Categories/CategoriesTabList';
+import CategoriesTabList from './Categories';
 
 export function Catalog() {
   return (

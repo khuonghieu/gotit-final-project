@@ -5,16 +5,7 @@ import {
 } from '@gotitinc/design-system';
 import PropTypes from 'prop-types';
 import { editItem } from '../../actions/items';
-
-function mapStateToProps(state) {
-  return {
-    categoryId: state.categories.currentCategory,
-  };
-}
-
-const mapDispatchToProps = {
-  editItem,
-};
+import showPositiveToast from '../../util/toast';
 
 export function EditItem({
   onClose, editItem, categoryId, prefill,
@@ -34,9 +25,10 @@ export function EditItem({
       const { success, payload } = await editItem(categoryId, prefill.id, name, description, price);
       setDisable(false);
       if (!success) {
-        setErrorMessage(JSON.stringify(payload));
+        setErrorMessage(JSON.stringify(payload.message));
       } else {
         setErrorMessage('');
+        showPositiveToast('Edit item success');
         onClose();
       }
     } else {
@@ -67,11 +59,11 @@ export function EditItem({
             <img src="holder.js/100px90?text=Image" className="u-maxWidthFull u-marginBottomExtraSmall" alt="" />
           </div>
           <Form.Label>Item name</Form.Label>
-          <Form.Input value={name} onChange={(e) => setName(e.target.value)} type="text" placeholder="Enter item name" name="name" />
+          <Form.Input value={name} onChange={(e) => { setErrorMessage(''); setName(e.target.value); }} type="text" placeholder="Enter item name" name="name" />
           <Form.Label>Item description</Form.Label>
-          <Form.Input value={description} onChange={(e) => setDescription(e.target.value)} type="text" placeholder="Enter description" name="description" />
+          <Form.Input value={description} onChange={(e) => { setErrorMessage(''); setDescription(e.target.value); }} type="text" placeholder="Enter description" name="description" />
           <Form.Label>Item price</Form.Label>
-          <Form.Input value={price} onChange={(e) => setPrice(e.target.value)} type="number" placeholder="Enter item price" name="price" />
+          <Form.Input value={price} onChange={(e) => { setErrorMessage(''); setPrice(e.target.value); }} type="number" placeholder="Enter item price" name="price" />
           <Button disabled={disable} onClick={handleEditItem} id="edit-item-form-button">Confirm</Button>
         </Modal.Body>
       </Modal>
@@ -84,6 +76,16 @@ EditItem.propTypes = {
   editItem: PropTypes.func.isRequired,
   categoryId: PropTypes.string.isRequired,
   prefill: PropTypes.object.isRequired,
+};
+
+function mapStateToProps(state) {
+  return {
+    categoryId: state.categories.currentCategory,
+  };
+}
+
+const mapDispatchToProps = {
+  editItem,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditItem);

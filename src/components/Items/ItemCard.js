@@ -7,20 +7,6 @@ import { viewItems, chooseItem, deleteItem } from '../../actions/items';
 import { chooseModal } from '../../actions/modals';
 import * as constants from '../../constants/actions';
 
-function mapStateToProps(state) {
-  return {
-    currentCategory: state.categories.currentCategory,
-    user: state.user,
-  };
-}
-
-const mapDispatchToProps = {
-  viewItems,
-  chooseItem,
-  deleteItem,
-  chooseModal,
-};
-
 export function ItemCard({
   user, itemElement, currentCategory, chooseItem, deleteItem, refreshItemList, chooseModal,
 }) {
@@ -87,6 +73,20 @@ ItemCard.propTypes = {
   deleteItem: PropTypes.func.isRequired,
   refreshItemList: PropTypes.func.isRequired,
   chooseModal: PropTypes.func.isRequired,
+};
+
+function mapStateToProps(state) {
+  return {
+    currentCategory: state.categories.currentCategory,
+    user: state.user,
+  };
+}
+
+const mapDispatchToProps = {
+  viewItems,
+  chooseItem,
+  deleteItem,
+  chooseModal,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ItemCard);

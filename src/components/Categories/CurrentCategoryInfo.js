@@ -3,24 +3,16 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { viewCategory } from '../../actions/categories';
 
-function mapStateToProps(state) {
-  return {
-    categoryId: state.categories.currentCategory,
-  };
-}
-
-const mapDispatchToProps = {
-  viewCategory,
-};
-
 export function CurrentCategoryInfo({ categoryId, viewCategory }) {
   const [categoryInfo, setCategoryInfo] = useState({});
 
   // Fetch category detail on render
   useEffect(() => {
     (async () => {
-      const { payload } = await viewCategory(categoryId);
-      setCategoryInfo(payload);
+      if (categoryId) {
+        const { payload } = await viewCategory(categoryId);
+        setCategoryInfo(payload);
+      }
     })();
   }, [categoryId, viewCategory]);
 
@@ -46,6 +38,15 @@ export function CurrentCategoryInfo({ categoryId, viewCategory }) {
 CurrentCategoryInfo.propTypes = {
   categoryId: PropTypes.string,
   viewCategory: PropTypes.func.isRequired,
+};
+function mapStateToProps(state) {
+  return {
+    categoryId: state.categories.currentCategory,
+  };
+}
+
+const mapDispatchToProps = {
+  viewCategory,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CurrentCategoryInfo);

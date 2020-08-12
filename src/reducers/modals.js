@@ -9,7 +9,7 @@ function modal(state = initialState, action) {
   switch (action.type) {
     case constants.CHOOSE_MODAL:
       return {
-        modalChosen: action.modalChosen !== constants.SIGN_OUT_MODAL ? action.modalChosen : null,
+        modalChosen: action.modalChosen,
         prefill: action.prefill,
       };
     case constants.CLOSE_MODAL:

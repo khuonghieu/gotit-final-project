@@ -4,10 +4,6 @@ import PropTypes from 'prop-types';
 import { useParams } from 'react-router';
 import { chooseItem } from '../../actions/items';
 
-const mapDispatchToProps = {
-  chooseItem,
-};
-
 export function ItemDetails({ chooseItem }) {
   const { categoryId, itemId } = useParams();
 
@@ -23,21 +19,26 @@ export function ItemDetails({ chooseItem }) {
 
   return (
     <div>
-      <div>
-        Item name:
-        {' '}
-        {chosenItem.name}
-      </div>
-      <div>
-        Item description:
-        {' '}
-        {chosenItem.description}
-      </div>
-      <div>
-        Item price:
-        {' '}
-        {chosenItem.price}
-      </div>
+      {chosenItem.name ? (
+        <div>
+          <div>
+            Item name:
+            {' '}
+            {chosenItem.name}
+          </div>
+          <div>
+            Item description:
+            {' '}
+            {chosenItem.description}
+          </div>
+          <div>
+            Item price:
+            {' '}
+            {chosenItem.price}
+          </div>
+        </div>
+      ) : 'Item not found'}
+
     </div>
   );
 }
@@ -46,6 +47,9 @@ ItemDetails.propTypes = {
 
   chooseItem: PropTypes.func.isRequired,
 
+};
+const mapDispatchToProps = {
+  chooseItem,
 };
 
 export default connect(null, mapDispatchToProps)(ItemDetails);

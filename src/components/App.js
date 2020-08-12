@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Header, Button } from '@gotitinc/design-system';
+import {
+  Header, Button, ToastContainer, Logo,
+} from '@gotitinc/design-system';
 import ModalContainer from './Modals';
 import { fetchUserInfo } from '../actions/users';
 import Catalog from './Catalog';
@@ -12,29 +14,24 @@ import ItemDetails from './Items/ItemDetails';
 import { chooseModal } from '../actions/modals';
 import * as constants from '../constants/actions';
 
-function mapStateToProps(state) {
-  return {
-    user: state.user,
-  };
-}
-
-const mapDispatchToProps = {
-  fetchUserInfo,
-  chooseModal,
-};
-
 export function App({ user, fetchUserInfo, chooseModal }) {
   // Fetch user info on every render
   useEffect(() => {
-    fetchUserInfo();
+    if (user.loggedIn) {
+      fetchUserInfo();
+    }
   }, [fetchUserInfo, user.loggedIn]);
 
   return (
     <div>
       <div><ModalContainer /></div>
+      <ToastContainer />
       <Header fullWidth>
         <Header.Main>
           <Header.Left>
+            <Link to="/">
+              <Logo name="gotit" variant="original" />
+            </Link>
             <UserProfile user={user} />
           </Header.Left>
           {user.loggedIn
@@ -72,6 +69,17 @@ App.propTypes = {
   user: PropTypes.object.isRequired,
   fetchUserInfo: PropTypes.func.isRequired,
   chooseModal: PropTypes.func.isRequired,
+};
+
+function mapStateToProps(state) {
+  return {
+    user: state.user,
+  };
+}
+
+const mapDispatchToProps = {
+  fetchUserInfo,
+  chooseModal,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -10,7 +10,7 @@ function categories(state = initialState, action) {
     case constants.CHOOSE_CATEGORY:
       return {
         ...state,
-        currentCategory: action.categoryId,
+        currentCategory: action.categoryId.toString(),
       };
     case constants.FETCH_CATEGORIES_SUCCESS:
       if (action.payload.categories) {

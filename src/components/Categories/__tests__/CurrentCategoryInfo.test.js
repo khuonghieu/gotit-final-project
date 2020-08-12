@@ -24,7 +24,6 @@ describe('components/Categories/CurrentCategoryInfo.js', () => {
     );
   };
   it('should render correctly', () => {
-    props.viewCategory.mockReturnValue({ payload: {} });
     setup();
     expect(wrapper).toMatchSnapshot();
   });
@@ -38,8 +37,14 @@ describe('components/Categories/CurrentCategoryInfo.js', () => {
 
   it('should set category info according to the fetched info', async () => {
     const setState = jest.fn();
-    props.viewCategory.mockReturnValue({ payload: {} });
+    useEffect.mockImplementation((f) => f());
+
     useState.mockImplementation((init) => [init, setState]);
+    props = {
+      categoryId: '1',
+      viewCategory: jest.fn(),
+    };
+    props.viewCategory.mockReturnValue({ payload: {} });
     await setup();
     expect(setState).toHaveBeenCalled();
   });

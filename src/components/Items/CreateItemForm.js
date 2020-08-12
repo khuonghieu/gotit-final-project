@@ -5,29 +5,7 @@ import {
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { createItem } from '../../actions/items';
-
-function mapStateToProps(state) {
-  return {
-    currentCategory: state.categories.currentCategory,
-    user: state.user,
-  };
-}
-
-const mapDispatchToProps = {
-  createItem,
-};
-
-const notifyPositive = () => toast.success(() => (
-  <div className="u-flex u-flexGrow-1">
-    <div className="u-marginRightExtraSmall">
-      <Icon name="checkmarkCircle" size="medium" />
-    </div>
-    <div className="u-flexGrow-1">
-      <div className="u-fontMedium u-marginBottomExtraSmall">Create item success</div>
-    </div>
-  </div>
-), {
-});
+import showPositiveToast from '../../util/toast';
 
 export function CreateItemForm({
   currentCategory, createItem, refreshItemList, user,
@@ -52,7 +30,6 @@ export function CreateItemForm({
     if (currentCategory && name && description && price) {
       // Disable button during API call
       setDisable(true);
-
       const { success, payload } = await createItem(currentCategory, name, description, price);
       setDisable(false);
       refreshItemList();
@@ -60,7 +37,7 @@ export function CreateItemForm({
         setErrorMessage(JSON.stringify(payload));
       } else {
         // Clear form input when item created successfully
-        notifyPositive();
+        showPositiveToast('Create item success');
         setErrorMessage('');
         setName('');
         setDescription('');
@@ -71,34 +48,31 @@ export function CreateItemForm({
     }
   }
   return (
-    // Only show form if logged in
-    user.loggedIn ? (
-      <div>
-        {errorMessage ? (
-          <Message type="system" variant="negative">
-            <Message.Container>
-              <Message.Title>
-                Create item fail failed
-              </Message.Title>
-              <Message.Content>
-                {errorMessage}
-              </Message.Content>
-            </Message.Container>
-          </Message>
-        ) : null}
-        <ToastContainer />
-        <p>
-          <b>Create item for this category:</b>
-        </p>
-        <Form.Label>Item name</Form.Label>
-        <Form.Input value={name} onChange={(e) => setName(e.target.value)} type="text" placeholder="Enter item name" name="name" />
-        <Form.Label>Item description</Form.Label>
-        <Form.Input value={description} onChange={(e) => setDescription(e.target.value)} type="text" placeholder="Enter item description" name="description" />
-        <Form.Label>Item price</Form.Label>
-        <Form.Input value={price} onChange={(e) => setPrice(e.target.value)} type="number" placeholder="Enter item price" name="price" />
-        <Button disabled={disable} onClick={handleCreateItem}>Create Item</Button>
-      </div>
-    ) : null
+    <div>
+      {errorMessage ? (
+        <Message type="system" variant="negative">
+          <Message.Container>
+            <Message.Title>
+              Create item fail failed
+            </Message.Title>
+            <Message.Content>
+              {errorMessage}
+            </Message.Content>
+          </Message.Container>
+        </Message>
+      ) : null}
+      <ToastContainer />
+      <p>
+        <b>Create item for this category:</b>
+      </p>
+      <Form.Label>Item name</Form.Label>
+      <Form.Input value={name} onChange={(e) => { setErrorMessage(''); setName(e.target.value); }} type="text" placeholder="Enter item name" name="name" />
+      <Form.Label>Item description</Form.Label>
+      <Form.Input value={description} onChange={(e) => { setErrorMessage(''); setDescription(e.target.value); }} type="text" placeholder="Enter item description" name="description" />
+      <Form.Label>Item price</Form.Label>
+      <Form.Input value={price} onChange={(e) => { setErrorMessage(''); setPrice(e.target.value); }} type="number" placeholder="Enter item price" name="price" />
+      <Button disabled={disable} onClick={handleCreateItem}>Create Item</Button>
+    </div>
   );
 }
 
@@ -109,4 +83,14 @@ CreateItemForm.propTypes = {
   refreshItemList: PropTypes.func.isRequired,
 };
 
+function mapStateToProps(state) {
+  return {
+    currentCategory: state.categories.currentCategory,
+    user: state.user,
+  };
+}
+
+const mapDispatchToProps = {
+  createItem,
+};
 export default connect(mapStateToProps, mapDispatchToProps)(CreateItemForm);

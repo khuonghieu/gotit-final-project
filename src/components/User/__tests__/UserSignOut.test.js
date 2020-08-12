@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallow, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import { createBrowserHistory } from 'history';
 import { UserSignOut } from '../UserSignOut';
 
 configure({ adapter: new Adapter() });
@@ -13,8 +12,7 @@ describe('components/User/UserSignOut.js', () => {
   beforeEach(() => {
     props = {
       signOut: jest.fn(),
-      chooseModal: jest.fn(),
-      history: createBrowserHistory(),
+      closeModal: jest.fn(),
     };
   });
   const setup = () => {
@@ -38,6 +36,6 @@ describe('components/User/UserSignOut.js', () => {
     setup();
     const button = wrapper.find('Button');
     button.simulate('click');
-    expect(props.chooseModal).toHaveBeenCalled();
+    expect(props.closeModal).toHaveBeenCalled();
   });
 });
