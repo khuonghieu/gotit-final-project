@@ -1,11 +1,12 @@
 ﻿# Clone the project:
 ```git clone https://github.com/khuonghieu/gotit-final-project.git```
 # Install all modules:
-```npm install --save``` 
+```npm install --save```
 # Starting the server:
 Local environment: ```npm run start```
 Production environment: ```npm run start:prod```
 Development environment: ```npm run start:dev```
+Go to localhost:3000 to use the app.
 # Building the app:
 Local environment: ```npm run build```
 Production environment: ```npm run build:prod```
