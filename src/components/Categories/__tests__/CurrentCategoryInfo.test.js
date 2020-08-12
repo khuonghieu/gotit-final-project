@@ -24,13 +24,15 @@ describe('components/Categories/CurrentCategoryInfo.js', () => {
     );
   };
   it('should render correctly', () => {
+    props.viewCategory.mockReturnValue({ payload: {} });
     setup();
     expect(wrapper).toMatchSnapshot();
   });
   it('should get category info when change categoryId', () => {
     useEffect.mockImplementation((f) => f());
+    props.viewCategory.mockReturnValue({ payload: {} });
     setup();
-    wrapper.setProps({ ...props, categoryId: 1 });
+    wrapper.setProps({ ...props, categoryId: '1' });
     expect(props.viewCategory).toHaveBeenCalled();
   });
 

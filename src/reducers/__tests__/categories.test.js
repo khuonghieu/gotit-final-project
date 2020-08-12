@@ -8,6 +8,7 @@ describe('reducers/categories.js', () => {
       categoriesList: [],
     });
   });
+
   it('should handle CHOOSE_CATEGORY', () => {
     const dispatchedAction = {
       type: constants.CHOOSE_CATEGORY,

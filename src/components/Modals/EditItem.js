@@ -82,7 +82,7 @@ export function EditItem({
 EditItem.propTypes = {
   onClose: PropTypes.func.isRequired,
   editItem: PropTypes.func.isRequired,
-  categoryId: PropTypes.number.isRequired,
+  categoryId: PropTypes.string.isRequired,
   prefill: PropTypes.object.isRequired,
 };
 

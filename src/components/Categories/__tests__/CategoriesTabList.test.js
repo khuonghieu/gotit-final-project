@@ -48,6 +48,7 @@ describe('components/Categories/CategoriesTabList.js', () => {
     };
     useHistory.mockImplementation(() => history);
     useParams.mockImplementation(() => params);
+    props.fetchCategories.mockReturnValue({ success: true, payload: { categories: [] } });
     setup();
     expect(wrapper).toMatchSnapshot();
   });
@@ -63,6 +64,7 @@ describe('components/Categories/CategoriesTabList.js', () => {
     };
     useHistory.mockImplementation(() => history);
     useParams.mockImplementation(() => params);
+    props.fetchCategories.mockReturnValue({ success: true, payload: { categories: [] } });
     setup();
     expect(props.fetchCategories).toHaveBeenCalled();
   });
@@ -72,6 +74,7 @@ describe('components/Categories/CategoriesTabList.js', () => {
       ...props,
       categories: { currentCategory: null, categoriesList: [{ id: 1, name: 'sport' }, { id: 2, name: 'fashion' }] },
     };
+    props.fetchCategories.mockReturnValue({ success: true, payload: { categories: [] } });
     setup();
     expect(tabItems.length).toBe(2);
   });
@@ -87,6 +90,7 @@ describe('components/Categories/CategoriesTabList.js', () => {
     };
     useHistory.mockImplementation(() => history);
     useParams.mockImplementation(() => params);
+    props.fetchCategories.mockReturnValue({ success: true, payload: { categories: [] } });
     await setup();
     expect(props.chooseCategory).toHaveBeenCalledWith(1);
   });
@@ -102,7 +106,7 @@ describe('components/Categories/CategoriesTabList.js', () => {
     };
     useHistory.mockImplementation(() => history);
     useParams.mockImplementation(() => params);
-    props.fetchCategories.mockReturnValue({ payload: { categories: [{ id: 1, name: 'sport' }, { id: 2, name: 'fashion' }] } });
+    props.fetchCategories.mockReturnValue({ success: true, payload: { categories: [{ id: 1, name: 'sport' }, { id: 2, name: 'fashion' }] } });
     await setup();
     expect(props.chooseCategory).toHaveBeenCalledWith(1);
   });
@@ -118,7 +122,7 @@ describe('components/Categories/CategoriesTabList.js', () => {
     };
     useHistory.mockImplementation(() => history);
     useParams.mockImplementation(() => params);
-    props.fetchCategories.mockReturnValue({ payload: { categories: [] } });
+    props.fetchCategories.mockReturnValue({ success: true, payload: { categories: [] } });
     await setup();
     expect(props.chooseCategory).toHaveBeenCalledWith(null);
   });

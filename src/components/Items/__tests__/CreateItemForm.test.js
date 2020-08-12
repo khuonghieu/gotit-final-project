@@ -19,7 +19,7 @@ describe('components/Items/CreateItemForm.js', () => {
 
   beforeEach(() => {
     props = {
-      currentCategory: 1,
+      currentCategory: '1',
       createItem: jest.fn(),
       refreshItemList: jest.fn(),
       user: { loggedIn: true },
@@ -39,6 +39,7 @@ describe('components/Items/CreateItemForm.js', () => {
   });
 
   it('should call SignIn API when form is fully filled and clicked submit button', () => {
+    props.createItem.mockReturnValue({ success: false, payload: {} });
     setup();
     input.at(0).simulate('change', { target: { value: 'testname' } });
     input.at(1).simulate('change', { target: { value: 'testdescription' } });
@@ -49,6 +50,7 @@ describe('components/Items/CreateItemForm.js', () => {
   });
 
   it('should show error message when form is NOT fully filled', () => {
+    props.createItem.mockReturnValue({ success: false, payload: {} });
     setup();
     input.at(0).simulate('change', { target: { value: '' } });
     input.at(1).simulate('change', { target: { value: '' } });
@@ -59,6 +61,7 @@ describe('components/Items/CreateItemForm.js', () => {
   });
 
   it('should refresh item list when done creating item', async () => {
+    props.createItem.mockReturnValue({ success: false, payload: {} });
     setup();
     input.at(0).simulate('change', { target: { value: 'testname1' } });
     input.at(1).simulate('change', { target: { value: 'testdescription1' } });

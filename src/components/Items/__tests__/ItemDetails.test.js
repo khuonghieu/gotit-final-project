@@ -33,6 +33,7 @@ describe('components/Items/ItemDetails.js', () => {
       match: jest.fn(),
     };
     useParams.mockImplementation(() => params);
+    props.chooseItem.mockReturnValue({ payload: {} });
     setup();
     expect(wrapper).toMatchSnapshot();
   });

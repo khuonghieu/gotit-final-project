@@ -31,11 +31,13 @@ describe('components/Modals/SignUp.js', () => {
   });
 
   it('should render correctly', () => {
+    props.signUp.mockReturnValue({ success: true, payload: { } });
     setup();
     expect(wrapper).toMatchSnapshot();
   });
 
   it('should call SignUn API when form is fully filled and clicked submit button', () => {
+    props.signUp.mockReturnValue({ success: true, payload: { } });
     setup();
     input.at(0).simulate('change', { target: { value: 'testemail@gmail.com' } });
     input.at(1).simulate('change', { target: { value: 'testusername' } });
@@ -47,6 +49,7 @@ describe('components/Modals/SignUp.js', () => {
   });
 
   it('should display error message when all fields are not fully filled', () => {
+    props.signUp.mockReturnValue({ success: true, payload: { } });
     setup();
     button.props().onClick({ preventDefault: jest.fn() });
     expect(wrapper.find(Message).length).toBe(1);

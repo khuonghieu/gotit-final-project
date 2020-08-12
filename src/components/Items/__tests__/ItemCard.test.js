@@ -18,7 +18,7 @@ describe('components/Items/ItemCard.js', () => {
       user: { currentUser: { id: 1 } },
       itemElement: { user_id: 1 },
       refreshItemList: jest.fn(),
-      currentCategory: 1,
+      currentCategory: '1',
       chooseItem: jest.fn(),
       chooseModal: jest.fn(),
       editItemModal: jest.fn(),

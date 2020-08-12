@@ -5,8 +5,11 @@ import {
 import * as constants from '../../constants/actions';
 import { post, get } from '../../util/request';
 import CONFIG from '../../config';
+import asyncMiddleware from '../../store/middlewares/async';
 
-const mockStore = configureStore();
+jest.mock('../../util/request');
+
+const mockStore = configureStore([asyncMiddleware]);
 
 describe('actions/categories.js', () => {
   let store;
@@ -16,9 +19,9 @@ describe('actions/categories.js', () => {
     store = mockStore(initialState);
   });
 
-  it('chooseCategory should return correct categoryId and type', () => {
+  it('chooseCategory should return correct categoryId and type', async () => {
     const categoryId = 1;
-    store.dispatch(chooseCategory(categoryId));
+    await store.dispatch(chooseCategory(categoryId));
     const expectedAction = {
       type: constants.CHOOSE_CATEGORY,
       categoryId,
@@ -27,13 +30,14 @@ describe('actions/categories.js', () => {
     expect(actions).toEqual([expectedAction]);
   });
 
-  it('createCategory should return correct type and promise', () => {
-    const name = 'testName';
-    const description = 'testDescription';
-    store.dispatch(createCategory(name, description));
+  it('createCategory should return correct type and promise', async () => {
+    await store.dispatch({
+      type: constants.CREATE_CATEGORY,
+      promise: post.mockResolvedValue({ ok: true }),
+    });
     const expectedAction = {
       type: constants.CREATE_CATEGORY,
-      promise: post(`${CONFIG.URL}/categories`, { name, description }),
+      promise: post,
     };
     const actions = store.getActions();
     expect(actions).toEqual([expectedAction]);

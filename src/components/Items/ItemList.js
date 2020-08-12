@@ -57,7 +57,7 @@ export function ItemList({
       <CreateItemForm refreshItemList={refreshItemList} />
       <hr />
       {itemList.length > 0 ? itemList.map((itemElement) => (
-        <ItemCard itemElement={itemElement} refreshItemList={refreshItemList} />
+        <ItemCard key={itemElement.id} itemElement={itemElement} refreshItemList={refreshItemList} />
       ))
         : (
           <div style={{ maxWidth: 300 }}>
@@ -74,7 +74,7 @@ export function ItemList({
       <div className="u-textCenter">
         <Pagination>
           {[...Array(Math.ceil(itemQuantity / 3)).keys()].map((key) => (
-            <Pagination.Item active={parsed.page === (key + 1).toString()} onClick={() => history.push(`/catalog/${currentCategory}?page=${key + 1}`)}>{key + 1}</Pagination.Item>
+            <Pagination.Item key={key + 1} active={parsed.page === (key + 1).toString()} onClick={() => history.push(`/catalog/${currentCategory}?page=${key + 1}`)}>{key + 1}</Pagination.Item>
           ))}
         </Pagination>
       </div>

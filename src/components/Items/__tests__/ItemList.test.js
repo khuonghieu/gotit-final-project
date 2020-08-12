@@ -27,7 +27,7 @@ describe('components/Items/ItemList.js', () => {
     useState = jest.spyOn(fromReact, 'useState');
     props = {
       editComplete: false,
-      currentCategory: 1,
+      currentCategory: '1',
       viewItems: jest.fn(),
     };
   });
@@ -41,6 +41,7 @@ describe('components/Items/ItemList.js', () => {
   it('should render correctly', () => {
     useLocation.mockImplementation(() => location);
     useHistory.mockImplementation(() => history);
+    props.viewItems.mockReturnValue({ success: true, payload: [1, 2, 3] });
     setup();
     expect(wrapper).toMatchSnapshot();
   });
@@ -49,15 +50,16 @@ describe('components/Items/ItemList.js', () => {
     useEffect.mockImplementation((f) => f());
     useLocation.mockImplementation(() => location);
     useHistory.mockImplementation(() => history);
+    props.viewItems.mockReturnValue({ success: true, payload: [1, 2, 3] });
     setup();
     expect(props.viewItems).toHaveBeenCalled();
   });
 
   it('should set item list when fetching items successfully', async () => {
     const setState = jest.fn();
-    useState.mockImplementation((init) => [init, setState]);
+    useState.mockImplementation((itemList) => [itemList, setState]);
     useEffect.mockImplementation((f) => f());
-    props.viewItems.mockReturnValue({ success: true, payload: [] });
+    props.viewItems.mockReturnValue({ success: true, payload: [1, 2, 3] });
     await setup();
     expect(setState).toHaveBeenCalled();
   });

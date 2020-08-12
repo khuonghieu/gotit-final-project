@@ -32,11 +32,13 @@ describe('components/Modals/SignIn.js', () => {
   };
 
   it('should render correctly', () => {
+    props.signIn.mockReturnValue({ success: true, payload: {} });
     setup();
     expect(wrapper).toMatchSnapshot();
   });
 
   it('should call SignIn API when form is fully filled and clicked submit button', () => {
+    props.signIn.mockReturnValue({ success: true, payload: {} });
     setup();
     input.at(0).props().onChange({ target: { value: 'testuser' } });
     input.at(1).props().onChange({ target: { value: 'testpassword' } });
@@ -46,6 +48,7 @@ describe('components/Modals/SignIn.js', () => {
   });
 
   it('should display error message when all fields are not fully filled', () => {
+    props.signIn.mockReturnValue({ success: true, payload: {} });
     setup();
     button.props().onClick({ preventDefault: jest.fn() });
     expect(wrapper.find(Message).length).toBe(1);

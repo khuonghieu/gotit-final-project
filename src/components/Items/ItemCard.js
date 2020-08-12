@@ -82,7 +82,7 @@ export function ItemCard({
 ItemCard.propTypes = {
   user: PropTypes.object.isRequired,
   itemElement: PropTypes.object.isRequired,
-  currentCategory: PropTypes.number.isRequired,
+  currentCategory: PropTypes.string.isRequired,
   chooseItem: PropTypes.func.isRequired,
   deleteItem: PropTypes.func.isRequired,
   refreshItemList: PropTypes.func.isRequired,

@@ -22,7 +22,7 @@ describe('components/Modals/EditItem.js', () => {
         price: 0,
       },
       editItem: jest.fn(),
-      categoryId: 0,
+      categoryId: '0',
     };
   });
 
@@ -39,11 +39,13 @@ describe('components/Modals/EditItem.js', () => {
   };
 
   it('should render correctly', () => {
+    props.editItem.mockReturnValue({ success: true, payload: {} });
     setup();
     expect(wrapper).toMatchSnapshot();
   });
 
   it('should call SignIn API when form is fully filled and clicked submit button', () => {
+    props.editItem.mockReturnValue({ success: true, payload: {} });
     setup();
     input.at(0).props().onChange({ target: { value: 'testname1' } });
     input.at(1).props().onChange({ target: { value: 'testdescription1' } });
@@ -54,6 +56,7 @@ describe('components/Modals/EditItem.js', () => {
   });
 
   it('should display error message when all fields are not fully filled', () => {
+    props.editItem.mockReturnValue({ success: true, payload: {} });
     setup();
     button.props().onClick({ preventDefault: jest.fn() });
     expect(wrapper.find(Message).length).toBe(1);
