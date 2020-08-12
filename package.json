@@ -77,6 +77,8 @@
     "start:prod": "REACT_APP_ENV=prod node scripts/start.js",
     "start:dev": "REACT_APP_ENV=dev node scripts/start.js",
     "build": "node scripts/build.js",
+    "build:prod": "REACT_APP_ENV=prod node scripts/build.js",
+    "build:dev": "REACT_APP_ENV=dev node scripts/build.js",
     "test": "node scripts/test.js",
     "lint": "./node_modules/.bin/eslint"
   },
