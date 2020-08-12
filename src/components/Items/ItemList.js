@@ -39,6 +39,7 @@ export function ItemList({
   // Limit fetch quantity to be 3, offset is tuned accordingly
   const offset = 3 * (Number.parseInt(parsed.page, 10) - 1);
 
+  // If a category is chosen, fetch that category's items with the precalculated offset
   useEffect(() => {
     (async () => {
       if (currentCategory) {

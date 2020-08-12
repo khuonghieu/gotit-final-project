@@ -1,4 +1,4 @@
-import React from 'react';
+import React, * as fromReact from 'react';
 import { shallow, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { CurrentCategoryInfo } from '../CurrentCategoryInfo';
@@ -9,8 +9,10 @@ describe('components/Categories/CurrentCategoryInfo.js', () => {
   let wrapper;
   let props;
   let useEffect;
+  let useState;
   beforeEach(() => {
-    useEffect = jest.spyOn(React, 'useEffect');
+    useEffect = jest.spyOn(fromReact, 'useEffect');
+    useState = jest.spyOn(fromReact, 'useState');
     props = {
       categoryId: null,
       viewCategory: jest.fn(),
@@ -30,5 +32,13 @@ describe('components/Categories/CurrentCategoryInfo.js', () => {
     setup();
     wrapper.setProps({ ...props, categoryId: 1 });
     expect(props.viewCategory).toHaveBeenCalled();
+  });
+
+  it('should set category info according to the fetched info', async () => {
+    const setState = jest.fn();
+    props.viewCategory.mockReturnValue({ payload: {} });
+    useState.mockImplementation((init) => [init, setState]);
+    await setup();
+    expect(setState).toHaveBeenCalled();
   });
 });

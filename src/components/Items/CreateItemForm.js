@@ -40,6 +40,7 @@ export function CreateItemForm({
 
   const [disable, setDisable] = useState(false);
 
+  // When change category, clear the prefill
   useEffect(() => {
     setName('');
     setDescription('');

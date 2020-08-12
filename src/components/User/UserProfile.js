@@ -16,7 +16,6 @@ export function UserProfile({ user }) {
         <Badge variant="positive_subtle">{user.currentUser ? user.currentUser.name : 'Not logged in'}</Badge>
       </span>
     </div>
-
   );
 }
 

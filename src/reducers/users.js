@@ -2,9 +2,7 @@ import * as constants from '../constants/actions';
 import { getToken } from '../util/localStorage';
 
 const initialState = { loggedIn: getToken() !== null, currentUser: null };
-// if (getToken() !== null) {
-//   initialState.loggedIn = true;
-// }
+
 export default function user(state = initialState, action) {
   switch (action.type) {
     case constants.SIGN_IN_SUCCESS:

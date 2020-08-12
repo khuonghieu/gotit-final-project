@@ -24,6 +24,7 @@ const mapDispatchToProps = {
 };
 
 export function App({ user, fetchUserInfo, chooseModal }) {
+  // Fetch user info on every render
   useEffect(() => {
     fetchUserInfo();
   }, [fetchUserInfo, user.loggedIn]);

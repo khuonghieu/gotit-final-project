@@ -12,6 +12,8 @@ export function ItemDetails({ chooseItem }) {
   const { categoryId, itemId } = useParams();
 
   const [chosenItem, setChosenItem] = useState({});
+
+  // Fetch item detail on render
   useEffect(() => {
     (async () => {
       const result = await chooseItem(categoryId, itemId);

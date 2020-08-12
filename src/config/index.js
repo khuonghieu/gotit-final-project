@@ -1,6 +1,7 @@
 import localConfigs from './local';
 import devConfigs from './dev';
 import prodConfigs from './prod';
+import baseConfigs from './base';
 
 let configs = localConfigs;
 
