@@ -11,6 +11,7 @@ function modal(state = initialState, action) {
       return {
         modalChosen: action.modalChosen,
         prefill: action.prefill,
+        callbackFunc: action.callbackFunc,
       };
     case constants.CLOSE_MODAL:
       return initialState;

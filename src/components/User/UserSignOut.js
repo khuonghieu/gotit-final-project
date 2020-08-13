@@ -2,17 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Button } from '@gotitinc/design-system';
 import PropTypes from 'prop-types';
-import { signOut } from '../../actions/users';
-import { closeModal } from '../../actions/modals';
+import { chooseModal } from '../../actions/modals';
+import * as constants from '../../constants/actions';
 
-export function UserSignOut({ signOut, closeModal }) {
-  function onSignOut() {
-    signOut();
-    closeModal();
-  }
+export function UserSignOut({ chooseModal }) {
   return (
     <div>
-      <Button variant="primary_outline" onClick={onSignOut}>
+      <Button variant="primary_outline" onClick={() => chooseModal(constants.SIGN_OUT_MODAL)}>
         <Button.Label>Sign Out</Button.Label>
       </Button>
     </div>
@@ -20,13 +16,12 @@ export function UserSignOut({ signOut, closeModal }) {
 }
 
 UserSignOut.propTypes = {
-  signOut: PropTypes.func.isRequired,
-  closeModal: PropTypes.func.isRequired,
+  // signOut: PropTypes.func.isRequired,
+  chooseModal: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = {
-  signOut,
-  closeModal,
+  chooseModal,
 };
 
 export default connect(null, mapDispatchToProps)(UserSignOut);

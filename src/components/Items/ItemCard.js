@@ -3,12 +3,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
 import PropTypes from 'prop-types';
-import { viewItems, chooseItem, deleteItem } from '../../actions/items';
+import { chooseItem } from '../../actions/items';
 import { chooseModal } from '../../actions/modals';
 import * as constants from '../../constants/actions';
 
 export function ItemCard({
-  user, itemElement, currentCategory, chooseItem, deleteItem, refreshItemList, chooseModal,
+  user, itemElement, currentCategory, chooseItem, chooseModal, refreshItemList,
 }) {
   const history = useHistory();
   return (
@@ -42,7 +42,7 @@ export function ItemCard({
                   price: itemElement.price,
                   id: itemElement.id,
                 };
-                chooseModal(constants.EDIT_ITEM_MODAL, prefill);
+                chooseModal(constants.EDIT_ITEM_MODAL, prefill, refreshItemList);
               }}
             >
               Edit item
@@ -50,9 +50,12 @@ export function ItemCard({
             <Button
               variant="negative"
               size="small"
-              onClick={async () => {
-                await deleteItem(currentCategory, itemElement.id);
-                refreshItemList();
+              onClick={() => {
+                const prefill = {
+                  categoryId: currentCategory,
+                  itemId: itemElement.id,
+                };
+                chooseModal(constants.DELETE_ITEM_MODAL, prefill, refreshItemList);
               }}
             >
               Delete item
@@ -70,8 +73,6 @@ ItemCard.propTypes = {
   itemElement: PropTypes.object.isRequired,
   currentCategory: PropTypes.string.isRequired,
   chooseItem: PropTypes.func.isRequired,
-  deleteItem: PropTypes.func.isRequired,
-  refreshItemList: PropTypes.func.isRequired,
   chooseModal: PropTypes.func.isRequired,
 };
 
@@ -83,9 +84,7 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
-  viewItems,
   chooseItem,
-  deleteItem,
   chooseModal,
 };
 

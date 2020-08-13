@@ -8,7 +8,7 @@ import { editItem } from '../../actions/items';
 import showPositiveToast from '../../util/toast';
 
 export function EditItem({
-  onClose, editItem, categoryId, prefill,
+  onClose, editItem, categoryId, prefill, callbackFunc,
 }) {
   const [name, setName] = useState(prefill.name);
   const [description, setDescription] = useState(prefill.description);
@@ -28,6 +28,7 @@ export function EditItem({
         setErrorMessage(JSON.stringify(payload.message));
       } else {
         setErrorMessage('');
+        callbackFunc();
         showPositiveToast('Edit item success');
         onClose();
       }
