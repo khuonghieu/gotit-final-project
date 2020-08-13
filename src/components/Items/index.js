@@ -6,11 +6,10 @@ import { useLocation, useHistory } from 'react-router';
 import queryString from 'query-string';
 import { viewItems } from '../../actions/items';
 import CreateItemForm from './CreateItemForm';
-import * as constants from '../../constants/actions';
 import ItemCard from './ItemCard';
 
 export function ItemList({
-  editComplete, currentCategory, viewItems, user,
+  currentCategory, viewItems, user,
 }) {
   const [itemList, setItemList] = useState([]);
   const [refresh, setRefresh] = useState(false);
@@ -38,7 +37,7 @@ export function ItemList({
         }
       }
     })();
-  }, [currentCategory, viewItems, refresh, editComplete, parsed.page, offset]);
+  }, [currentCategory, viewItems, refresh, parsed.page, offset]);
 
   return (
     <div>
@@ -75,7 +74,6 @@ export function ItemList({
 }
 
 ItemList.propTypes = {
-  editComplete: PropTypes.bool.isRequired,
   currentCategory: PropTypes.string,
   viewItems: PropTypes.func.isRequired,
 };
@@ -83,7 +81,6 @@ ItemList.propTypes = {
 function mapStateToProps(state) {
   return {
     currentCategory: state.categories.currentCategory,
-    editComplete: state.modal.modalChosen === constants.EDIT_ITEM_MODAL,
     user: state.user,
   };
 }
